@@ -1,0 +1,27 @@
+{
+  "name": "restaurantts",
+  "version": "1.0.0",
+  "description": "This package contains a backend of what would be the logic of a restaurant software, the architecture used is made in 3 layers",
+  "main": "app.js",
+
+  "scripts": {
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rwkama1/HotelTS"
+  },
+  "keywords": ["backend",
+    "typeScript",
+    "ts",
+    "js",
+    "javascript",
+    "payment",
+    "amount",
+    "total",
+    "date",
+    "user",
+    "restaurant"],
+  "author": "Carlos Rodriguez <rwkamandriw@gmail.com>",
+  "license": "MIT"
+}
