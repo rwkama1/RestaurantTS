@@ -1,12 +1,19 @@
 export  default class DTODishC
 {
-   iddishc: number;
-   characteristic: string;
+    iddishc: number;
+    namei: string;
+    costi: number;
+    quantity: number;
+  
 
-   constructor(piddishc:number,pcharacteristic:string)
+   constructor(piddishc:number,pnami:string,
+    pcosti:number,pquantity:number)
+
    {
        this.iddishc=piddishc;
-       this.characteristic=pcharacteristic;   
+       this.namei=pnami;  
+       this.costi=pcosti;
+       this.quantity=pquantity;   
    }
       
 }

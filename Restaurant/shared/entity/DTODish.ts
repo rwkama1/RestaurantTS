@@ -9,11 +9,13 @@ export  default class DTODish
     img: string;
     price: number;
     arraycharact: DTODishC[];
+    cost: number;
+    quantity: number;
 
     
  
    constructor(piddish:number,pname:string,pcategory:string,
-    pdescription:string,pimg:string,pprice:number,parraycharact:DTODishC[])
+    pdescription:string,pimg:string,pprice:number,parraycharact:DTODishC[],pcost:number,pquantity:number)
    {
        this.iddish=piddish;
        this.name=pname;   
@@ -21,7 +23,9 @@ export  default class DTODish
        this.description=pdescription;   
        this.img=pimg;
        this.price=pprice; 
-       this.arraycharact=parraycharact;         
+       this.arraycharact=parraycharact; 
+       this.cost=pcost;
+       this.quantity=pquantity;         
    }
       
 }

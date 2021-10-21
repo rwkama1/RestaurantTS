@@ -1,3 +1,4 @@
+import DTODish from "../../../../shared/entity/DTODish";
 import { InstanceLogicClass } from "../../extras/instanceBusinessClass";
 import LogicDish from "../LDish";
 
@@ -58,15 +59,17 @@ export class ArrayDish
         const sortarray=this.arraydish.sort((a, b) => b.price-a.price);
         return sortarray
        }
-       //****************************************** */
-       getDTO=()=>
+       sortbyQuantity=()=>
        {
-        let arraydto=[];
-        for(let ldish of this.arraydish)
-        {
-            const dto=ldish.getDTO();
-            arraydto.push(dto);
-        }
-        return arraydto; 
+        const sortarray=this.arraydish.sort((a, b) => b.quantity-a.quantity);
+        return sortarray
        }
+       sortbyCost=()=>
+       {
+        const sortarray=this.arraydish.sort((a, b) => b.cost-a.cost);
+        return sortarray
+       }
+     
+
+    
 }

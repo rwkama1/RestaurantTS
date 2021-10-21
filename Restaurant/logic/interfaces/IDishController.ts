@@ -1,17 +1,53 @@
+import DTODish from "../../shared/entity/DTODish";
+import DTODishC from "../../shared/entity/DTODishC";
+
 export default interface IDishController
 {
    
     //  //************ MAINTENANCE ********************** */
+    // UPDATE
 
-    //  listCategories():Promise<any[]>;
-    //  selectCategory(name:string):Promise<DTOCategory>;
-    //  updateCategory(desc:string):Promise<boolean>;
-    //  registerCategory(dtc:DTOCategory):Promise<boolean>;
+    listDishes():Promise<DTODish[]>;
+    selectDish(id:number):Promise<DTODish>;
+    updateDish(dtodish:DTODish):Promise<boolean>;
+
+    // REGISTER
+
+    enterDataDish(dtodish:DTODish):Promise<DTODish>
+    registerDIngredient(dtoing:DTODishC):Promise<DTODish>
+    removeDIngredient(idingre:number):Promise<DTODish>
+    saveDishDB(pricedish:number):Promise<boolean>
+   
          
     //  //********************* GETS ************************ */
-     
-    //  getLSortCategories():Promise<any[]>;
-    //  getLCategory(name:string):Promise<DTOCategory>;
-    //  getLCategories():Promise<any[]>;
+
+    getDish(id:number):Promise<DTODish>;
+    searchLDishCategory(name:string):Promise<any[]>;
+
+    sortDishbyName():Promise<any[]>;
+    sortbyDishCategoryName():Promise<any[]>;
+    sortbyDishPriceAscending():Promise<any[]>;
+    sortbyDishPriceDescending():Promise<any[]>;
+    sortbyCost():Promise<any[]>;
+    sortbyQuantity():Promise<any[]>;
+    getDishes():Promise<any[]>;
+
+    //********************* INGREDIENTS ***************************** */
+
+    listDishesI():Promise<any[]>;
+    selectDishI(id:number):Promise<DTODishC[]>;
     
+    // UPDATE 
+   
+    selectIngredient(id:number):Promise<DTODishC>;
+    updateIngredient(dtoing:DTODishC):Promise<DTODishC>;
+    updateCost():Promise<DTODish>;
+    updateDishI():Promise<boolean>;
+
+    // REGISTER 
+    
+    registerIngredient(dtoing:DTODishC):Promise<boolean>;
+
+
+
 }

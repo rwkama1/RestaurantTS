@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FactoryLogic = void 0;
 const CategoryController_1 = require("./class/category_maintenance/CategoryController");
 const CustomerController_1 = require("./class/customer_maintenance/CustomerController");
+const DishController_1 = require("./class/dish_maintenance/DishController");
 const UserController_1 = require("./class/user_maintenace/UserController");
 class FactoryLogic {
     static UserController() {
@@ -13,6 +14,9 @@ class FactoryLogic {
     }
     static CategoryController() {
         return (CategoryController_1.CategoryController.getInstance());
+    }
+    static DishController() {
+        return (DishController_1.DishController.getInstance());
     }
 }
 exports.FactoryLogic = FactoryLogic;

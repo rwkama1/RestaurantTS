@@ -2,6 +2,8 @@
 const {FactoryLogic}=require("./Restaurant/dist/logic/FactoryLogic");
 const { default: DTOCategory } = require("./Restaurant/dist/shared/entity/DTOCategory");
 const { default: DTOCustomer } = require("./Restaurant/dist/shared/entity/DTOCustomer");
+const { default: DTODish } = require("./Restaurant/dist/shared/entity/DTODish");
+const { default: DTODishC } = require("./Restaurant/dist/shared/entity/DTODishC");
 // const { default: DTOPassenger } = require("./Hotel/dist/shared/entity/DTOPassenger");
 // const { default: DTORoom } = require("./Hotel/dist/shared/entity/DTORoom");
 // const { default: DTOService } = require("./Hotel/dist/shared/entity/DTOService");
@@ -119,10 +121,10 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
 
 // ***********************  CATEGORY MAINTENANCE ************************* */
 
-let dtocat=new DTOCategory("Category","Description");
+// let dtocat=new DTOCategory("Category","Description");
 
-let categorymaintenance=async()=>
-{
+// let categorymaintenance=async()=>
+// {
    // UPDATE CATEGORY
 
     // let getcs=await FactoryLogic.CategoryController().listCategories();
@@ -148,300 +150,118 @@ let categorymaintenance=async()=>
   //   let getc=await FactoryLogic.CategoryController().getLCategory("Category1");
   //   console.log(getc);
 
- }
- categorymaintenance().then(
-
-)
-
-// *********************** SERVICE MAINTENANCE ************************ */
-
-// FactoryLogic.ServiceController().registerService(dtoservice).then(data => {
-//     console.log(data);
-// });
-// FactoryLogic.ServiceController().updateService(dtoservice).then(data => {
-//     console.log(data);
-// });
-// FactoryLogic.ServiceController().disableService(dtoservice).then(data => {
-//   console.log(data);
-// });
-// FactoryLogic.ServiceController().getServices().then(data => {
-//     console.log(data);
-// });
-// FactoryLogic.ServiceController().getService(1).then(data => {
-//   console.log(data);
-// });
-
-// ************************** RESERVATION MAINTENANCE ******************* */
-
-//  HOTEL
-
-// let registerReservation=async()=>
-// {
-//     let enterp=await FactoryLogic.ReservationController().enterPassenger("456456546");
-//     console.log(enterp);
-//     if(enterp===false)
-//     {
-//     let p=await FactoryLogic.ReservationController().registerPassenger(dtpassenger);
-//      console.log(p);
-//     }
-//     let listreservation= await FactoryLogic.RoomController().getLActiveSortRooms();
-//     console.log(listreservation);
-
-//     let regdetailr=await FactoryLogic.ReservationController().registerReservationDetail(7);
-//     console.log(regdetailr);
-//     // let regdetailr1=await FactoryLogic.ReservationController().registerReservationDetail(2);
-//     // console.log(regdetailr1);
-//     // let regdetailr6=await FactoryLogic.ReservationController().removeReservationDetail(3);
-//     // console.log(regdetailr6);
-
-//     let closer=await FactoryLogic.ReservationController().closeReservation(dtoreservation);
-//     console.log(closer);
-
-//     let saver=await FactoryLogic.ReservationController().saveReservation();
-//     console.log(saver);
-
-
-// }
-
-// registerReservation().then(
+//  }
+//  categorymaintenance().then(
 
 // )
 
+// //*********************** DISH MAINTENANCE ************************ */
 
-//  ONLINE
 
+// let dtodish=new DTODish(86,"Dish","Category2","Description","img.jpg",8,[],10,20);
+// let dtodishingredient1=new DTODishC(86,"Ingredient1",2,3);
+// let dtodishingredient2=new DTODishC(86,"Ingredient2",4,2);
+// let dtodishingredient3=new DTODishC(86,"Ingredient3",3,1);
 
-// let registerReservation=async()=>
+// let dishmaintenance=async()=>
 // {
-//     let start=await FactoryLogic.ReservationController().startReservation();
-//     console.log(start);
+   // // REGISTER DISH
+    
+  //  let enterdd=await FactoryLogic.DishController().enterDataDish(dtodish);
+  //  console.log(enterdd);
 
+  //   let registeri1=await FactoryLogic.DishController().registerDIngredient(dtodishingredient1);
+  //   console.log(registeri1);
 
-//     let regdetailr=await FactoryLogic.ReservationController().registerOnlineReservationDetail(4);
-//     console.log(regdetailr);
+  //   let registeri2=await FactoryLogic.DishController().registerDIngredient(dtodishingredient2);
+  //   console.log(registeri2);
 
-//     let objreservation= FactoryLogic.ReservationController().getReservationinProgress();
-//     console.log(objreservation);
-//     // let regdetailr1=await FactoryLogic.ReservationController().registerOnlineReservationDetail(2);
-//     // console.log(regdetailr1);
-//     // let regdetailr2=await FactoryLogic.ReservationController().registerOnlineReservationDetail(3);
-//     // console.log(regdetailr2);
-//     // let regdetailr6=await FactoryLogic.ReservationController().removeOnlineReservationDetail(3);
-//     // console.log(regdetailr6);
-//     let login=await FactoryLogic.PassengerController().loginPassenger("7898764","Passenger123");
-//     console.log(login);
-//     dtoreservation.idcardpassenger=login.idcard;
-//     let closer=await FactoryLogic.ReservationController().closeOnlineReservation(dtoreservation);
-//     console.log(closer);
+  //   // let removei=await FactoryLogic.DishController().removeDIngredient(1);
+  //   // console.log(removei);
 
-//     let saver=await FactoryLogic.ReservationController().saveOnlineReservation();
+  //   let registeri3=await FactoryLogic.DishController().registerDIngredient(dtodishingredient3);
+  //   console.log(registeri3);
 
-//     console.log(saver);
+  //   let savedish= await FactoryLogic.DishController().saveDishDB(15);
+  //   console.log(savedish);
 
+    // // UPDATE DISH
 
-// }
+  //   let listDishes=await FactoryLogic.DishController().getDishes();
+  //  console.log(listDishes);
 
-// registerReservation().then(
+  //   let selectDish=await FactoryLogic.DishController().selectDish(1);
+  //   console.log(selectDish);
+
+  //   let updateDish=await FactoryLogic.DishController().updateDish(dtodish);
+  //   console.log(updateDish);
+
+   // // GET DISH
+
+  //   let getDish=await FactoryLogic.DishController().getDish(1);
+  //  console.log(getDish);
+  
+  //   let searchLDishCategory=await FactoryLogic.DishController().searchLDishCategory("Category1");
+  //  console.log(searchLDishCategory);
+  
+
+  //   let sortDishbyName=await FactoryLogic.DishController().sortDishbyName();
+  //  console.log(sortDishbyName);
+  
+  //   let sortbyDishCategoryName=await FactoryLogic.DishController().sortbyDishCategoryName();
+  //  console.log(sortbyDishCategoryName);
+
+  //   let sortbyDishPriceAscending=await FactoryLogic.DishController().sortbyDishPriceAscending();
+  //  console.log(sortbyDishPriceAscending);
+    
+  //   let sortbyDishPriceDescending=await FactoryLogic.DishController().sortbyDishPriceDescending();
+  //  console.log(sortbyDishPriceDescending);
+
+  //  let sortbyCost=await FactoryLogic.DishController().sortbyCost();
+  //  console.log(sortbyCost);
+
+  //  let sortbyQuantity=await FactoryLogic.DishController().sortbyQuantity();
+  //  console.log(sortbyQuantity);
+
+  //  let getDishes=await FactoryLogic.DishController().getDishes();
+  //  console.log(getDishes);
+
+  // //*******************  INGREDIENTS ***************************
+
+  //    let listDishesI=await FactoryLogic.DishController().listDishesI();
+  //  console.log(listDishesI);
+
+  //   let selectDishI=await FactoryLogic.DishController().selectDishI(1);
+  //   console.log(selectDishI);
+
+  //    // UPDATE
+
+  //   let selectIngredient=await FactoryLogic.DishController().selectIngredient(0);
+  //   console.log(selectIngredient);
+ 
+  //    let updateIngredient=await FactoryLogic.DishController().updateIngredient(
+  //      new DTODishC(0,"Ingredientupdate",5,4));
+  //    console.log(updateIngredient);
+
+  //    let updateCost=await FactoryLogic.DishController().updateCost();
+  //    console.log(updateCost);
+
+  //    let updateDishI=await FactoryLogic.DishController().updateDishI();
+  //    console.log(updateDishI);
+
+   //   // REGISTER
+
+    //  let registerIngredient=await FactoryLogic.DishController().registerIngredient(new DTODishC(
+    //    0,"Ingredientadded",6,5));
+  
+    // console.log(registerIngredient);
+
+//  }
+//  dishmaintenance().then(
 
 // )
 
-
-// MAINTENANCE
-
-
-// let removeRoomReservation=async()=>
-// {
-//       let getp=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName5");
-//   console.log(getp);
-//   let getspr=await FactoryLogic.ReservationController().getLReservationPassenger(getp.idcard)
-//   console.log(getspr);
-//     let getr=await FactoryLogic.ReservationController().getReservation(1);
-//   console.log(getr);
-//   let removerroom=await FactoryLogic.ReservationController().removeReservationRoom(getr.numberreservation,2);
-//   console.log(removerroom)
-
-// }
-
-// removeRoomReservation().then(
-
-// )
-
-
-// let canceledr=async()=>
-// {
-//     let getp=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName5");
-//   console.log(getp);
-//   let getspr=await FactoryLogic.ReservationController().getLReservationPassenger(getp.idcard)
-//   console.log(getspr);
-//   let getr=await FactoryLogic.ReservationController().getReservation(1);
-//   console.log(getr);
-//   let canceledr=await FactoryLogic.ReservationController().cancelReservation(getr.numberreservation);
-//   console.log(canceledr);
-
-// }
-// canceledr().then(
-
-// );
-// let confirmr=async()=>
-// {
-//     let getp=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName5");
-//   console.log(getp);
-//   let getspr=await FactoryLogic.ReservationController().getLReservationPassenger(getp.idcard)
-//   console.log(getspr);
-//   let getr=await FactoryLogic.ReservationController().getReservation(2);
-//   console.log(getr);
-
-//   let confirmr=await FactoryLogic.ReservationController().confirmReservation(getr.numberreservation);
-//   console.log(confirmr);
-
-// }
-// confirmr().then(
-
-// );
-
-// let addroomreservation=async()=>
-// {
-//   dtoreservation.listDetailReservation.push(new DTOReservationDetail(0,50,5));
-//     let getp=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName4");
-//   console.log(getp);
-
-//   let getadd=await FactoryLogic.ReservationController().addReservationDetail(5,2);
-//   console.log(getadd);
-
-// }
-
-// addroomreservation().then(
-
-// )
-
-// let getPendingPassenger=async()=>
-// {
-
-//   let getppr=await FactoryLogic.ReservationController().getLPendingPassenger("7898764");
-//   console.log(getppr);
-
-// }
-
-
-// getPendingPassenger().then(
-
-// )
-
-// let getReservationbyDates=async()=>
-// {
-
-//   let getppr=await FactoryLogic.ReservationController().getLRbyDate(new Date("September 16, 2021"),new Date("December 7, 2021"));
-//   console.log(getppr);
-
-// }
-
-// getReservationbyDates().then(
-
-// )
-
-// let getReservationbyroom=async()=>
-// {
-
-//   let getppr=await FactoryLogic.ReservationController().getByRoom(2);
-//   console.log(getppr);
-
-// }
-
-// getReservationbyroom().then(
-
-// )
-// // **************************** PASSENGER SERVICES MAINTENANCE  ******************************************* */
-
-// let addservicepassanger=async()=>
-// {
-
-//   let sps=await FactoryLogic.PassengerServiceController().startPS();
-//   console.log(sps);
-//   let rdps=await FactoryLogic.PassengerServiceController().registerDPS(1);
-//   console.log(rdps);
-//   let rdps2=await FactoryLogic.PassengerServiceController().registerDPS(5);
-//   console.log(rdps2);
-//   let rmdps2=await FactoryLogic.PassengerServiceController().removeDPS(5);
-//   console.log(rmdps2);
-//   let closeps=await FactoryLogic.PassengerServiceController().closePS(dtopassengerservice);
-//   console.log(closeps);
-//   let saveps=await FactoryLogic.PassengerServiceController().savePS();
-//   console.log(saveps);
-
-// }
-// addservicepassanger().then(
-
-// )
-
-// let addnewservice=async()=>
-// {
-
-
-//   dtopassengerservice.listdetailps.push(new DTODPassengerService(0,6,200));
-//     let getpname=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName4");
-//   console.log(getpname);
-
-//   let getp=await FactoryLogic.PassengerServiceController().enterPassenger(getpname.idcard);
-//   console.log(getp);
-//   let addps=await FactoryLogic.PassengerServiceController().addDPS(dtopassengerservice);
-//   console.log(addps);
-
-// }
-// addnewservice().then(
-
-// )
-// let getPassengerService=async()=>
-// {
-
-//      let getpname=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName4");
-//     console.log(getpname);
-//       let getspr=await FactoryLogic.PassengerServiceController().getPSbyPassenger(getpname.idcard);
-//   console.log(getspr);
-//     let getps=await FactoryLogic.PassengerServiceController().getPS(getspr.numberps);
-//    console.log(getps);
-
-// }
-// getPassengerService().then(
-
-// )
-
-// ********************************** PAYMENT MAINTENANCE ******************************* */
-
-// let registerPayment=async()=>
-// {
-
-//   let datepay=new Date("October 20, 2021");
-//      let getreservations=await FactoryLogic.PaymentController().enterPassenger("456456546");
-//     console.log(getreservations);
-//     let getres=await FactoryLogic.PaymentController().enterReservationsService(1);
-//     console.log(getres);
-//       let getclosep=await FactoryLogic.PaymentController().closePayment(200,datepay);
-//     console.log(getclosep);
-//     let result=await FactoryLogic.PaymentController().savePayment();
-//    console.log(result);
-
-// }
-// registerPayment().then(
-
-// )
-
-
-// let getPayment=async()=>
-// {
-
-//        let getpname=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName4");
-//     console.log(getpname);
-//       let getpay=await FactoryLogic.PaymentController().getLPaymentPassenger(getpname.idcard);
-//     console.log(getpay);
-
-
-// }
-// getPayment().then(
-
-// )
-
-
-
+// ************************** TABLES MAINTENANCE ******************* */
 
 
 
@@ -452,7 +272,7 @@ let categorymaintenance=async()=>
 
 // // *************************************************************************** */
 
-// // ADD MANY CUSTOMER
+// ADD MANY CUSTOMER
 
 // let dtcustomer1=new DTOCustomer("784564566","Customer2","LastName2"
 // ,"Town2","Address2","0945645654","mail2customer@gmail.com","","Customer12345");
@@ -530,7 +350,7 @@ let categorymaintenance=async()=>
 
 // addmanyuser().then()
 
-// //******************************************************************************** */
+// // //******************************************************************************** */
 
 // //ADD MANY CATEGORIES
 
@@ -564,4 +384,6 @@ let categorymaintenance=async()=>
 //    addmanycategory().then(
 
 //   )
+
+//  //**************************************************** */
 
