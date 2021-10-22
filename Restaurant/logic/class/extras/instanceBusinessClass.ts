@@ -2,12 +2,14 @@
 import DTOCategory from "../../../shared/entity/DTOCategory";
 import DTOCustomer from "../../../shared/entity/DTOCustomer";
 import DTODish from "../../../shared/entity/DTODish";
+import DTOTable from "../../../shared/entity/DTOTable";
 import DTOUser from "../../../shared/entity/DTOUser";
 import { LogicException } from "../../../shared/exceptions/logicexception";
 import LogicCategory from "../business_class/LCategory";
 import LogicCustomer from "../business_class/LCustomer";
 import LogicDish from "../business_class/LDish";
 import LogicDishC from "../business_class/LDishC";
+import LogicTable from "../business_class/LTable";
 
 import LogicUser from "../business_class/LUser";
 import { LGetCategory } from "../category_maintenance/maintenance/LGetCategory";
@@ -48,6 +50,11 @@ export class InstanceLogicClass
         let logicdish=new LogicDish(dtodish.iddish,dtodish.name,searchcategory,
             dtodish.description,dtodish.img,dtodish.price,arrayldishc,dtodish.cost,dtodish.quantity);
         return logicdish
+    }
+    static instanceLTable=(dtot:DTOTable)=>
+    { 
+        let logic=new LogicTable(dtot.IDT,dtot.StateT);
+        return logic
     }
     
 }

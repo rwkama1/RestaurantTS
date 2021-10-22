@@ -34,6 +34,14 @@ class InstanceArrayDTO {
         }
         return arraydto;
     };
+    static instanceArrayTable = (larrayt) => {
+        let arraydto = [];
+        for (let ltable of larrayt) {
+            let dtotable = ltable.getDTO();
+            arraydto.push(dtotable);
+        }
+        return arraydto;
+    };
 }
 exports.InstanceArrayDTO = InstanceArrayDTO;
 //# sourceMappingURL=instanceArrayDTO.js.map

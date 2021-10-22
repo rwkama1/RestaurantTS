@@ -44,6 +44,11 @@ class DishController {
         let dish = await LCUDish_1.LCUDish.getInstance().saveDishDB(pricedish);
         return dish;
     };
+    // REGISTER QUANTITY
+    addQuantity = async (quantity) => {
+        let dish = await LCUDish_1.LCUDish.getInstance().addQuantity(quantity);
+        return dish;
+    };
     //*********************** GETS   ************************** */
     getDish = async (id) => {
         let getdish = await LGetDish_1.LGetDish.getLDish(id);

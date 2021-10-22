@@ -6,6 +6,7 @@ const LCategory_1 = require("../business_class/LCategory");
 const LCustomer_1 = require("../business_class/LCustomer");
 const LDish_1 = require("../business_class/LDish");
 const LDishC_1 = require("../business_class/LDishC");
+const LTable_1 = require("../business_class/LTable");
 const LUser_1 = require("../business_class/LUser");
 const LGetCategory_1 = require("../category_maintenance/maintenance/LGetCategory");
 class InstanceLogicClass {
@@ -32,6 +33,10 @@ class InstanceLogicClass {
         }
         let logicdish = new LDish_1.default(dtodish.iddish, dtodish.name, searchcategory, dtodish.description, dtodish.img, dtodish.price, arrayldishc, dtodish.cost, dtodish.quantity);
         return logicdish;
+    };
+    static instanceLTable = (dtot) => {
+        let logic = new LTable_1.default(dtot.IDT, dtot.StateT);
+        return logic;
     };
 }
 exports.InstanceLogicClass = InstanceLogicClass;

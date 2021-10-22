@@ -116,5 +116,19 @@ export class LCUDish {
       }
     }
 
-  
+    //********************* REGISTER QUANTITY ************************* */
+    addQuantity=async(quantity:number)=>
+    {
+      if(this.dishobj!=null)
+      {
+        this.dishobj.quantity=this.dishobj.quantity+quantity;
+        const savedish=await FactoryData.getDataDish().updateQuantity(this.dishobj.getDTO());
+        this.dishobj=null; 
+        return savedish
+      }
+      else
+      {
+        throw new LogicException("The Dish does not exists in the system");
+      }
+    }
 }

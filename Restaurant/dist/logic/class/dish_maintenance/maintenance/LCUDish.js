@@ -86,6 +86,18 @@ class LCUDish {
             throw new logicexception_1.LogicException("The Dish does not exists in the system");
         }
     };
+    //********************* REGISTER QUANTITY ************************* */
+    addQuantity = async (quantity) => {
+        if (this.dishobj != null) {
+            this.dishobj.quantity = this.dishobj.quantity + quantity;
+            const savedish = await FactoryData_1.FactoryData.getDataDish().updateQuantity(this.dishobj.getDTO());
+            this.dishobj = null;
+            return savedish;
+        }
+        else {
+            throw new logicexception_1.LogicException("The Dish does not exists in the system");
+        }
+    };
 }
 exports.LCUDish = LCUDish;
 //# sourceMappingURL=LCUDish.js.map

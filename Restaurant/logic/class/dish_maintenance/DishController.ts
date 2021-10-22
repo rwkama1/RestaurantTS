@@ -57,6 +57,16 @@ export class DishController implements IDishController{
         let dish= await LCUDish.getInstance().saveDishDB(pricedish);
         return dish
     }
+
+    // REGISTER QUANTITY
+
+    addQuantity=async(quantity:number)=>
+    {
+        let dish= await LCUDish.getInstance().addQuantity(quantity);
+        return dish
+    }
+
+
     //*********************** GETS   ************************** */
 
      getDish=async(id:number)=>

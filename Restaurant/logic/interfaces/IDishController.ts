@@ -5,6 +5,7 @@ export default interface IDishController
 {
    
     //  //************ MAINTENANCE ********************** */
+    
     // UPDATE
 
     listDishes():Promise<DTODish[]>;
@@ -13,12 +14,15 @@ export default interface IDishController
 
     // REGISTER
 
-    enterDataDish(dtodish:DTODish):Promise<DTODish>
-    registerDIngredient(dtoing:DTODishC):Promise<DTODish>
-    removeDIngredient(idingre:number):Promise<DTODish>
-    saveDishDB(pricedish:number):Promise<boolean>
+    enterDataDish(dtodish:DTODish):Promise<DTODish>;
+    registerDIngredient(dtoing:DTODishC):Promise<DTODish>;
+    removeDIngredient(idingre:number):Promise<DTODish>;
+    saveDishDB(pricedish:number):Promise<boolean>;
    
-         
+    // REGISTER QUANTITY
+
+    addQuantity(quantity:number):Promise<boolean>;
+
     //  //********************* GETS ************************ */
 
     getDish(id:number):Promise<DTODish>;

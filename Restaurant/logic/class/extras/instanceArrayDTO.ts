@@ -1,8 +1,10 @@
 
 import DTODish from "../../../shared/entity/DTODish";
+import DTOTable from "../../../shared/entity/DTOTable";
 import LogicCategory from "../business_class/LCategory";
 import LogicCustomer from "../business_class/LCustomer";
 import LogicDish from "../business_class/LDish";
+import LogicTable from "../business_class/LTable";
 import LogicUser from "../business_class/LUser";
 
 export class InstanceArrayDTO
@@ -52,7 +54,17 @@ export class InstanceArrayDTO
         }
         return arraydto;       
     }
-    
+    static instanceArrayTable=(larrayt:LogicTable[])=>
+    {
+        let arraydto:DTOTable[]=[];
+        for(let ltable of larrayt)
+        {
+            let dtotable=ltable.getDTO();
+            arraydto.push(dtotable);
+
+        }
+        return arraydto;       
+    }
    
 
 

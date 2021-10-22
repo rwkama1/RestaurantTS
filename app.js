@@ -4,6 +4,7 @@ const { default: DTOCategory } = require("./Restaurant/dist/shared/entity/DTOCat
 const { default: DTOCustomer } = require("./Restaurant/dist/shared/entity/DTOCustomer");
 const { default: DTODish } = require("./Restaurant/dist/shared/entity/DTODish");
 const { default: DTODishC } = require("./Restaurant/dist/shared/entity/DTODishC");
+const { default: DTOTable } = require("./Restaurant/dist/shared/entity/DTOTable");
 // const { default: DTOPassenger } = require("./Hotel/dist/shared/entity/DTOPassenger");
 // const { default: DTORoom } = require("./Hotel/dist/shared/entity/DTORoom");
 // const { default: DTOService } = require("./Hotel/dist/shared/entity/DTOService");
@@ -256,14 +257,54 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
   
     // console.log(registerIngredient);
 
-//  }
-//  dishmaintenance().then(
+  //  // REGISTER QUANTITY
 
-// )
+  //  let listDishes=await FactoryLogic.DishController().getDishes();
+  //  console.log(listDishes);
+
+  //   let selectDish=await FactoryLogic.DishController().selectDish(1);
+  //   console.log(selectDish);
+
+  //    let addQuantity=await FactoryLogic.DishController().addQuantity(5);
+  //   console.log(addQuantity);
+
+//  }
+//  dishmaintenance().then()
 
 // ************************** TABLES MAINTENANCE ******************* */
 
 
+
+
+// let categorymaintenance=async()=>
+// {
+   // UPDATE CATEGORY
+
+    // let getcs=await FactoryLogic.CategoryController().listCategories();
+    // console.log(getcs);
+
+    // let getselect= await FactoryLogic.CategoryController().selectCategory("Category");
+    // console.log(getselect);
+
+    // let upcategory=  await FactoryLogic.CategoryController().updateCategory("Descriptionone");
+    // console.log(upcategory);
+
+    // REGISTER CATEGORY
+
+    // let addc=await FactoryLogic.CategoryController().registerCategory(dtocat);
+    // console.log(addc);
+
+    // GETS
+
+  //  let getcates=await FactoryLogic.CategoryController().getLSortCategories();
+  //   console.log(getcates);
+  //   let getcname=await FactoryLogic.CategoryController().getLCategories();
+  //   console.log(getcname);
+  //   let getc=await FactoryLogic.CategoryController().getLCategory("Category1");
+  //   console.log(getc);
+
+//  }
+//  categorymaintenance().then()
 
 
 
@@ -387,3 +428,17 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
 
 //  //**************************************************** */
 
+// //ADD MANY TABLE
+
+  // let addmanytable=async()=>
+  //       {
+  //    for(let i=1; i<=10; i++)
+  //      {
+  //        let addr=await FactoryLogic.TableController().registerTable();
+  //        console.log(addr);
+  //      }
+  //    }
+
+  //    addmanytable().then(
+
+  // )
