@@ -1,23 +1,18 @@
+import IDataTableCustomer from "../interfaces/IDataTableCustomer";
 
-import { DataException } from "../../shared/exceptions/dataexception";
-import IDataTable from "../interfaces/IDataTable";
-import { Int,VarChar } from "mssql";
-import { Conection } from "../Conection";
-import DTOTable from "../../shared/entity/DTOTable";
-
-export class DataTable implements IDataTable
+export class DataTableCustomer implements IDataTableCustomer
 {
       
-    private static instancia: DataTable;
+    private static instancia: DataTableCustomer;
     private constructor() { }
-    public static getInstance(): DataTable {
-        if (!DataTable.instancia) {
-            DataTable.instancia = new DataTable();
+    public static getInstance(): DataTableCustomer {
+        if (!DataTableCustomer.instancia) {
+            DataTableCustomer.instancia = new DataTableCustomer();
         }
 
-        return DataTable.instancia;
+        return DataTableCustomer.instancia;
     }
-    registerTable=async()=>
+    registerTableCustomer=async()=>
     {
       try {
         let queryinsert = "insert into TablesR values ('Available')";

@@ -273,46 +273,51 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
 
 // ************************** TABLES MAINTENANCE ******************* */
 
-
-
-
-// let categorymaintenance=async()=>
+// let tablemaintenance=async()=>
 // {
-   // UPDATE CATEGORY
 
-    // let getcs=await FactoryLogic.CategoryController().listCategories();
-    // console.log(getcs);
+   // REGISTER TABLE
 
-    // let getselect= await FactoryLogic.CategoryController().selectCategory("Category");
-    // console.log(getselect);
+    // let regtable=await FactoryLogic.TableController().registerTable();
+    // console.log(regtable);
 
-    // let upcategory=  await FactoryLogic.CategoryController().updateCategory("Descriptionone");
-    // console.log(upcategory);
+    // UPDATE TABLE
 
-    // REGISTER CATEGORY
+  //  let getLAvailableTables=await FactoryLogic.TableController().getLAvailableTables();
+  //   console.log(getLAvailableTables);
 
-    // let addc=await FactoryLogic.CategoryController().registerCategory(dtocat);
-    // console.log(addc);
+    // let listBusyTables=await FactoryLogic.TableController().listBusyTables();
+    // console.log(listBusyTables);
+
+    // let selectTable=await FactoryLogic.TableController().selectTable(2);
+    // console.log(selectTable);
+
+    // let enableTable=await FactoryLogic.TableController().enableTable();
+    // console.log(enableTable);
+
+    // let disableTable=await FactoryLogic.TableController().disableTable();
+    // console.log(disableTable);
+
 
     // GETS
 
-  //  let getcates=await FactoryLogic.CategoryController().getLSortCategories();
-  //   console.log(getcates);
-  //   let getcname=await FactoryLogic.CategoryController().getLCategories();
-  //   console.log(getcname);
-  //   let getc=await FactoryLogic.CategoryController().getLCategory("Category1");
-  //   console.log(getc);
+  //  let getLAvailableTables=await FactoryLogic.TableController().getLAvailableTables();
+  //   console.log(getLAvailableTables);
+  //   let getLBusyTables=await FactoryLogic.TableController().getLBusyTables();
+  //   console.log(getLBusyTables);
+  //   let getLTable=await FactoryLogic.TableController().getLTable(1);
+  //   console.log(getLTable);
+  //    let getLTables=await FactoryLogic.TableController().getLTables();
+  //   console.log(getLTables);
 
 //  }
-//  categorymaintenance().then()
+//  tablemaintenance().then()
+
+// // ***************************** TABLE_CUSTOMER ************* */
 
 
 
-
-
-
-// // *************************************************************************** */
-
+// // *********************************************************** */
 // ADD MANY CUSTOMER
 
 // let dtcustomer1=new DTOCustomer("784564566","Customer2","LastName2"

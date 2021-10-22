@@ -3,11 +3,13 @@ import { DataCategory } from "./class/DataCategory";
 import DataCustomer from "./class/DataCustomer";
 import { DataDish } from "./class/DataDish";
 import { DataTable } from "./class/DataTable";
+import { DataTableCustomer } from "./class/DataTableCustomer";
 import DataUser from "./class/DataUser";
 import IDataCategory from "./interfaces/IDataCategory";
 import IDataCustomer from "./interfaces/IDataCustomer";
 import IDataDish from "./interfaces/IDataDish";
 import IDataTable from "./interfaces/IDataTable";
+import IDataTableCustomer from "./interfaces/IDataTableCustomer";
 import IDataUsers from "./interfaces/IDataUser";
 
 export class FactoryData {
@@ -26,5 +28,7 @@ export class FactoryData {
     public static getDataTable(): IDataTable {
         return (DataTable.getInstance());
     }
-   
+    public static getDataTableCustomer(): IDataTableCustomer {
+        return (DataTableCustomer.getInstance());
+    }
 }

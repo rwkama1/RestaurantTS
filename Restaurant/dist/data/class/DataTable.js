@@ -33,7 +33,7 @@ class DataTable {
             let pool = await Conection_1.Conection.conection();
             const result = await pool.request()
                 .input('IDT', mssql_1.Int, dtot.IDT)
-                .input('StateT', mssql_1.Varchar, dtot.StateT)
+                .input('StateT', mssql_1.VarChar, dtot.StateT)
                 .query(queryupdate);
             pool.close();
             return true;
