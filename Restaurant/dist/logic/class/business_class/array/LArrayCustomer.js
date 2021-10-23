@@ -6,10 +6,10 @@ class ArrayCustomer {
     constructor(parraycustomer) {
         this.arraycustomer = parraycustomer;
     }
-    search = (idcard) => {
+    search = (id) => {
         let listc = this.arraycustomer;
         for (let c of listc) {
-            if (idcard === c.idcard) {
+            if (id === c.id) {
                 return c;
             }
         }

@@ -1,4 +1,8 @@
 import IDataTableCustomer from "../interfaces/IDataTableCustomer";
+import { Int } from "mssql";
+import { Conection } from "../Conection";
+import DTOTableCustomer from "../../shared/entity/DTOTableCustomer";
+import { DataException } from "../../shared/exceptions/dataexception";
 
 export class DataTableCustomer implements IDataTableCustomer
 {
@@ -12,12 +16,14 @@ export class DataTableCustomer implements IDataTableCustomer
 
         return DataTableCustomer.instancia;
     }
-    registerTableCustomer=async()=>
+    registerTableCustomer=async(dtotc:DTOTableCustomer)=>
     {
       try {
-        let queryinsert = "insert into TablesR values ('Available')";
+        let queryinsert = "insert into Table_Customer values (@IDT,@IDCustomer)";
           let pool = await Conection.conection();
           const result = await pool.request()
+          .input('IDT', Int,dtotc.idtable)
+          .input('IDCustomer', Int,dtotc.customer.id)
         .query(queryinsert)
           pool.close();
           return true;
@@ -29,15 +35,15 @@ export class DataTableCustomer implements IDataTableCustomer
       }
   
     }
-    changeState=async(dtot:DTOTable)=>
+    deleteTableCustomer=async(dtotc:DTOTableCustomer)=>
     {
       try {
-        let queryupdate = "Update TablesR Set StateT=@StateT where IDT=@IDT";
+        let quarydelete = "DELETE FROM Table_Customer WHERE IDT=@IDT and IDCustomer=@IDCustomer";
           let pool = await Conection.conection();
           const result = await pool.request()
-          .input('IDT', Int, dtot.IDT)
-          .input('StateT', VarChar,dtot.StateT)
-        .query(queryupdate)
+          .input('IDT', Int, dtotc.idtable)
+          .input('IDCustomer', Int,dtotc.customer.id)
+        .query(quarydelete)
           pool.close();
           return true;
          
@@ -48,20 +54,20 @@ export class DataTableCustomer implements IDataTableCustomer
       }
   
     }
-    getTables=async()=>
+    getTableCustomer=async()=>
     {
       try {
-          let queryget = "select * from TablesR"
+          let queryget = "select * from Table_Customer"
           let pool = await Conection.conection();
-          let arraytables:DTOTable[]=[];
+          let arraytc:DTOTableCustomer[]=[];
           const result = await pool.request()
           .query(queryget)
           for (let x of result.recordset) {
-              let dtot = new DTOTable(x.IDT,x.StateT);
-              arraytables.push(dtot);
+              let dtotc = new DTOTableCustomer(x.IDTC,x.IDT,x.IDCustomer);
+              arraytc.push(dtotc);
            }
           pool.close();
-          return arraytables;
+          return arraytc;
       }
       catch(e)
       {

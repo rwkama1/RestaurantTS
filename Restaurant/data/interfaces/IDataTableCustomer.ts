@@ -1,6 +1,9 @@
+import DTOTableCustomer from "../../shared/entity/DTOTableCustomer";
+
 export default interface IDataTableCustomer 
 {
-    //  getCategories():Promise<DTOCategory[]>; 
-    //  registerCategory(dtocat:DTOCategory):Promise<boolean>;
-    //  updateCategory(dtocat:DTOCategory):Promise<boolean>;
+ 
+    registerTableCustomer(dtotc:DTOTableCustomer):Promise<boolean>;
+    deleteTableCustomer(dtotc:DTOTableCustomer):Promise<boolean>;
+    getTableCustomer():Promise<DTOTableCustomer[]>;
 }

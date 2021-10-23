@@ -17,7 +17,7 @@ export  default class LogicDish
   private  _price: number;
   private  _arraydishc: LogicDishC[];
   private _cost: number;
-   private _quantity: number;
+  private _quantity: number;
   
 
 //GETTERS 

@@ -71,48 +71,26 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
 // **************************** CUSTOMER MAINTENANCE ********************************** */
 
 
-// let dtcustomer=new DTOCustomer("6446789797","Customer1","LastName1"
-// ,"Town1","Address1","4678987987","mail1customer@gmail.com","","Customer12345");
+// let dtcustomer=new DTOCustomer(0,"Customer","LastName");
 
 // let customermaintenace=async()=>
 // {
-//    // UPDATE CUSTOMER
-
-//     // let getcs=await FactoryLogic.CustomerController().listCustomers();
-//     // console.log(getcs);
-//     // let getcname=await FactoryLogic.CustomerController().getCustomersbyName('Customer1',"LastName1");
-//     // console.log(getcname);
-//     // let getselect= await FactoryLogic.CustomerController().selectCustomer("6446789797");
-//     // console.log(getselect);
-//     // let updcustomer=  await FactoryLogic.CustomerController().updateCustomer(dtcustomer);
-//     // console.log(updcustomer);
-
+ 
 //     // REGISTER CUSTOMER
 
-//     // let addc=await FactoryLogic.CustomerController().registerCustomer(dtcustomer);
-//     // console.log(addc);
-
-//     // AUTENTICACTION
-
-//     // let login=await FactoryLogic.CustomerController().loginCustomer("784564566","Customer12345");
-//     // console.log(login);
-//     // let customerlogin= FactoryLogic.CustomerController().getloginCustomer();
-//     // console.log(customerlogin);
-//     // let logout= FactoryLogic.CustomerController().logout();
-//     // console.log(logout);
-//     // let customerlogin2= FactoryLogic.CustomerController().getloginCustomer();
-//     // console.log(customerlogin2);
+//     let addc=await FactoryLogic.CustomerController().registerCustomer(dtcustomer);
+//     console.log(addc);
 
 //     // GETS
 
-//     //  let getscust=await FactoryLogic.CustomerController().getLSortCustomers();
-//     // console.log(getscust);
-//     // let getcname=await FactoryLogic.CustomerController().getCustomersbyName('Customer1',"LastName1");
-//     // console.log(getcname);
-//     // let getc=await FactoryLogic.CustomerController().getLCustomer("784564566");
-//     // console.log(getc);
-//     //   let getcs=await FactoryLogic.CustomerController().getLCustomers();
-//     // console.log(getcs);
+//      let getscust=await FactoryLogic.CustomerController().getLSortCustomers();
+//     console.log(getscust);
+//     let getcname=await FactoryLogic.CustomerController().getLCustomerbyName('Customer1',"LastName1");
+//     console.log(getcname);
+//     let getc=await FactoryLogic.CustomerController().getLCustomer(5);
+//     console.log(getc);
+//       let getcs=await FactoryLogic.CustomerController().getLCustomers();
+//     console.log(getcs);
 
 //  }
 // customermaintenace().then(
@@ -320,22 +298,14 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
 // // *********************************************************** */
 // ADD MANY CUSTOMER
 
-// let dtcustomer1=new DTOCustomer("784564566","Customer2","LastName2"
-// ,"Town2","Address2","0945645654","mail2customer@gmail.com","","Customer12345");
-// let dtcustomer2=new DTOCustomer("789456456","Customer3","LastName3"
-// ,"Town3","Address3","0978546456","mail3customer@gmail.com","","Customer12345");
-// let dtcustomer3=new DTOCustomer("456789789","Customer4","LastName4"
-// ,"Town4","Address4","09784564456","mail4customer@gmail.com","","Customer12345");
-// let dtcustomer4=new DTOCustomer("453645677","Customer5","LastName5"
-// ,"Town5","Address5","07545645456","mail5customer@gmail.com","","Customer12345");
-// let dtcustomer5=new DTOCustomer("2564897897","Customer6","LastName6"
-// ,"Town6","Address6","07945645656","mail6customer@gmail.com","","Customer12345");
-// let dtcustomer6=new DTOCustomer("754564685","Customer7","LastName7"
-// ,"Town7","Address7","078546456","mail7customer@gmail.com","","Customer12345");
-// let dtcustomer7=new DTOCustomer("165468797","Customer8","LastName8"
-// ,"Town8","Address8","0954564564","mail8customer@gmail.com","","Customer12345");
-// let dtcustomer8=new DTOCustomer("564645647","Customer9","LastName9"
-// ,"Town9","Address9","0345645678","mail9customer@gmail.com","","Customer12345");
+// let dtcustomer1=new DTOCustomer(0,"Customer1","LastName1");
+// let dtcustomer2=new DTOCustomer(0,"Customer2","LastName2");
+// let dtcustomer3=new DTOCustomer(0,"Customer3","LastName3");
+// let dtcustomer4=new DTOCustomer(0,"Customer4","LastName4");
+// let dtcustomer5=new DTOCustomer(0,"Customer5","LastName5");
+// let dtcustomer6=new DTOCustomer(0,"Customer6","LastName6");
+// let dtcustomer7=new DTOCustomer(0,"Customer7","LastName7");
+// let dtcustomer8=new DTOCustomer(0,"Customer8","LastName8");
 
 // let arraycustomer=[];
 // arraycustomer.push(dtcustomer1);

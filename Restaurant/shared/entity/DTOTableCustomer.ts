@@ -1,13 +1,15 @@
+import DTOCustomer from "./DTOCustomer";
+
 export  default class DTOTableCustomer
 {
     idtc: number;
     idtable: number;
-    idcardcustomer: string;
+    customer: DTOCustomer;
 
-   constructor(pidtc:number,pidtable:number,pidcardcustomer:string)
+   constructor(pidtc:number,pidtable:number,pcustomer:DTOCustomer)
    {
        this.idtc=pidtc;
        this.idtable=pidtable;  
-       this.idcardcustomer=pidcardcustomer;   
+       this.customer=pcustomer;   
    }   
 }

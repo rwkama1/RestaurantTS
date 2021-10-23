@@ -2,7 +2,6 @@ import DTOCustomer from "../../../shared/entity/DTOCustomer";
 import { LogicException } from "../../../shared/exceptions/logicexception";
 import ICustomerController from "../../interfaces/ICustomerController";
 import { InstanceArrayDTO } from "../extras/instanceArrayDTO";
-import { LCustomerAutentication } from "./maintenance/LAutentication";
 import { LCUCustomer } from "./maintenance/LCUCustomer";
 import { LGetCustomer } from "./maintenance/LGetsCustomer";
 
@@ -18,31 +17,8 @@ export class CustomerController implements ICustomerController{
         return CustomerController.instancia;
     }
     
-    //************ MAINTENANCE ********************** */
+    //************ REGISTER ********************** */
 
-    listCustomers=async()=>
-    {
-        let customers= await LCUCustomer.getInstance().listCustomers();
-        return customers
-    }
-    getCustomersbyName=async(name:string,lastname:string)=>
-    {
-       let customer= await LCUCustomer.getInstance().getCustomersbyName(name,lastname);
-      return customer
-        
-    }
-    selectCustomer=async(idcard:string)=>
-    {
-        let customer= await LCUCustomer.getInstance().selectCustomer(idcard);
-      return customer
-        
-    }
-    updateCustomer=async(dtc:DTOCustomer)=>
-     {
-        let customer= await LCUCustomer.getInstance().updateCustomer(dtc);
-       return customer
-  
-     }
     registerCustomer=async(dtc:DTOCustomer)=>
          {
           
@@ -60,9 +36,9 @@ export class CustomerController implements ICustomerController{
     return arraydto
    
      }
-    getLCustomer=async(idcard:string)=>
+    getLCustomer=async(id:number)=>
      {
-        const getcustomer= await LGetCustomer.getLCustomer(idcard);
+        const getcustomer= await LGetCustomer.getLCustomer(id);
         if(getcustomer===null)
         {
             throw new LogicException("The Customer does not exists in the system");
@@ -87,28 +63,5 @@ export class CustomerController implements ICustomerController{
         return arraydto
      }
      
-   //******************* AUTENTICATION *********************** */
-
-    loginCustomer=async(idcard:string,password:string)=>
-   {  
-    const lcustomer=await LCustomerAutentication.getInstance().loginCustomer(idcard,password);
-    return lcustomer.getDTO()
-   }
-    getloginCustomer=()=>
-   {
-  
-    const getloginc= LCustomerAutentication.getInstance().customerlogin;
-    if(getloginc===null)
-    {
-        throw new LogicException("There is no customer logged in");
-        
-    }
-    return getloginc.getDTO()
-    
-   }
-    logout=()=>
-   {
-    const logout= LCustomerAutentication.getInstance().logout();
-    return logout
-   }
+   
 }

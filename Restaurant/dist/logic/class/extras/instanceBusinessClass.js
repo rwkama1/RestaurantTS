@@ -15,7 +15,7 @@ class InstanceLogicClass {
         return logicuser;
     };
     static instanceLCustomer = (dtc) => {
-        var logicustomer = new LCustomer_1.default(dtc.idcard, dtc.name, dtc.lastname, dtc.town, dtc.address, dtc.phonenumber, dtc.mail, dtc.salt, dtc.passwordd);
+        var logicustomer = new LCustomer_1.default(dtc.id, dtc.name, dtc.lastname);
         return logicustomer;
     };
     static instanceLCategory = (dtocat) => {

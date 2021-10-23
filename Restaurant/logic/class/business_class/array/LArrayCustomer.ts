@@ -9,12 +9,12 @@ export class ArrayCustomer{
         this.arraycustomer=parraycustomer;
        }
      
-    search=(idcard:string)=>
+    search=(id:number)=>
     {
     let listc=this.arraycustomer;
     for(let c of listc)
       {
-        if(idcard===c.idcard)
+        if(id===c.id)
         {
           return c;
         }

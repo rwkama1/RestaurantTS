@@ -25,8 +25,7 @@ export class InstanceLogicClass
     }
     static instanceLCustomer=(dtc:DTOCustomer)=>
     {
-        var logicustomer=new LogicCustomer(dtc.idcard,dtc.name,dtc.lastname,dtc.town,dtc.address,dtc.phonenumber
-            ,dtc.mail,dtc.salt,dtc.passwordd);
+        var logicustomer=new LogicCustomer(dtc.id,dtc.name,dtc.lastname);
          return logicustomer
     }
     static instanceLCategory=(dtocat:DTOCategory)=>

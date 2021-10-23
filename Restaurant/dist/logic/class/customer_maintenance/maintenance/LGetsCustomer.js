@@ -10,9 +10,9 @@ class LGetCustomer {
         let searchc = datac.getSort();
         return searchc;
     };
-    static getLCustomer = async (idcard) => {
+    static getLCustomer = async (id) => {
         let datac = await this.getLCustomers();
-        let searchc = datac.search(idcard);
+        let searchc = datac.search(id);
         return searchc;
     };
     static getLCustomerbyName = async (name, lastname) => {

@@ -9,23 +9,52 @@ export class ArrayTableCustomer{
         this.arraytc=parratc;
        }
      
-    // search=(name:string)=>
-    // {
-    // let listc=this.arraycat;
-    // for(let c of listc)
-    //   {
-    //     if(name===c.name)
-    //     {
-    //       return c;
-    //     }
-    //   }
-    //   return null;
-    // }
+    search=(idtc:number)=>
+    {
+    for(let tablec of this.arraytc)
+      {
+        if(idtc===tablec.idtc)
+        {
+          return tablec;
+        }
+      }
+      return null;
+    }
+    searchbyTable=(idt:number)=>
+    {
+    for(let tablec of this.arraytc)
+      {
+        if(idt===tablec.table.idtable)
+        {
+          return tablec;
+        }
+      }
+      return null;
+    }
+    searchbyCustomer=(name:string,lastname:string)=>
+    {
+    for(let tablec of this.arraytc)
+      {
+        if(name===tablec.customer.name||lastname===tablec.customer.lastname)
+        {
+          return tablec;
+        }
+      }
+      return null;
+    }
 
-    // getSort=()=>
-    // {
-    //   let listc=this.arraycat
-    //  const sortarray=listc.sort((a, b) => a.name.localeCompare(b.name));
-    //  return sortarray
-    // }
+    //*************************** */
+
+    getSortbyCustomer=()=>
+    {
+    
+     const sortarray=this.arraytc.sort((a, b) => a.customer.name.localeCompare(b.customer.name));
+     return sortarray
+    }
+    getSortbyTable=()=>
+    {
+    
+     const sortarray=this.arraytc.sort((a, b) => a.table.idtable-b.table.idtable);
+     return sortarray
+    }
 }

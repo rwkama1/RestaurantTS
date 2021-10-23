@@ -19,18 +19,11 @@ export default class DataCustomer implements IDataCustomer {
     registerCustomer=async(dtc:DTOCustomer)=>
     {
       try {
-        let queryinsert = "insert into Customer values (@IDCard,@Names,@LastName,@Town,@Addresss,@PhoneNumber,@Mail,@Salt,@Passwordd)";
+        let queryinsert = "insert into Customer values (@Names,@LastName)";
           let pool = await Conection.conection();
           const result = await pool.request()
-          .input('IDCard', VarChar, dtc.idcard)
           .input('Names', VarChar, dtc.name)
           .input('LastName', VarChar, dtc.lastname)
-          .input('Town',VarChar, dtc.town)
-          .input('Addresss', VarChar, dtc.address)
-          .input('PhoneNumber', VarChar, dtc.phonenumber)
-          .input('Mail', VarChar, dtc.mail)
-          .input('Salt', VarChar, dtc.salt)
-          .input('Passwordd', VarChar, dtc.passwordd)
         .query(queryinsert)
           pool.close();
           return true;
@@ -42,33 +35,7 @@ export default class DataCustomer implements IDataCustomer {
       }
   
     }
-    updateCustomer=async(dtc:DTOCustomer)=>
-    {
-      try {
-          let queryupdate = "Update Customer Set NamesC=@Names,LastNameC=@LastName,TownC=@Town,AddressC=@Addresss,PhoneNumberC=@PhoneNumber,MailC=@Mail,SaltC=@Salt,PassworddC=@Passwordd where IDCardC=@IDCard";
-          let pool = await Conection.conection();
-        
-          const result = await pool.request()
-          .input('IDCard', VarChar, dtc.idcard)
-          .input('Names', VarChar, dtc.name)
-          .input('LastName', VarChar, dtc.lastname)
-          .input('Town',VarChar, dtc.town)
-          .input('Addresss', VarChar, dtc.address)
-          .input('PhoneNumber', VarChar, dtc.phonenumber)
-          .input('Mail', VarChar, dtc.mail)
-          .input('Salt', VarChar, dtc.salt)
-          .input('Passwordd', VarChar, dtc.passwordd)
-          .query(queryupdate) 
-          pool.close();
-          return true;
-         
-      }
-      catch(e)
-      {
-          throw new DataException("DataLayer Error: "+e.message)
-      }
-  
-    }  
+   
     getCustomers=async()=>
     {
       try {
@@ -78,8 +45,7 @@ export default class DataCustomer implements IDataCustomer {
           const result = await pool.request()
           .query(queryget)
           for (let x of result.recordset) {
-              let cust = new DTOCustomer(x.IDCardC,x.NamesC,x.LastNameC,x.TownC,
-                x.AddressC,x.PhoneNumberC,x.MailC,x.SaltC,x.PassworddC);
+              let cust = new DTOCustomer(x.IDCustomer,x.NamesC,x.LastNameC);
               arrayu.push(cust);
            }
           pool.close();
