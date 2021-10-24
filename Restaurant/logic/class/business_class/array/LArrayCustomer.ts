@@ -34,6 +34,20 @@ export class ArrayCustomer{
       }
       return null;
     }
+    searchbynameExpression=(exp:string)=>
+    { 
+      let listc=this.arraycustomer;
+      let newarray:LogicCustomer[]=[];
+      for(let customer of listc)
+      {
+       
+        if(customer.name.match(exp)||customer.lastname.match(exp))
+        {
+          newarray.push(customer);
+        }
+      }
+      return newarray;
+    }
     getSort=()=>
     {
       let listc=this.arraycustomer

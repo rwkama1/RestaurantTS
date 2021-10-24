@@ -20,7 +20,7 @@ class DataTableCustomer {
             let pool = await Conection_1.Conection.conection();
             const result = await pool.request()
                 .input('IDT', mssql_1.Int, dtotc.idtable)
-                .input('IDCustomer', mssql_1.Int, dtotc.customer.id)
+                .input('IDCustomer', mssql_1.Int, dtotc.idcustomer)
                 .query(queryinsert);
             pool.close();
             return true;
@@ -35,7 +35,7 @@ class DataTableCustomer {
             let pool = await Conection_1.Conection.conection();
             const result = await pool.request()
                 .input('IDT', mssql_1.Int, dtotc.idtable)
-                .input('IDCustomer', mssql_1.Int, dtotc.customer.id)
+                .input('IDCustomer', mssql_1.Int, dtotc.idcustomer)
                 .query(quarydelete);
             pool.close();
             return true;

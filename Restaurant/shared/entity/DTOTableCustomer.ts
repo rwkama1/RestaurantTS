@@ -4,12 +4,12 @@ export  default class DTOTableCustomer
 {
     idtc: number;
     idtable: number;
-    customer: DTOCustomer;
+    idcustomer: number;
 
-   constructor(pidtc:number,pidtable:number,pcustomer:DTOCustomer)
+   constructor(pidtc:number,pidtable:number,pcustomer:number)
    {
        this.idtc=pidtc;
        this.idtable=pidtable;  
-       this.customer=pcustomer;   
+       this.idcustomer=pcustomer;   
    }   
 }

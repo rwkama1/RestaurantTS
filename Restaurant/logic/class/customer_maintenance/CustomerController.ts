@@ -62,6 +62,13 @@ export class CustomerController implements ICustomerController{
         let arraydto=InstanceArrayDTO.instanceArrayCustomer(getcustomers.arraycustomer);
         return arraydto
      }
+     getCustomerbyExpresion=async(exp:string)=>
+     {
+        const getcustomers= await LGetCustomer.getCustomerbyExpresion(exp);
+        let arraydto=InstanceArrayDTO.instanceArrayCustomer(getcustomers);
+        return arraydto
+     }
+     
      
    
 }

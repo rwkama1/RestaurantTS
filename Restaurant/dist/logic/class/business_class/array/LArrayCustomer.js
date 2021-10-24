@@ -24,6 +24,16 @@ class ArrayCustomer {
         }
         return null;
     };
+    searchbynameExpression = (exp) => {
+        let listc = this.arraycustomer;
+        let newarray = [];
+        for (let customer of listc) {
+            if (customer.name.match(exp) || customer.lastname.match(exp)) {
+                newarray.push(customer);
+            }
+        }
+        return newarray;
+    };
     getSort = () => {
         let listc = this.arraycustomer;
         const sortarray = listc.sort((a, b) => a.name.localeCompare(b.name));

@@ -20,6 +20,11 @@ class LGetCustomer {
         let searchc = datac.searchbyname(name, lastname);
         return searchc;
     };
+    static getCustomerbyExpresion = async (exp) => {
+        let datac = await this.getLCustomers();
+        let searchc = datac.searchbynameExpression(exp);
+        return searchc;
+    };
     static getLCustomers = async () => {
         let arrayc = [];
         let datac = await FactoryData_1.FactoryData.getDataCustomer().getCustomers();

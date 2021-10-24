@@ -44,6 +44,11 @@ class CustomerController {
         let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayCustomer(getcustomers.arraycustomer);
         return arraydto;
     };
+    getCustomerbyExpresion = async (exp) => {
+        const getcustomers = await LGetsCustomer_1.LGetCustomer.getCustomerbyExpresion(exp);
+        let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayCustomer(getcustomers);
+        return arraydto;
+    };
 }
 exports.CustomerController = CustomerController;
 //# sourceMappingURL=CustomerController.js.map

@@ -23,7 +23,7 @@ export class DataTableCustomer implements IDataTableCustomer
           let pool = await Conection.conection();
           const result = await pool.request()
           .input('IDT', Int,dtotc.idtable)
-          .input('IDCustomer', Int,dtotc.customer.id)
+          .input('IDCustomer', Int,dtotc.idcustomer)
         .query(queryinsert)
           pool.close();
           return true;
@@ -42,7 +42,7 @@ export class DataTableCustomer implements IDataTableCustomer
           let pool = await Conection.conection();
           const result = await pool.request()
           .input('IDT', Int, dtotc.idtable)
-          .input('IDCustomer', Int,dtotc.customer.id)
+          .input('IDCustomer', Int,dtotc.idcustomer)
         .query(quarydelete)
           pool.close();
           return true;

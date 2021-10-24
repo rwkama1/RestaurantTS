@@ -3,6 +3,7 @@ import DTOCategory from "../../../shared/entity/DTOCategory";
 import DTOCustomer from "../../../shared/entity/DTOCustomer";
 import DTODish from "../../../shared/entity/DTODish";
 import DTOTable from "../../../shared/entity/DTOTable";
+import DTOTableCustomer from "../../../shared/entity/DTOTableCustomer";
 import DTOUser from "../../../shared/entity/DTOUser";
 import { LogicException } from "../../../shared/exceptions/logicexception";
 import LogicCategory from "../business_class/LCategory";
@@ -10,9 +11,12 @@ import LogicCustomer from "../business_class/LCustomer";
 import LogicDish from "../business_class/LDish";
 import LogicDishC from "../business_class/LDishC";
 import LogicTable from "../business_class/LTable";
+import LogicTableCustomer from "../business_class/LTableCustomer";
 
 import LogicUser from "../business_class/LUser";
 import { LGetCategory } from "../category_maintenance/maintenance/LGetCategory";
+import { LGetCustomer } from "../customer_maintenance/maintenance/LGetsCustomer";
+import { LGetTable } from "../table_maintenance/maintenance/LGetTable";
 
 
 export class InstanceLogicClass
@@ -53,6 +57,23 @@ export class InstanceLogicClass
     static instanceLTable=(dtot:DTOTable)=>
     { 
         let logic=new LogicTable(dtot.IDT,dtot.StateT);
+        return logic
+    }
+    static instanceLTableCustomer=async(dtotc:DTOTableCustomer)=>
+    { 
+        let table=await LGetTable.getLTable(dtotc.idtable);
+        if(table===null)
+        {
+            throw new LogicException("The Table does not exists in the system");
+            
+        }
+        let customer=await LGetCustomer.getLCustomer(dtotc.idtable);
+        if(customer===null)
+        {
+            throw new LogicException("The Customer does not exists in the system");
+            
+        }
+        let logic=new LogicTableCustomer(dtotc.idtc,table,customer);
         return logic
     }
     

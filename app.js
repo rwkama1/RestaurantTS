@@ -76,21 +76,23 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
 // let customermaintenace=async()=>
 // {
  
-//     // REGISTER CUSTOMER
+  //  // REGISTER CUSTOMER
 
-//     let addc=await FactoryLogic.CustomerController().registerCustomer(dtcustomer);
-//     console.log(addc);
+  //   let addc=await FactoryLogic.CustomerController().registerCustomer(dtcustomer);
+  //   console.log(addc);
 
-//     // GETS
+  //   // GETS
 
-//      let getscust=await FactoryLogic.CustomerController().getLSortCustomers();
-//     console.log(getscust);
-//     let getcname=await FactoryLogic.CustomerController().getLCustomerbyName('Customer1',"LastName1");
-//     console.log(getcname);
-//     let getc=await FactoryLogic.CustomerController().getLCustomer(5);
-//     console.log(getc);
-//       let getcs=await FactoryLogic.CustomerController().getLCustomers();
-//     console.log(getcs);
+  //    let getscust=await FactoryLogic.CustomerController().getLSortCustomers();
+  //   console.log(getscust);
+  //   let getcname=await FactoryLogic.CustomerController().getLCustomerbyName('Customer1',"LastName1");
+  //   console.log(getcname);
+  //   let getc=await FactoryLogic.CustomerController().getLCustomer(5);
+  //   console.log(getc);
+  //     let getcs=await FactoryLogic.CustomerController().getLCustomers();
+  //   console.log(getcs);
+    // let getCustomerbyExpresion=await FactoryLogic.CustomerController().getCustomerbyExpresion("");
+    // console.log(getCustomerbyExpresion);
 
 //  }
 // customermaintenace().then(
@@ -417,3 +419,5 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
   //    addmanytable().then(
 
   // )
+ 
+

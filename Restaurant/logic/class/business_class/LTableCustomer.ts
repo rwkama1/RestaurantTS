@@ -37,7 +37,7 @@ export  default class LogicTableCustomer
    
     getDTO=()=>
     {
-      let dtotc=new DTOTableCustomer(this.idtc,this.table.idtable,this.customer.getDTO());
+      let dtotc=new DTOTableCustomer(this.idtc,this.table.idtable,this.customer.id);
        return dtotc
     }
 

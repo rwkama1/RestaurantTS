@@ -7,8 +7,11 @@ const LCustomer_1 = require("../business_class/LCustomer");
 const LDish_1 = require("../business_class/LDish");
 const LDishC_1 = require("../business_class/LDishC");
 const LTable_1 = require("../business_class/LTable");
+const LTableCustomer_1 = require("../business_class/LTableCustomer");
 const LUser_1 = require("../business_class/LUser");
 const LGetCategory_1 = require("../category_maintenance/maintenance/LGetCategory");
+const LGetsCustomer_1 = require("../customer_maintenance/maintenance/LGetsCustomer");
+const LGetTable_1 = require("../table_maintenance/maintenance/LGetTable");
 class InstanceLogicClass {
     static instanceLUser = (dtouser) => {
         var logicuser = new LUser_1.default(dtouser.idcard, dtouser.name, dtouser.city, dtouser.typeuserr, dtouser.hashh, dtouser.password);
@@ -36,6 +39,18 @@ class InstanceLogicClass {
     };
     static instanceLTable = (dtot) => {
         let logic = new LTable_1.default(dtot.IDT, dtot.StateT);
+        return logic;
+    };
+    static instanceLTableCustomer = async (dtotc) => {
+        let table = await LGetTable_1.LGetTable.getLTable(dtotc.idtable);
+        if (table === null) {
+            throw new logicexception_1.LogicException("The Table does not exists in the system");
+        }
+        let customer = await LGetsCustomer_1.LGetCustomer.getLCustomer(dtotc.idtable);
+        if (customer === null) {
+            throw new logicexception_1.LogicException("The Customer does not exists in the system");
+        }
+        let logic = new LTableCustomer_1.default(dtotc.idtc, table, customer);
         return logic;
     };
 }

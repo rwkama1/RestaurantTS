@@ -26,7 +26,7 @@ class LogicTableCustomer {
         this._customer = value;
     }
     getDTO = () => {
-        let dtotc = new DTOTableCustomer_1.default(this.idtc, this.table.idtable, this.customer.getDTO());
+        let dtotc = new DTOTableCustomer_1.default(this.idtc, this.table.idtable, this.customer.id);
         return dtotc;
     };
     constructor(pidtc, ptable, pcustomer) {
