@@ -30,6 +30,14 @@ class ArrayTableCustomer {
         }
         return null;
     };
+    searchbyCustomerId = (id) => {
+        for (let tablec of this.arraytc) {
+            if (id === tablec.customer.id) {
+                return tablec;
+            }
+        }
+        return null;
+    };
     //*************************** */
     getSortbyCustomer = () => {
         const sortarray = this.arraytc.sort((a, b) => a.customer.name.localeCompare(b.customer.name));

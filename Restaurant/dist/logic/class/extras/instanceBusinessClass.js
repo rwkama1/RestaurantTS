@@ -46,7 +46,7 @@ class InstanceLogicClass {
         if (table === null) {
             throw new logicexception_1.LogicException("The Table does not exists in the system");
         }
-        let customer = await LGetsCustomer_1.LGetCustomer.getLCustomer(dtotc.idtable);
+        let customer = await LGetsCustomer_1.LGetCustomer.getLCustomer(dtotc.idcustomer);
         if (customer === null) {
             throw new logicexception_1.LogicException("The Customer does not exists in the system");
         }

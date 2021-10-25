@@ -5,9 +5,11 @@ import { DataDish } from "./class/DataDish";
 import { DataTable } from "./class/DataTable";
 import { DataTableCustomer } from "./class/DataTableCustomer";
 import DataUser from "./class/DataUser";
+import { DataOrder } from "./class/DateOrder";
 import IDataCategory from "./interfaces/IDataCategory";
 import IDataCustomer from "./interfaces/IDataCustomer";
 import IDataDish from "./interfaces/IDataDish";
+import IDataOrder from "./interfaces/IDataOrder";
 import IDataTable from "./interfaces/IDataTable";
 import IDataTableCustomer from "./interfaces/IDataTableCustomer";
 import IDataUsers from "./interfaces/IDataUser";
@@ -30,5 +32,8 @@ export class FactoryData {
     }
     public static getDataTableCustomer(): IDataTableCustomer {
         return (DataTableCustomer.getInstance());
+    }
+    public static getDataOrder(): IDataOrder {
+        return (DataOrder.getInstance());
     }
 }

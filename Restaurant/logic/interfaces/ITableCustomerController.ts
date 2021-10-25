@@ -19,7 +19,7 @@ export default interface ITableCustomerController
     
     
     
-   //************************** DELETE  ****************************** */
+   //********************** DELETE  ****************************** */
  
    getLTCSortbyCustomer():Promise<DTOTableCustomer[]>;
    selectTableCustomer(id:number):Promise<DTOTableCustomer>;

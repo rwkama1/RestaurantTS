@@ -1,5 +1,6 @@
 
 import DTOCustomer from "../../../shared/entity/DTOCustomer";
+import { LogicException } from "../../../shared/exceptions/logicexception";
 import ITableCustomerController from "../../interfaces/ITableCustomerController";
 import { InstanceArrayDTO } from "../extras/instanceArrayDTO";
 import { LCUTableCustomer } from "./maintenance/LCUTableCustomer";
@@ -88,19 +89,31 @@ export class TableCustomerController implements ITableCustomerController
     getLTableC=async(id:number)=>
     {
         let gettlc=await LGetTableCustomer.getLTableC(id);
+        if(gettlc===null)
+        {
+        throw new LogicException("The Table Customer does not exists in the system");      
+        }
         return gettlc.getDTO() 
     }
    
     getLTCbyCustomer=async(name:string,lastname:string)=>
    {
         let gettlc=await LGetTableCustomer.getLTCbyCustomer(name,lastname);
+        if(gettlc===null)
+        {
+        throw new LogicException("The Customer has not Table");      
+        }
         return gettlc.getDTO()
    }
    
     getLTCbyTable=async(id:number)=>
    {
-    let gettlc=await LGetTableCustomer.getLTCbyTable(id);
-    return gettlc.getDTO()
+        let gettlc=await LGetTableCustomer.getLTCbyTable(id);
+        if(gettlc===null)
+        {
+        throw new LogicException("The Table is available");      
+        }
+        return gettlc.getDTO()
    }
  
   

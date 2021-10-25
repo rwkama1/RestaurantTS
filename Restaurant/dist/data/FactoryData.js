@@ -7,6 +7,7 @@ const DataDish_1 = require("./class/DataDish");
 const DataTable_1 = require("./class/DataTable");
 const DataTableCustomer_1 = require("./class/DataTableCustomer");
 const DataUser_1 = require("./class/DataUser");
+const DateOrder_1 = require("./class/DateOrder");
 class FactoryData {
     static getDataUser() {
         return (DataUser_1.default.getInstance());
@@ -25,6 +26,9 @@ class FactoryData {
     }
     static getDataTableCustomer() {
         return (DataTableCustomer_1.DataTableCustomer.getInstance());
+    }
+    static getDataOrder() {
+        return (DateOrder_1.DataOrder.getInstance());
     }
 }
 exports.FactoryData = FactoryData;

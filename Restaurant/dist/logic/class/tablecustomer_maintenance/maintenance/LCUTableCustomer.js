@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LCUTableCustomer = void 0;
 const FactoryData_1 = require("../../../../data/FactoryData");
 const logicexception_1 = require("../../../../shared/exceptions/logicexception");
+const LTableCustomer_1 = require("../../business_class/LTableCustomer");
 const LCUCustomer_1 = require("../../customer_maintenance/maintenance/LCUCustomer");
 const LGetsCustomer_1 = require("../../customer_maintenance/maintenance/LGetsCustomer");
 const instanceArrayDTO_1 = require("../../extras/instanceArrayDTO");
@@ -41,9 +42,15 @@ class LCUTableCustomer {
         return arraydto;
     };
     enterCustomer = async (id) => {
+        let newtc = new LTableCustomer_1.default(0, null, null);
+        this.customertableobj = newtc;
         let customer = await LGetsCustomer_1.LGetCustomer.getLCustomer(id);
         if (customer === null) {
             throw new logicexception_1.LogicException("The Customer does not exists in the system");
+        }
+        let tablecustomerbyid = await LGetTableCustomer_1.LGetTableCustomer.getLTCbyCustomerId(id);
+        if (tablecustomerbyid != null) {
+            throw new logicexception_1.LogicException("That Customer already has a table");
         }
         this.customertableobj.customer = customer;
         return this.customertableobj.customer.getDTO();
@@ -57,6 +64,9 @@ class LCUTableCustomer {
         let table = await LGetTable_1.LGetTable.getLTable(id);
         if (table === null) {
             throw new logicexception_1.LogicException("The Table does not exists in the system");
+        }
+        if (table.statetable === "Busy") {
+            throw new logicexception_1.LogicException("That Table is Busy");
         }
         this.customertableobj.table = table;
         return this.customertableobj.table.getDTO();

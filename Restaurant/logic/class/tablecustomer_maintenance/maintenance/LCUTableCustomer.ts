@@ -1,4 +1,3 @@
-
 import { FactoryData } from "../../../../data/FactoryData";
 import DTOCustomer from "../../../../shared/entity/DTOCustomer";
 import { LogicException } from "../../../../shared/exceptions/logicexception";
@@ -58,12 +57,20 @@ export class LCUTableCustomer
     }  
     enterCustomer=async(id:number)=>
     {
+        let newtc=new LogicTableCustomer(0,null,null);
+        this.customertableobj=newtc;
         let customer=await LGetCustomer.getLCustomer(id);
         if(customer===null)
         {
             throw new LogicException("The Customer does not exists in the system");
 
             
+        }
+        let tablecustomerbyid=await LGetTableCustomer.getLTCbyCustomerId(id);
+        if(tablecustomerbyid!=null)
+        {
+            throw new LogicException("That Customer already has a table");
+  
         }
         this.customertableobj.customer=customer;
         return this.customertableobj.customer.getDTO();
@@ -82,8 +89,12 @@ export class LCUTableCustomer
         if(table===null)
         {
             throw new LogicException("The Table does not exists in the system");
-
-            
+             
+        }
+        if(table.statetable==="Busy")
+        {
+            throw new LogicException("That Table is Busy");
+             
         }
         this.customertableobj.table=table;
         return this.customertableobj.table.getDTO();
@@ -106,32 +117,32 @@ export class LCUTableCustomer
    
   //************************** DELETE  ****************************** */
 
-   getLTCSortbyCustomer=async()=>
-  {
-    let customers=await LGetTableCustomer.getLSortbyCustomer();
-    let arraydto=InstanceArrayDTO.instanceArrayTableCustomer(customers);
-    return arraydto
-  } 
-   selectTableCustomer=async(id:number)=>
-  {
-    let tc=await LGetTableCustomer.getLTableC(id);
-    if(tc===null)
+    getLTCSortbyCustomer=async()=>
     {
-      throw new LogicException("The Table Customer does not exists in the system");      
-    }
-    this.customertableobj=tc;
-    return this.customertableobj.getDTO();
-  } 
-   deleteTableCustomer=async()=>
-  {
-    this.customertableobj.table.statetable="Available";
-   let dto=this.customertableobj.getDTO();
-   let deltc=await FactoryData.getDataTableCustomer().deleteTableCustomer(dto);
-    if(deltc===true)
+        let customers=await LGetTableCustomer.getLSortbyCustomer();
+        let arraydto=InstanceArrayDTO.instanceArrayTableCustomer(customers);
+        return arraydto
+    } 
+    selectTableCustomer=async(id:number)=>
     {
-        let availablet=await FactoryData.getDataTable().changeState(this.customertableobj.table.getDTO())
-        return availablet
-    }
-   } 
-   
+        let tc=await LGetTableCustomer.getLTableC(id);
+        if(tc===null)
+        {
+        throw new LogicException("The Table Customer does not exists in the system");      
+        }
+        this.customertableobj=tc;
+        return this.customertableobj.getDTO();
+    } 
+    deleteTableCustomer=async()=>
+    {
+        this.customertableobj.table.statetable="Available";
+    let dto=this.customertableobj.getDTO();
+    let deltc=await FactoryData.getDataTableCustomer().deleteTableCustomer(dto);
+        if(deltc===true)
+        {
+            let availablet=await FactoryData.getDataTable().changeState(this.customertableobj.table.getDTO())
+            return availablet
+        }
+    } 
+    
 }

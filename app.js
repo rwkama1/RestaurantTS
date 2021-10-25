@@ -68,7 +68,7 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
 
 // )
 
-// **************************** CUSTOMER MAINTENANCE ********************************** */
+// ************************* CUSTOMER MAINTENANCE ********************************** */
 
 
 // let dtcustomer=new DTOCustomer(0,"Customer","LastName");
@@ -295,6 +295,87 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
 
 // // ***************************** TABLE_CUSTOMER ************* */
 
+// let tablecustomermaintenance=async()=>
+// {
+  
+ //  let dtcustomer=new DTOCustomer(0,"Customer10","LastName15");
+
+  //********* ADD WITHOUT PREVIOUS RESERVATION ******* */
+
+  //  let registerCustomer=await FactoryLogic.TableCustomerController().registerCustomer(dtcustomer);
+  //  console.log(registerCustomer);
+
+  //********* ADD WITH PREVIOUS RESERVATION ********** */
+
+  //  let getCustomerbyExpresion=await FactoryLogic.TableCustomerController().getCustomerbyExpresion();
+  //  console.log(getCustomerbyExpresion);
+
+  //  let enterCustomer=await FactoryLogic.TableCustomerController().enterCustomer(7);
+  //  console.log(enterCustomer);
+   
+  //  let listAvailableTable=await FactoryLogic.TableCustomerController().listAvailableTable();
+  //  console.log(listAvailableTable);
+
+  //  let enterTable=await FactoryLogic.TableCustomerController().enterTable(6);
+  //  console.log(enterTable);
+
+  //  let registerTableCustomer=await FactoryLogic.TableCustomerController().registerTableCustomer();
+  //  console.log(registerTableCustomer);
+  
+  //********** DELETE **************** */
+
+  //  let getLTablesCustomers=await FactoryLogic.TableCustomerController().getLTablesCustomers();
+  //  console.log(getLTablesCustomers);
+  //   let selectTableCustomer=await FactoryLogic.TableCustomerController().selectTableCustomer(1);
+  //  console.log(selectTableCustomer);
+  //   let deleteTableCustomer=await FactoryLogic.TableCustomerController().deleteTableCustomer();
+  //  console.log(deleteTableCustomer);
+
+  //********* GETS ******************** */
+
+  //  let getLSortbyTable=await FactoryLogic.TableCustomerController().getLSortbyTable();
+  //  console.log(getLSortbyTable);
+  //  let getLSortbyCustomer=await FactoryLogic.TableCustomerController().getLSortbyCustomer();
+  //  console.log(getLSortbyCustomer);
+  //  let getLTablesCustomers=await FactoryLogic.TableCustomerController().getLTablesCustomers();
+  //  console.log(getLTablesCustomers);
+
+  
+  //  let getLTableC=await FactoryLogic.TableCustomerController().getLTableC(2);
+  //  console.log(getLTableC);
+  //  let getLTCbyCustomer=await FactoryLogic.TableCustomerController().getLTCbyCustomer("","LastName5");
+  //  console.log(getLTCbyCustomer);
+  //  let getLTCbyTable=await FactoryLogic.TableCustomerController().getLTCbyTable(1);
+  //  console.log(getLTCbyTable);
+// }
+// tablecustomermaintenance().then()
+
+// // ***************************** ORDER ********************************** */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // // *********************************************************** */
@@ -407,17 +488,17 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
 
 // //ADD MANY TABLE
 
-  // let addmanytable=async()=>
-  //       {
-  //    for(let i=1; i<=10; i++)
-  //      {
-  //        let addr=await FactoryLogic.TableController().registerTable();
-  //        console.log(addr);
-  //      }
-  //    }
+//   let addmanytable=async()=>
+//         {
+//      for(let i=1; i<=10; i++)
+//        {
+//          let addr=await FactoryLogic.TableController().registerTable();
+//          console.log(addr);
+//        }
+//      }
 
-  //    addmanytable().then(
+//      addmanytable().then(
 
-  // )
+//   )
  
 

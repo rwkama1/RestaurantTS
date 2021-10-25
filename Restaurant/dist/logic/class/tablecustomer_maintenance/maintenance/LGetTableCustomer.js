@@ -15,6 +15,11 @@ class LGetTableCustomer {
         let searchtc = datatc.searchbyCustomer(name, lastname);
         return searchtc;
     };
+    static getLTCbyCustomerId = async (id) => {
+        let datatc = await this.getLTablesCustomers();
+        let searchtc = datatc.searchbyCustomerId(id);
+        return searchtc;
+    };
     static getLTCbyTable = async (id) => {
         let datatc = await this.getLTablesCustomers();
         let searchtc = datatc.searchbyTable(id);

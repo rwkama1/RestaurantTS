@@ -42,6 +42,18 @@ export class ArrayTableCustomer{
       }
       return null;
     }
+    searchbyCustomerId=(id:number)=>
+    {
+    for(let tablec of this.arraytc)
+      {
+        if(id===tablec.customer.id)
+        {
+          return tablec;
+        }
+      }
+      return null;
+    }
+  
 
     //*************************** */
 

@@ -22,6 +22,7 @@ export class LGetCustomer{
         let searchc=datac.searchbyname(name,lastname);
         return searchc
       }
+    
       static getCustomerbyExpresion=async(exp:string)=>
       {
         let datac= await this.getLCustomers();

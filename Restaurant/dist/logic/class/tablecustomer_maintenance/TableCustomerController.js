@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TableCustomerController = void 0;
+const logicexception_1 = require("../../../shared/exceptions/logicexception");
 const instanceArrayDTO_1 = require("../extras/instanceArrayDTO");
 const LCUTableCustomer_1 = require("./maintenance/LCUTableCustomer");
 const LGetTableCustomer_1 = require("./maintenance/LGetTableCustomer");
@@ -59,14 +60,23 @@ class TableCustomerController {
     //********************* GETS ***************************************** */
     getLTableC = async (id) => {
         let gettlc = await LGetTableCustomer_1.LGetTableCustomer.getLTableC(id);
+        if (gettlc === null) {
+            throw new logicexception_1.LogicException("The Table Customer does not exists in the system");
+        }
         return gettlc.getDTO();
     };
     getLTCbyCustomer = async (name, lastname) => {
         let gettlc = await LGetTableCustomer_1.LGetTableCustomer.getLTCbyCustomer(name, lastname);
+        if (gettlc === null) {
+            throw new logicexception_1.LogicException("The Customer has not Table");
+        }
         return gettlc.getDTO();
     };
     getLTCbyTable = async (id) => {
         let gettlc = await LGetTableCustomer_1.LGetTableCustomer.getLTCbyTable(id);
+        if (gettlc === null) {
+            throw new logicexception_1.LogicException("The Table is available");
+        }
         return gettlc.getDTO();
     };
     getLSortbyCustomer = async () => {
