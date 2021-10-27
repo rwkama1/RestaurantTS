@@ -1,10 +1,12 @@
 
 import DTODish from "../../../shared/entity/DTODish";
+import DTOOrder from "../../../shared/entity/DTOOrder";
 import DTOTable from "../../../shared/entity/DTOTable";
 import DTOTableCustomer from "../../../shared/entity/DTOTableCustomer";
 import LogicCategory from "../business_class/LCategory";
 import LogicCustomer from "../business_class/LCustomer";
 import LogicDish from "../business_class/LDish";
+import LogicOrder from "../business_class/LOrder";
 import LogicTable from "../business_class/LTable";
 import LogicTableCustomer from "../business_class/LTableCustomer";
 import LogicUser from "../business_class/LUser";
@@ -74,6 +76,17 @@ export class InstanceArrayDTO
         {
             let dtotc=ltabletc.getDTO();
             arraydto.push(dtotc);
+
+        }
+        return arraydto;       
+    }
+    static instanceArrayOrder=(larrayo:LogicOrder[])=>
+    {
+        let arraydto:DTOOrder[]=[];
+        for(let lorder of larrayo)
+        {
+            let dto=lorder.getDTO();
+            arraydto.push(dto);
 
         }
         return arraydto;       

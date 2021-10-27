@@ -95,7 +95,7 @@ class LCUDish {
             return savedish;
         }
         else {
-            throw new logicexception_1.LogicException("The Dish does not exists in the system");
+            throw new logicexception_1.LogicException("The Dish is null");
         }
     };
 }

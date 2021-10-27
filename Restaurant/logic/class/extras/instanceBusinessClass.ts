@@ -2,20 +2,24 @@
 import DTOCategory from "../../../shared/entity/DTOCategory";
 import DTOCustomer from "../../../shared/entity/DTOCustomer";
 import DTODish from "../../../shared/entity/DTODish";
+import DTOOrder from "../../../shared/entity/DTOOrder";
 import DTOTable from "../../../shared/entity/DTOTable";
 import DTOTableCustomer from "../../../shared/entity/DTOTableCustomer";
 import DTOUser from "../../../shared/entity/DTOUser";
 import { LogicException } from "../../../shared/exceptions/logicexception";
 import LogicCategory from "../business_class/LCategory";
 import LogicCustomer from "../business_class/LCustomer";
+import LogicDetailOrder from "../business_class/LDetailOrder";
 import LogicDish from "../business_class/LDish";
 import LogicDishC from "../business_class/LDishC";
+import LogicOrder from "../business_class/LOrder";
 import LogicTable from "../business_class/LTable";
 import LogicTableCustomer from "../business_class/LTableCustomer";
 
 import LogicUser from "../business_class/LUser";
 import { LGetCategory } from "../category_maintenance/maintenance/LGetCategory";
 import { LGetCustomer } from "../customer_maintenance/maintenance/LGetsCustomer";
+import { LGetDish } from "../dish_maintenance/maintenance/LGetDish";
 import { LGetTable } from "../table_maintenance/maintenance/LGetTable";
 
 
@@ -76,5 +80,19 @@ export class InstanceLogicClass
         let logic=new LogicTableCustomer(dtotc.idtc,table,customer);
         return logic
     }
+    static instanceLOrder=async(dtoorder:DTOOrder)=>
+    {
+        let arraydetailo:LogicDetailOrder[]=[];
+        for(let dtodo of dtoorder.detailorders)
+        {
+            let ldish=await LGetDish.getLDish(dtodo.iddish);
+            arraydetailo.push(new LogicDetailOrder(dtodo.iddetailorder,dtodo.quantitydo,dtodo.amountdo,ldish));
+        }
+        let lcustomer= await LGetCustomer.getLCustomer(dtoorder.idcustomer);
+        let logicorder=new LogicOrder(dtoorder.idorder,dtoorder.dateorder,dtoorder.stateorder,dtoorder.specialrequirements,dtoorder.numberpeople,
+            lcustomer,arraydetailo);
+        return logicorder
+    }
+
     
 }

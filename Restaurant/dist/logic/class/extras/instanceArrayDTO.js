@@ -50,6 +50,14 @@ class InstanceArrayDTO {
         }
         return arraydto;
     };
+    static instanceArrayOrder = (larrayo) => {
+        let arraydto = [];
+        for (let lorder of larrayo) {
+            let dto = lorder.getDTO();
+            arraydto.push(dto);
+        }
+        return arraydto;
+    };
 }
 exports.InstanceArrayDTO = InstanceArrayDTO;
 //# sourceMappingURL=instanceArrayDTO.js.map

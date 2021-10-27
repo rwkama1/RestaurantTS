@@ -5,7 +5,7 @@ import { DataDish } from "./class/DataDish";
 import { DataTable } from "./class/DataTable";
 import { DataTableCustomer } from "./class/DataTableCustomer";
 import DataUser from "./class/DataUser";
-import { DataOrder } from "./class/DateOrder";
+import { DataOrder } from "./class/DataOrder";
 import IDataCategory from "./interfaces/IDataCategory";
 import IDataCustomer from "./interfaces/IDataCustomer";
 import IDataDish from "./interfaces/IDataDish";

@@ -128,7 +128,7 @@ export class LCUDish {
       }
       else
       {
-        throw new LogicException("The Dish does not exists in the system");
+        throw new LogicException("The Dish is null");
       }
     }
 }

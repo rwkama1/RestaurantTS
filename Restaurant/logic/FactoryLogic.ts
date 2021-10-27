@@ -2,12 +2,14 @@
 import { CategoryController } from "./class/category_maintenance/CategoryController";
 import { CustomerController } from "./class/customer_maintenance/CustomerController";
 import { DishController } from "./class/dish_maintenance/DishController";
+import { OrderController } from "./class/order_maintenance/OrderController";
 import { TableCustomerController } from "./class/tablecustomer_maintenance/TableCustomerController";
 import { TableController } from "./class/table_maintenance/TableController";
 import { UserController } from "./class/user_maintenace/UserController";
 import ICategoryController from "./interfaces/ICategoryController";
 import ICustomerController from "./interfaces/ICustomerController";
 import IDishController from "./interfaces/IDishController";
+import IOrderController from "./interfaces/IOrderController";
 import ITableController from "./interfaces/ITableController";
 import ITableCustomerController from "./interfaces/ITableCustomerController";
 
@@ -32,5 +34,8 @@ export class FactoryLogic {
     }
     public static TableCustomerController(): ITableCustomerController {
         return (TableCustomerController.getInstance());
+    }
+    public static OrderController(): IOrderController {
+        return (OrderController.getInstance());
     }
 }

@@ -4,6 +4,7 @@ exports.FactoryLogic = void 0;
 const CategoryController_1 = require("./class/category_maintenance/CategoryController");
 const CustomerController_1 = require("./class/customer_maintenance/CustomerController");
 const DishController_1 = require("./class/dish_maintenance/DishController");
+const OrderController_1 = require("./class/order_maintenance/OrderController");
 const TableCustomerController_1 = require("./class/tablecustomer_maintenance/TableCustomerController");
 const TableController_1 = require("./class/table_maintenance/TableController");
 const UserController_1 = require("./class/user_maintenace/UserController");
@@ -25,6 +26,9 @@ class FactoryLogic {
     }
     static TableCustomerController() {
         return (TableCustomerController_1.TableCustomerController.getInstance());
+    }
+    static OrderController() {
+        return (OrderController_1.OrderController.getInstance());
     }
 }
 exports.FactoryLogic = FactoryLogic;
