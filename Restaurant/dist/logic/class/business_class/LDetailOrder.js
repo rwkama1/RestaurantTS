@@ -31,18 +31,18 @@ class LogicDetailOrder {
         }
         this._quantitydo = value;
     }
+    set dish(value) {
+        if (value === null) {
+            throw new logicexception_1.LogicException("The Dish does not exists in the system");
+        }
+        this._dish = value;
+    }
     set amountdo(value) {
         if (value < 1) {
             throw new logicexception_1.LogicException("The Amount must be grater than 0");
         }
         let amount = this.quantitydo * this.dish.price;
         this._amountdo = amount;
-    }
-    set dish(value) {
-        if (value === null) {
-            throw new logicexception_1.LogicException("The Dish does not exists in the system");
-        }
-        this._dish = value;
     }
     update = async (iddish, quantity) => {
         let ldish = await LGetDish_1.LGetDish.getLDish(iddish);
@@ -55,9 +55,9 @@ class LogicDetailOrder {
     };
     constructor(piddetailorder, pquantitydo, pamountdo, pdish) {
         this.iddetailorder = piddetailorder;
+        this.dish = pdish;
         this.quantitydo = pquantitydo;
         this.amountdo = pamountdo;
-        this.dish = pdish;
     }
 }
 exports.default = LogicDetailOrder;

@@ -116,7 +116,8 @@ export class LCUOrders
     saveOrder=async()=>
     {
         if (this.orderobj!=null) {
-
+          let gerorders=await LGetOrders.getLOrders();
+          this.orderobj.idorder=gerorders.arrayorder.length+1;
             let datao= this.orderobj.getDTO();
             let addo=FactoryData.getDataOrder().registerOrder(datao);
             return addo

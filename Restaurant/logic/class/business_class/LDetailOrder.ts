@@ -39,15 +39,7 @@ export  default class LogicDetailOrder
         }
         this._quantitydo = value;
     }
-    public set amountdo(value: number) {
-        if(value<1)
-        {
-            throw new LogicException("The Amount must be grater than 0");
-            
-        }
-        let amount=this.quantitydo*this.dish.price;
-        this._amountdo = amount;
-    }
+    
     public set dish(value: LogicDish) {
 
         if(value===null)
@@ -56,6 +48,15 @@ export  default class LogicDetailOrder
             
         }
         this._dish = value;
+    }
+    public set amountdo(value: number) {
+        if(value<1)
+        {
+            throw new LogicException("The Amount must be grater than 0");
+            
+        }
+        let amount=this.quantitydo*this.dish.price;
+        this._amountdo = amount;
     }
     
     update=async(iddish:number,quantity:number)=> {
@@ -74,9 +75,10 @@ export  default class LogicDetailOrder
         pdish:LogicDish)
        {
            this.iddetailorder=piddetailorder;
+           this.dish=pdish; 
            this.quantitydo=pquantitydo; 
            this.amountdo=pamountdo;
-           this.dish=pdish; 
+        
          
        }
       

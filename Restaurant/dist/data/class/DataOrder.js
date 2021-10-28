@@ -19,8 +19,8 @@ class DataOrder {
         try {
             let queryinsert = "insert into Orderr values (@IDO,@DateO,@StateO,@SpecialRequirement,@NumberPeople,@IDCustomer)";
             let queryinsert2 = "insert into DetailOrder values (@IDDO,@QuantityDO,@AmountDO,@IDO,@IDDish)";
-            let pool = await Conection_1.Conection.conection();
-            const result = await pool.request()
+            let poolorder = await Conection_1.Conection.conection();
+            const result = await poolorder.request()
                 .input('IDO', mssql_1.Int, dtoorder.idorder)
                 .input('DateO', mssql_1.DateTime, dtoorder.dateorder)
                 .input('StateO', mssql_1.VarChar, dtoorder.stateorder)
@@ -29,7 +29,7 @@ class DataOrder {
                 .input('IDCustomer', mssql_1.Int, dtoorder.idcustomer)
                 .query(queryinsert);
             for (let detailo of dtoorder.detailorders) {
-                const result2 = await pool.request()
+                const result2 = await poolorder.request()
                     .input('IDDO', mssql_1.Int, detailo.iddetailorder)
                     .input('QuantityDO', mssql_1.Int, detailo.quantitydo)
                     .input('AmountDO', mssql_1.Money, detailo.amountdo)
@@ -37,7 +37,7 @@ class DataOrder {
                     .input('IDDish', mssql_1.Int, detailo.iddish)
                     .query(queryinsert2);
             }
-            pool.close();
+            poolorder.close();
             return true;
         }
         catch (e) {

@@ -21,8 +21,8 @@ export class DataOrder implements IDataOrder{
       try {
         let queryinsert = "insert into Orderr values (@IDO,@DateO,@StateO,@SpecialRequirement,@NumberPeople,@IDCustomer)";
         let queryinsert2 = "insert into DetailOrder values (@IDDO,@QuantityDO,@AmountDO,@IDO,@IDDish)";
-          let pool = await Conection.conection();
-          const result = await pool.request()
+          let poolorder = await Conection.conection();
+          const result = await poolorder.request()
           .input('IDO', Int, dtoorder.idorder)
           .input('DateO', DateTime, dtoorder.dateorder)
           .input('StateO', VarChar, dtoorder.stateorder)
@@ -34,7 +34,7 @@ export class DataOrder implements IDataOrder{
                 
           for(let detailo of dtoorder.detailorders)
           {
-            const result2 = await pool.request()
+            const result2 = await poolorder.request()
             .input('IDDO', Int, detailo.iddetailorder)
             .input('QuantityDO', Int, detailo.quantitydo)
             .input('AmountDO', Money, detailo.amountdo)
@@ -42,7 +42,7 @@ export class DataOrder implements IDataOrder{
             .input('IDDish', Int, detailo.iddish)
             .query(queryinsert2)
           }
-          pool.close();    
+          poolorder.close();    
           return true;
          
       }

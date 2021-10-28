@@ -139,14 +139,14 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
 // //*********************** DISH MAINTENANCE ************************ */
 
 
-// let dtodish=new DTODish(86,"Dish","Category2","Description","img.jpg",8,[],10,20);
-// let dtodishingredient1=new DTODishC(86,"Ingredient1",2,3);
-// let dtodishingredient2=new DTODishC(86,"Ingredient2",4,2);
-// let dtodishingredient3=new DTODishC(86,"Ingredient3",3,1);
+//  let dtodish=new DTODish(86,"Dish3","Category6","Description5","img.jpg",8,[],10,15);
+//  let dtodishingredient1=new DTODishC(86,"Ingredient1",2,2);
+//  let dtodishingredient2=new DTODishC(86,"Ingredient2",3,1);
+//  let dtodishingredient3=new DTODishC(86,"Ingredient3",1,4);
 
 // let dishmaintenance=async()=>
 // {
-   // // REGISTER DISH
+   // REGISTER DISH
     
   //  let enterdd=await FactoryLogic.DishController().enterDataDish(dtodish);
   //  console.log(enterdd);
@@ -157,14 +157,14 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
   //   let registeri2=await FactoryLogic.DishController().registerDIngredient(dtodishingredient2);
   //   console.log(registeri2);
 
-  //   // let removei=await FactoryLogic.DishController().removeDIngredient(1);
-  //   // console.log(removei);
+    // let removei=await FactoryLogic.DishController().removeDIngredient(1);
+    // console.log(removei);
 
-  //   let registeri3=await FactoryLogic.DishController().registerDIngredient(dtodishingredient3);
-  //   console.log(registeri3);
+    // let registeri3=await FactoryLogic.DishController().registerDIngredient(dtodishingredient3);
+    // console.log(registeri3);
 
-  //   let savedish= await FactoryLogic.DishController().saveDishDB(15);
-  //   console.log(savedish);
+    // let savedish= await FactoryLogic.DishController().saveDishDB(15);
+    // console.log(savedish);
 
     // // UPDATE DISH
 
@@ -350,7 +350,48 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
 // }
 // tablecustomermaintenance().then()
 
-// // ***************************** ORDER ********************************** */
+// // ***************************** ORDER **************************************** */
+
+    let ordermaintenance=async()=>
+    {
+       
+    //    //***************** REGISTER ***************** */
+
+      // let dtcustomer=new DTOCustomer(0,"Customer9","LastName9");
+      // let registerCustomer=await FactoryLogic.OrderController().registerCustomer(dtcustomer);
+      // console.log(registerCustomer);
+
+       //*** ONLINE ************* */
+
+      // let getCustomerbyExpresionName=await FactoryLogic.OrderController().getCustomerbyExpresionName("Customer9");
+      // console.log(getCustomerbyExpresionName);
+      // let enterCustomer=await FactoryLogic.OrderController().enterCustomer(9);
+      // console.log(enterCustomer);
+      // let listDishes=await FactoryLogic.OrderController().listDishes();
+      // console.log(listDishes);
+      
+      // let registerDOrder=await FactoryLogic.OrderController().registerDOrder(1,2);
+      // console.log(registerDOrder);
+      // let registerDOrder2=await FactoryLogic.OrderController().registerDOrder(3,2);
+      // console.log(registerDOrder2);
+      // let registerDOrder3=await FactoryLogic.OrderController().registerDOrder(2,2);
+      // console.log(registerDOrder3);
+      // // let removeDOrder=await FactoryLogic.OrderController().removeDOrder(2);
+      // // console.log(removeDOrder);
+      // let calculateTotal= FactoryLogic.OrderController().calculateTotal();
+      // console.log(calculateTotal);
+
+      // let date=  new Date("October 28, 2021");
+      // date.setUTCHours(14,30);
+
+      // let closeOrder= FactoryLogic.OrderController().closeOrder(
+      //  date,"SpecialRequirements2",2);
+      // console.log(closeOrder);
+      // let saveorder=await FactoryLogic.OrderController().saveOrder();
+      // console.log(saveorder);
+
+    }
+    ordermaintenance().then()
 
 
 
@@ -393,9 +434,8 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
 
 
 
-
-// // *********************************************************** */
-// ADD MANY CUSTOMER
+// // // *********************************************************** */
+// //ADD MANY CUSTOMER
 
 // let dtcustomer1=new DTOCustomer(0,"Customer1","LastName1");
 // let dtcustomer2=new DTOCustomer(0,"Customer2","LastName2");

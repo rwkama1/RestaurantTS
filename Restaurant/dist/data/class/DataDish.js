@@ -78,15 +78,15 @@ class DataDish {
     getDishes = async () => {
         try {
             let queryget = "select * from Dish";
-            let pool = await Conection_1.Conection.conection();
+            let pool3 = await Conection_1.Conection.conection();
             let arraydish = [];
-            const result = await pool.request()
+            const result = await pool3.request()
                 .query(queryget);
             for (let x of result.recordset) {
                 let dtodish = new DTODish_1.default(x.IDD, x.NameD, x.NameC, x.DescriptionD, x.ImgD, x.PriceD, await this.getDishIngredients(x.IDD), x.CostD, x.QuantityAD);
                 arraydish.push(dtodish);
             }
-            pool.close();
+            pool3.close();
             return arraydish;
         }
         catch (e) {
@@ -127,16 +127,16 @@ class DataDish {
     getDishIngredients = async (numberdish) => {
         try {
             let queryget = "select * from Ingredient where IDDish=@IDDish";
-            let pool = await Conection_1.Conection.conection();
+            let pool2 = await Conection_1.Conection.conection();
             let arraydish = [];
-            const result = await pool.request()
+            const result = await pool2.request()
                 .input('IDDish', mssql_1.Int, numberdish)
                 .query(queryget);
             for (let x of result.recordset) {
                 let dtodishc = new DTODishC_1.default(x.IDDC, x.NameI, x.CostI, x.QuantityI);
                 arraydish.push(dtodishc);
             }
-            pool.close();
+            pool2.close();
             return arraydish;
         }
         catch (e) {

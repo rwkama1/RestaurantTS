@@ -94,16 +94,16 @@ export class DataDish implements IDataDish
     {
       try {
           let queryget = "select * from Dish"
-          let pool = await Conection.conection();
+          let pool3 = await Conection.conection();
           let arraydish=[];
-          const result = await pool.request()
+          const result = await pool3.request()
           .query(queryget)
           for (let x of result.recordset) {
               let dtodish = new DTODish(x.IDD,x.NameD,x.NameC,
                 x.DescriptionD,x.ImgD,x.PriceD,await this.getDishIngredients(x.IDD),x.CostD,x.QuantityAD);
               arraydish.push(dtodish);
            }
-          pool.close();
+           pool3.close();
           return arraydish;
       }
       catch(e)
@@ -160,16 +160,16 @@ export class DataDish implements IDataDish
      {
       try {
         let queryget = "select * from Ingredient where IDDish=@IDDish";
-        let pool = await Conection.conection();
+        let pool2 = await Conection.conection();
         let arraydish=[];
-        const result = await pool.request()
+        const result = await pool2.request()
         .input('IDDish', Int, numberdish)
         .query(queryget)
         for (let x of result.recordset) {
             let dtodishc = new DTODishC(x.IDDC,x.NameI,x.CostI,x.QuantityI);
             arraydish.push(dtodishc);
          }
-        pool.close();
+        pool2.close();
         return arraydish;
     }
     catch(e)
