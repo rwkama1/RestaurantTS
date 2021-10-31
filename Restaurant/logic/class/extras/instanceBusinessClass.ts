@@ -86,9 +86,17 @@ export class InstanceLogicClass
         for(let dtodo of dtoorder.detailorders)
         {
             let ldish=await LGetDish.getLDish(dtodo.iddish);
+            if (ldish===null) {
+                throw new LogicException("The Dish does not exists in the system");
+                
+            }
             arraydetailo.push(new LogicDetailOrder(dtodo.iddetailorder,dtodo.quantitydo,dtodo.amountdo,ldish));
         }
         let lcustomer= await LGetCustomer.getLCustomer(dtoorder.idcustomer);
+        if (lcustomer===null) {
+            throw new LogicException("The Customer does not exists in the system");
+            
+        }
         let logicorder=new LogicOrder(dtoorder.idorder,dtoorder.dateorder,dtoorder.stateorder,dtoorder.specialrequirements,dtoorder.numberpeople,
             lcustomer,arraydetailo);
         return logicorder

@@ -66,8 +66,8 @@ class LCUDetailOrder {
     //***************************** UPDATE ******************** */
     updateDetailOrderDO = async (iddetailo, iddish, quantity) => {
         if (this.orderobj != null) {
-            let dtoorder = this.orderobj.updateDetailOrder(iddetailo, iddish, quantity);
-            let adddo = await FactoryData_1.FactoryData.getDataOrder().updateOrder(this.orderobj.getDTO());
+            let dtoorder = await this.orderobj.updateDetailOrder(iddetailo, iddish, quantity);
+            let adddo = await FactoryData_1.FactoryData.getDataOrder().updateOrder(dtoorder);
             return adddo;
         }
         else {

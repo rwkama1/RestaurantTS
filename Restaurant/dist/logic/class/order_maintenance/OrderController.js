@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderController = void 0;
+const logicexception_1 = require("../../../shared/exceptions/logicexception");
 const instanceArrayDTO_1 = require("../extras/instanceArrayDTO");
 const LCUDetailOrder_1 = require("./maintenance/LCUDetailOrder");
 const LCUOrders_1 = require("./maintenance/LCUOrders");
@@ -114,10 +115,16 @@ class OrderController {
     //*************************************** GETS *************************************************** */
     getLOrder = async (id) => {
         let lorder = await LGetOrders_1.LGetOrders.getLOrder(id);
+        if (lorder === null) {
+            throw new logicexception_1.LogicException("The Order does not exists in the system");
+        }
         return lorder.getDTO();
     };
     searchbyCustomer = async (id) => {
         let lorder = await LGetOrders_1.LGetOrders.searchbyCustomer(id);
+        if (lorder === null) {
+            throw new logicexception_1.LogicException("The Customer have not Orders");
+        }
         return lorder.getDTO();
     };
     searchbyCustomerExp = async (exp) => {

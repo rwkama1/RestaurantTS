@@ -47,15 +47,15 @@ class DataCategory {
     getCategories = async () => {
         try {
             let queryget = "select * from Category";
-            let pool = await Conection_1.Conection.conection();
+            let poolcategory = await Conection_1.Conection.conection();
             let arraycat = [];
-            const result = await pool.request()
+            const result = await poolcategory.request()
                 .query(queryget);
             for (let x of result.recordset) {
                 let dtocat = new DTOCategory_1.default(x.NameC, x.DescriptionC);
                 arraycat.push(dtocat);
             }
-            pool.close();
+            poolcategory.close();
             return arraycat;
         }
         catch (e) {

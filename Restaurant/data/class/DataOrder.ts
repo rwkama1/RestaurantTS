@@ -31,10 +31,11 @@ export class DataOrder implements IDataOrder{
           .input('IDCustomer', Int, dtoorder.idcustomer)
          
         .query(queryinsert)
-                
+       await poolorder.close();   
+       let poolorder2 = await Conection.conection();
           for(let detailo of dtoorder.detailorders)
           {
-            const result2 = await poolorder.request()
+            const result2 = await poolorder2.request()
             .input('IDDO', Int, detailo.iddetailorder)
             .input('QuantityDO', Int, detailo.quantitydo)
             .input('AmountDO', Money, detailo.amountdo)
@@ -42,7 +43,7 @@ export class DataOrder implements IDataOrder{
             .input('IDDish', Int, detailo.iddish)
             .query(queryinsert2)
           }
-          poolorder.close();    
+          await poolorder2.close();   
           return true;
          
       }

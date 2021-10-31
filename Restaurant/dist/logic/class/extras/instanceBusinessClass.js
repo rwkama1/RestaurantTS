@@ -60,9 +60,15 @@ class InstanceLogicClass {
         let arraydetailo = [];
         for (let dtodo of dtoorder.detailorders) {
             let ldish = await LGetDish_1.LGetDish.getLDish(dtodo.iddish);
+            if (ldish === null) {
+                throw new logicexception_1.LogicException("The Dish does not exists in the system");
+            }
             arraydetailo.push(new LDetailOrder_1.default(dtodo.iddetailorder, dtodo.quantitydo, dtodo.amountdo, ldish));
         }
         let lcustomer = await LGetsCustomer_1.LGetCustomer.getLCustomer(dtoorder.idcustomer);
+        if (lcustomer === null) {
+            throw new logicexception_1.LogicException("The Customer does not exists in the system");
+        }
         let logicorder = new LOrder_1.default(dtoorder.idorder, dtoorder.dateorder, dtoorder.stateorder, dtoorder.specialrequirements, dtoorder.numberpeople, lcustomer, arraydetailo);
         return logicorder;
     };

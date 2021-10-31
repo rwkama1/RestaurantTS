@@ -126,8 +126,8 @@ export  default class LogicOrder
         {
             if(ldetailo.iddetailorder===iddetailo)
             {
-                ldetailo.update(iddish,quantity);
-                return ldetailo.getDTO()
+               await ldetailo.update(iddish,quantity);
+                return this.getDTO()
             }
         }  
     

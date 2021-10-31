@@ -139,14 +139,14 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
 // //*********************** DISH MAINTENANCE ************************ */
 
 
-//  let dtodish=new DTODish(86,"Dish3","Category6","Description5","img.jpg",8,[],10,15);
-//  let dtodishingredient1=new DTODishC(86,"Ingredient1",2,2);
-//  let dtodishingredient2=new DTODishC(86,"Ingredient2",3,1);
-//  let dtodishingredient3=new DTODishC(86,"Ingredient3",1,4);
+//   let dtodish=new DTODish(86,"Dish3","Category6","Description5","img.jpg",8,[],10,15);
+//   let dtodishingredient1=new DTODishC(86,"Ingredient1",2,2);
+// let dtodishingredient2=new DTODishC(86,"Ingredient2",3,1);
+//   let dtodishingredient3=new DTODishC(86,"Ingredient3",1,4);
 
 // let dishmaintenance=async()=>
 // {
-   // REGISTER DISH
+   // // REGISTER DISH
     
   //  let enterdd=await FactoryLogic.DishController().enterDataDish(dtodish);
   //  console.log(enterdd);
@@ -157,14 +157,14 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
   //   let registeri2=await FactoryLogic.DishController().registerDIngredient(dtodishingredient2);
   //   console.log(registeri2);
 
-    // let removei=await FactoryLogic.DishController().removeDIngredient(1);
-    // console.log(removei);
+  //   let removei=await FactoryLogic.DishController().removeDIngredient(1);
+  //   console.log(removei);
 
-    // let registeri3=await FactoryLogic.DishController().registerDIngredient(dtodishingredient3);
-    // console.log(registeri3);
+  //   let registeri3=await FactoryLogic.DishController().registerDIngredient(dtodishingredient3);
+  //   console.log(registeri3);
 
-    // let savedish= await FactoryLogic.DishController().saveDishDB(15);
-    // console.log(savedish);
+  //   let savedish= await FactoryLogic.DishController().saveDishDB(15);
+  //   console.log(savedish);
 
     // // UPDATE DISH
 
@@ -361,34 +361,111 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
       // let registerCustomer=await FactoryLogic.OrderController().registerCustomer(dtcustomer);
       // console.log(registerCustomer);
 
-       //*** ONLINE ************* */
+       // //*** ONLINE ************* */
 
       // let getCustomerbyExpresionName=await FactoryLogic.OrderController().getCustomerbyExpresionName("Customer9");
       // console.log(getCustomerbyExpresionName);
       // let enterCustomer=await FactoryLogic.OrderController().enterCustomer(9);
       // console.log(enterCustomer);
-      // let listDishes=await FactoryLogic.OrderController().listDishes();
-      // console.log(listDishes);
+      //  let listDishes=await FactoryLogic.OrderController().listDishes();
+      //  console.log(listDishes);
       
       // let registerDOrder=await FactoryLogic.OrderController().registerDOrder(1,2);
       // console.log(registerDOrder);
       // let registerDOrder2=await FactoryLogic.OrderController().registerDOrder(3,2);
       // console.log(registerDOrder2);
-      // let registerDOrder3=await FactoryLogic.OrderController().registerDOrder(2,2);
-      // console.log(registerDOrder3);
+      // // let registerDOrder3=await FactoryLogic.OrderController().registerDOrder(2,2);
+      // // console.log(registerDOrder3);
       // // let removeDOrder=await FactoryLogic.OrderController().removeDOrder(2);
       // // console.log(removeDOrder);
       // let calculateTotal= FactoryLogic.OrderController().calculateTotal();
       // console.log(calculateTotal);
 
-      // let date=  new Date("October 28, 2021");
-      // date.setUTCHours(14,30);
+      // let date=  new Date("November 3, 2021");
+      // date.setUTCHours(12,00);
 
       // let closeOrder= FactoryLogic.OrderController().closeOrder(
-      //  date,"SpecialRequirements2",2);
+      //  date,"SpecialRequirements3",2);
       // console.log(closeOrder);
       // let saveorder=await FactoryLogic.OrderController().saveOrder();
       // console.log(saveorder);
+
+       //******************* UPDATE *********************************** *
+ 
+    //  let listOrdersCustomer=await FactoryLogic.OrderController().listOrdersCustomer("Customer9");
+    //   console.log(listOrdersCustomer);
+      // let selectOrder=await FactoryLogic.OrderController().selectOrder(1);
+      // console.log(selectOrder);
+    //   let updateCustomerinOrder=await FactoryLogic.OrderController().updateCustomer(2);
+    //   console.log(updateCustomerinOrder);
+    //       let date=  new Date("November 6, 2021");
+    //   date.setUTCHours(15,00);
+    //   let updateData=await FactoryLogic.OrderController().updateData(date,"SpecialRUpdate",3);
+    //   console.log(updateData);
+    //   let updateOrder= await FactoryLogic.OrderController().updateOrder();
+    //   console.log(updateOrder);
+
+       //****** CHANGE STATE *******/
+
+    // let updateState= await FactoryLogic.OrderController().updateState("Confirmed");
+    //   console.log(updateState);
+    
+     //***********************************  DETAIL ORDER ***************************************** */
+
+    //******** REGISTER ********
+
+
+    //  let listOrdersCustomerDO= await FactoryLogic.OrderController().listOrdersCustomerDO();
+    //   console.log(listOrdersCustomerDO);
+    
+    // let selectOrderDO= await FactoryLogic.OrderController().selectOrderDO(1);
+    //   console.log(selectOrderDO);
+    
+    //  let registerDOrderDO= await FactoryLogic.OrderController().registerDOrderDO(2,3);
+    // console.log(registerDOrderDO);
+
+    // let calculateTotalDO=  FactoryLogic.OrderController().calculateTotalDO();
+    // console.log(calculateTotalDO);
+
+    // let saveDOrderDO= await FactoryLogic.OrderController().saveDOrderDO();
+    // console.log(saveDOrderDO);
+
+    //********* UPDATE ***********
+
+    // let updateDetailOrderDO= await FactoryLogic.OrderController().updateDetailOrderDO(3,3,3);
+    // console.log(updateDetailOrderDO);
+
+      //****** DELETE ALL **********/
+
+      //let deleteAllDO= await FactoryLogic.OrderController().deleteAllDO();
+    //console.log(deleteAllDO);
+
+  //*************************************** GETS *************************************************** */
+
+    // let getLOrder=  await FactoryLogic.OrderController().getLOrder(1);
+    // console.log(getLOrder);
+    // let searchbyCustomer= await FactoryLogic.OrderController().searchbyCustomer(2);
+    // console.log(searchbyCustomer);
+    // let searchbyCustomerExp= await FactoryLogic.OrderController().searchbyCustomerExp(1);
+    // console.log(searchbyCustomerExp);
+
+
+    // let getLOrders=  await FactoryLogic.OrderController().getLOrders();
+    // console.log(getLOrders);
+    // let sortbyCustomerName=  await FactoryLogic.OrderController().sortbyCustomerName();
+    // console.log(sortbyCustomerName);
+    // let sortbyNumberPeople=  await FactoryLogic.OrderController().sortbyNumberPeople();
+    // console.log(sortbyNumberPeople);
+    // let getPendingOrders=  await FactoryLogic.OrderController().getPendingOrders();
+    // console.log(getPendingOrders);
+    // let getConfirmedOrders=  await FactoryLogic.OrderController().getConfirmedOrders();
+    // console.log(getConfirmedOrders);
+    // let getCashedOrders=  await FactoryLogic.OrderController().getCashedOrders();
+    // console.log(getCashedOrders);
+    // let getCanceledOrders=  await FactoryLogic.OrderController().getCanceledOrders();
+    // console.log(getCanceledOrders);
+  
+ 
 
     }
     ordermaintenance().then()

@@ -28,8 +28,10 @@ class DataOrder {
                 .input('NumberPeople', mssql_1.Int, dtoorder.numberpeople)
                 .input('IDCustomer', mssql_1.Int, dtoorder.idcustomer)
                 .query(queryinsert);
+            await poolorder.close();
+            let poolorder2 = await Conection_1.Conection.conection();
             for (let detailo of dtoorder.detailorders) {
-                const result2 = await poolorder.request()
+                const result2 = await poolorder2.request()
                     .input('IDDO', mssql_1.Int, detailo.iddetailorder)
                     .input('QuantityDO', mssql_1.Int, detailo.quantitydo)
                     .input('AmountDO', mssql_1.Money, detailo.amountdo)
@@ -37,7 +39,7 @@ class DataOrder {
                     .input('IDDish', mssql_1.Int, detailo.iddish)
                     .query(queryinsert2);
             }
-            poolorder.close();
+            await poolorder2.close();
             return true;
         }
         catch (e) {

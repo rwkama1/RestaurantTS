@@ -1,5 +1,6 @@
 
 import DTOCustomer from "../../../shared/entity/DTOCustomer";
+import { LogicException } from "../../../shared/exceptions/logicexception";
 import IOrderController from "../../interfaces/IOrderController";
 import { InstanceArrayDTO } from "../extras/instanceArrayDTO";
 import { LCUDetailOrder } from "./maintenance/LCUDetailOrder";
@@ -160,11 +161,19 @@ export class OrderController implements IOrderController{
      getLOrder=async(id:number)=>
      {
      let lorder= await LGetOrders.getLOrder(id);
+     if (lorder===null) {
+       throw new LogicException("The Order does not exists in the system");
+       
+     }
       return lorder.getDTO()
      }
      searchbyCustomer=async(id:number)=>
      {
       let lorder= await LGetOrders.searchbyCustomer(id);
+      if (lorder===null) {
+        throw new LogicException("The Customer have not Orders");
+        
+      }
        return lorder.getDTO()
       }
       searchbyCustomerExp=async(exp:string)=>

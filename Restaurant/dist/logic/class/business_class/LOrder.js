@@ -102,8 +102,8 @@ class LogicOrder {
     updateDetailOrder = async (iddetailo, iddish, quantity) => {
         for (let ldetailo of this.detailorders) {
             if (ldetailo.iddetailorder === iddetailo) {
-                ldetailo.update(iddish, quantity);
-                return ldetailo.getDTO();
+                await ldetailo.update(iddish, quantity);
+                return this.getDTO();
             }
         }
     };
