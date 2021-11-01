@@ -111,6 +111,27 @@ export class DataDish implements IDataDish
           throw new DataException("DataLayer Error: "+e.message)
       }
      }
+     getDishesWithoutI=async()=>
+    {
+      try {
+          let queryget = "select * from Dish"
+          let pooldi = await Conection.conection();
+          let arraydish=[];
+          const result = await pooldi.request()
+          .query(queryget)
+          for (let x of result.recordset) {
+              let dtodish = new DTODish(x.IDD,x.NameD,x.NameC,
+                x.DescriptionD,x.ImgD,x.PriceD,[],x.CostD,x.QuantityAD);
+              arraydish.push(dtodish);
+           }
+           pooldi.close();
+          return arraydish;
+      }
+      catch(e)
+      {
+          throw new DataException("DataLayer Error: "+e.message)
+      }
+     }
     updateCost=async(dtodish:DTODish)=>
      {
        try {

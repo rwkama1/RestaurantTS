@@ -57,7 +57,7 @@ export class LCUOrders
     }   
     listDishes=async()=>
     {
-        let dishes= await LGetDish.getLDishes();
+        let dishes= await LGetDish.getLDishesWithoutI();
         let arraydto=InstanceArrayDTO.instanceArrayDish(dishes.arraydish);
         return arraydto   
     }

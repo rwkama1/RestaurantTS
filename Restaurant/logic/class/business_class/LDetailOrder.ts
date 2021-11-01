@@ -61,7 +61,7 @@ export  default class LogicDetailOrder
     
     update=async(iddish:number,quantity:number)=> {
         
-        let ldish=await LGetDish.getLDish(iddish);
+        let ldish=await LGetDish.getLDishWithoutI(iddish);
         this.dish=ldish;
         this.quantitydo=quantity;
     }

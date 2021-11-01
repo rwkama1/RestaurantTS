@@ -1,6 +1,7 @@
 
 import DTOCategory from "../../../shared/entity/DTOCategory";
 import DTOCustomer from "../../../shared/entity/DTOCustomer";
+import DTODeatilOrder from "../../../shared/entity/DTODetailOrder";
 import DTODish from "../../../shared/entity/DTODish";
 import DTOOrder from "../../../shared/entity/DTOOrder";
 import DTOTable from "../../../shared/entity/DTOTable";
@@ -44,17 +45,20 @@ export class InstanceLogicClass
     static instanceLDish=async(dtodish:DTODish)=>
     {
         let arrayldishc=[];
-        for(let dtodishc of dtodish.arraycharact)
+        let searchcategory;
+         let dtodishc;
+         let logicdish; 
+        for( dtodishc of dtodish.arraycharact)
         {
             arrayldishc.push(new LogicDishC(dtodishc.iddishc,dtodishc.namei,dtodishc.costi,dtodishc.quantity));
         }
-        let searchcategory=await LGetCategory.getLCategory(dtodish.category);
+         searchcategory=await LGetCategory.getLCategory(dtodish.category);
         if(searchcategory===null)
         {
             throw new LogicException("The Category does not exists");
             
         }
-        let logicdish=new LogicDish(dtodish.iddish,dtodish.name,searchcategory,
+         logicdish=new LogicDish(dtodish.iddish,dtodish.name,searchcategory,
             dtodish.description,dtodish.img,dtodish.price,arrayldishc,dtodish.cost,dtodish.quantity);
         return logicdish
     }
@@ -83,21 +87,27 @@ export class InstanceLogicClass
     static instanceLOrder=async(dtoorder:DTOOrder)=>
     {
         let arraydetailo:LogicDetailOrder[]=[];
-        for(let dtodo of dtoorder.detailorders)
+        let ldish;
+        let ldetailo;
+        let lcustomer;
+        let logicorder;
+        let dtodo;
+        for( dtodo of dtoorder.detailorders)
         {
-            let ldish=await LGetDish.getLDish(dtodo.iddish);
+             ldish=await LGetDish.getLDishWithoutI(dtodo.iddish);
             if (ldish===null) {
                 throw new LogicException("The Dish does not exists in the system");
                 
             }
-            arraydetailo.push(new LogicDetailOrder(dtodo.iddetailorder,dtodo.quantitydo,dtodo.amountdo,ldish));
+            ldetailo=new LogicDetailOrder(dtodo.iddetailorder,dtodo.quantitydo,dtodo.amountdo,ldish);
+            arraydetailo.push(ldetailo);
         }
-        let lcustomer= await LGetCustomer.getLCustomer(dtoorder.idcustomer);
+         lcustomer= await LGetCustomer.getLCustomer(dtoorder.idcustomer);
         if (lcustomer===null) {
             throw new LogicException("The Customer does not exists in the system");
             
         }
-        let logicorder=new LogicOrder(dtoorder.idorder,dtoorder.dateorder,dtoorder.stateorder,dtoorder.specialrequirements,dtoorder.numberpeople,
+         logicorder=new LogicOrder(dtoorder.idorder,dtoorder.dateorder,dtoorder.stateorder,dtoorder.specialrequirements,dtoorder.numberpeople,
             lcustomer,arraydetailo);
         return logicorder
     }

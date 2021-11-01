@@ -30,14 +30,17 @@ class InstanceLogicClass {
     };
     static instanceLDish = async (dtodish) => {
         let arrayldishc = [];
-        for (let dtodishc of dtodish.arraycharact) {
+        let searchcategory;
+        let dtodishc;
+        let logicdish;
+        for (dtodishc of dtodish.arraycharact) {
             arrayldishc.push(new LDishC_1.default(dtodishc.iddishc, dtodishc.namei, dtodishc.costi, dtodishc.quantity));
         }
-        let searchcategory = await LGetCategory_1.LGetCategory.getLCategory(dtodish.category);
+        searchcategory = await LGetCategory_1.LGetCategory.getLCategory(dtodish.category);
         if (searchcategory === null) {
             throw new logicexception_1.LogicException("The Category does not exists");
         }
-        let logicdish = new LDish_1.default(dtodish.iddish, dtodish.name, searchcategory, dtodish.description, dtodish.img, dtodish.price, arrayldishc, dtodish.cost, dtodish.quantity);
+        logicdish = new LDish_1.default(dtodish.iddish, dtodish.name, searchcategory, dtodish.description, dtodish.img, dtodish.price, arrayldishc, dtodish.cost, dtodish.quantity);
         return logicdish;
     };
     static instanceLTable = (dtot) => {
@@ -58,18 +61,24 @@ class InstanceLogicClass {
     };
     static instanceLOrder = async (dtoorder) => {
         let arraydetailo = [];
-        for (let dtodo of dtoorder.detailorders) {
-            let ldish = await LGetDish_1.LGetDish.getLDish(dtodo.iddish);
+        let ldish;
+        let ldetailo;
+        let lcustomer;
+        let logicorder;
+        let dtodo;
+        for (dtodo of dtoorder.detailorders) {
+            ldish = await LGetDish_1.LGetDish.getLDishWithoutI(dtodo.iddish);
             if (ldish === null) {
                 throw new logicexception_1.LogicException("The Dish does not exists in the system");
             }
-            arraydetailo.push(new LDetailOrder_1.default(dtodo.iddetailorder, dtodo.quantitydo, dtodo.amountdo, ldish));
+            ldetailo = new LDetailOrder_1.default(dtodo.iddetailorder, dtodo.quantitydo, dtodo.amountdo, ldish);
+            arraydetailo.push(ldetailo);
         }
-        let lcustomer = await LGetsCustomer_1.LGetCustomer.getLCustomer(dtoorder.idcustomer);
+        lcustomer = await LGetsCustomer_1.LGetCustomer.getLCustomer(dtoorder.idcustomer);
         if (lcustomer === null) {
             throw new logicexception_1.LogicException("The Customer does not exists in the system");
         }
-        let logicorder = new LOrder_1.default(dtoorder.idorder, dtoorder.dateorder, dtoorder.stateorder, dtoorder.specialrequirements, dtoorder.numberpeople, lcustomer, arraydetailo);
+        logicorder = new LOrder_1.default(dtoorder.idorder, dtoorder.dateorder, dtoorder.stateorder, dtoorder.specialrequirements, dtoorder.numberpeople, lcustomer, arraydetailo);
         return logicorder;
     };
 }

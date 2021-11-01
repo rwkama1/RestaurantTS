@@ -13,12 +13,18 @@ export class LGetDish
       let searchdish=datadishes.search(id);
       return searchdish
     }
-    static searchLDishCategory=async(name:string)=>
+    static getLDishWithoutI=async(id:number)=>
+    {
+      let datadishes= await this.getLDishesWithoutI();
+      let searchdish=datadishes.search(id);
+      return searchdish
+    }
+   static searchLDishCategory=async(name:string)=>
     {
       let datadishes= await this.getLDishes();
       let searchdish=datadishes.searchbyCategory(name);
       return searchdish
-    }
+    } 
     //************************************************** */
     static sortDishbyName=async()=>
     {
@@ -60,6 +66,18 @@ export class LGetDish
     {
     let arrayd:LogicDish[]=[];
     let datad= await FactoryData.getDataDish().getDishes();
+      for(var dtod of datad)
+      {
+        const logicdish=await InstanceLogicClass.instanceLDish(dtod);
+        arrayd.push(logicdish);
+      }
+    let arraylogicdishes=new ArrayDish(arrayd);
+    return arraylogicdishes; 
+    }
+    static getLDishesWithoutI=async()=>
+    {
+    let arrayd:LogicDish[]=[];
+    let datad= await FactoryData.getDataDish().getDishesWithoutI();
       for(var dtod of datad)
       {
         const logicdish=await InstanceLogicClass.instanceLDish(dtod);

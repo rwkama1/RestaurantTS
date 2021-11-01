@@ -7,6 +7,7 @@ export default interface IDataDish
     updateCost(dtodish:DTODish):Promise<boolean>;
     updateQuantity(dtodish:DTODish):Promise<boolean>;
     getDishes():Promise<any[]>;
+    getDishesWithoutI():Promise<any[]>;
 
     //***************************************** */
 

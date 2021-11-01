@@ -93,6 +93,24 @@ class DataDish {
             throw new dataexception_1.DataException("DataLayer Error: " + e.message);
         }
     };
+    getDishesWithoutI = async () => {
+        try {
+            let queryget = "select * from Dish";
+            let pooldi = await Conection_1.Conection.conection();
+            let arraydish = [];
+            const result = await pooldi.request()
+                .query(queryget);
+            for (let x of result.recordset) {
+                let dtodish = new DTODish_1.default(x.IDD, x.NameD, x.NameC, x.DescriptionD, x.ImgD, x.PriceD, [], x.CostD, x.QuantityAD);
+                arraydish.push(dtodish);
+            }
+            pooldi.close();
+            return arraydish;
+        }
+        catch (e) {
+            throw new dataexception_1.DataException("DataLayer Error: " + e.message);
+        }
+    };
     updateCost = async (dtodish) => {
         try {
             let queryupdate = "Update Dish Set CostD=@CostD where IDD=@IDD";

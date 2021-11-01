@@ -350,127 +350,165 @@ const { default: DTOUser } = require("./Restaurant/dist/shared/entity/DTOUser");
 // }
 // tablecustomermaintenance().then()
 
+
 // // ***************************** ORDER **************************************** */
 
-    let ordermaintenance=async()=>
-    {
+  
        
     //    //***************** REGISTER ***************** */
 
+
       // let dtcustomer=new DTOCustomer(0,"Customer9","LastName9");
-      // let registerCustomer=await FactoryLogic.OrderController().registerCustomer(dtcustomer);
-      // console.log(registerCustomer);
+    
+//   FactoryLogic.OrderController().registerCustomer(dtcustomer).then(data => {
+//       console.log(data);
+//   })
 
        // //*** ONLINE ************* */
 
-      // let getCustomerbyExpresionName=await FactoryLogic.OrderController().getCustomerbyExpresionName("Customer9");
-      // console.log(getCustomerbyExpresionName);
-      // let enterCustomer=await FactoryLogic.OrderController().enterCustomer(9);
-      // console.log(enterCustomer);
-      //  let listDishes=await FactoryLogic.OrderController().listDishes();
-      //  console.log(listDishes);
+//      FactoryLogic.OrderController().getCustomerbyExpresionName().then(data1 => {
+//       console.log(data1);
+//   FactoryLogic.OrderController().enterCustomer(9).then(data2 => {
+//       console.log(data2);
+//   FactoryLogic.OrderController().listDishes().then(data3 => {
+//       console.log(data3);
+//   let data5=FactoryLogic.OrderController().calculateTotal();
+//       console.log(data5);
+//       let date=  new Date("November 3, 2021");
+//       date.setUTCHours(12,00);
+//       let data6 = FactoryLogic.OrderController().updateData(date,"SpecialR",3);
+//         console.log(data6);
+//   FactoryLogic.OrderController().saveOrder().then(data7 => {
+//       console.log(data7);
       
-      // let registerDOrder=await FactoryLogic.OrderController().registerDOrder(1,2);
-      // console.log(registerDOrder);
-      // let registerDOrder2=await FactoryLogic.OrderController().registerDOrder(3,2);
-      // console.log(registerDOrder2);
-      // // let registerDOrder3=await FactoryLogic.OrderController().registerDOrder(2,2);
-      // // console.log(registerDOrder3);
-      // // let removeDOrder=await FactoryLogic.OrderController().removeDOrder(2);
-      // // console.log(removeDOrder);
-      // let calculateTotal= FactoryLogic.OrderController().calculateTotal();
-      // console.log(calculateTotal);
-
-      // let date=  new Date("November 3, 2021");
-      // date.setUTCHours(12,00);
-
-      // let closeOrder= FactoryLogic.OrderController().closeOrder(
-      //  date,"SpecialRequirements3",2);
-      // console.log(closeOrder);
-      // let saveorder=await FactoryLogic.OrderController().saveOrder();
-      // console.log(saveorder);
+//   })
+//   })
+//   })
+//   })
+// })
 
        //******************* UPDATE *********************************** *
- 
-    //  let listOrdersCustomer=await FactoryLogic.OrderController().listOrdersCustomer("Customer9");
-    //   console.log(listOrdersCustomer);
-      // let selectOrder=await FactoryLogic.OrderController().selectOrder(1);
-      // console.log(selectOrder);
-    //   let updateCustomerinOrder=await FactoryLogic.OrderController().updateCustomer(2);
-    //   console.log(updateCustomerinOrder);
-    //       let date=  new Date("November 6, 2021");
-    //   date.setUTCHours(15,00);
-    //   let updateData=await FactoryLogic.OrderController().updateData(date,"SpecialRUpdate",3);
-    //   console.log(updateData);
-    //   let updateOrder= await FactoryLogic.OrderController().updateOrder();
-    //   console.log(updateOrder);
+
+  //           FactoryLogic.OrderController().listOrdersCustomer().then(data1 => {
+  //     console.log(data1);
+  // FactoryLogic.OrderController().selectOrder(1).then(data2 => {
+  //     console.log(data2);
+  // FactoryLogic.OrderController().updateCustomer(2).then(data3 => {
+  //     console.log(data3);
+  //     let date=  new Date("November 3, 2021");
+  //     date.setUTCHours(12,00);
+  //     let data6 = FactoryLogic.OrderController().updateData(date,"SpecialRUpdate",3);
+  //       console.log(data6);
+  // FactoryLogic.OrderController().updateOrder().then(data7 => {
+  //     console.log(data7);
+      
+  // })
+  // })
+  // })
+  // })
 
        //****** CHANGE STATE *******/
 
-    // let updateState= await FactoryLogic.OrderController().updateState("Confirmed");
-    //   console.log(updateState);
+    //    FactoryLogic.OrderController().listOrdersCustomer().then(data1 => {
+    //     console.log(data1);
+    // FactoryLogic.OrderController().selectOrder(1).then(data2 => {
+    //     console.log(data2);
+    // FactoryLogic.OrderController().updateState("Canceled").then(data7 => {
+    //     console.log(data7);
+        
+    // })
+    // })
+    // })
+  
     
      //***********************************  DETAIL ORDER ***************************************** */
 
     //******** REGISTER ********
 
 
-    //  let listOrdersCustomerDO= await FactoryLogic.OrderController().listOrdersCustomerDO();
-    //   console.log(listOrdersCustomerDO);
-    
-    // let selectOrderDO= await FactoryLogic.OrderController().selectOrderDO(1);
-    //   console.log(selectOrderDO);
-    
-    //  let registerDOrderDO= await FactoryLogic.OrderController().registerDOrderDO(2,3);
-    // console.log(registerDOrderDO);
+  //    FactoryLogic.OrderController().listOrdersCustomerDO().then(data1 => {
+  //     console.log(data1);
+  // FactoryLogic.OrderController().selectOrderDO(1).then(data2 => {
+  //     console.log(data2);
+  // FactoryLogic.OrderController().registerDOrderDO(2,3).then(data3 => {
+  //     console.log(data3);
+  // let data5=FactoryLogic.OrderController().calculateTotalDO();
+  //     console.log(data5);
+  // FactoryLogic.OrderController().saveDOrderDO().then(data7 => {
+  //     console.log(data7);
+      
+  // })
+  // })
+  // })
+  // })
 
-    // let calculateTotalDO=  FactoryLogic.OrderController().calculateTotalDO();
-    // console.log(calculateTotalDO);
-
-    // let saveDOrderDO= await FactoryLogic.OrderController().saveDOrderDO();
-    // console.log(saveDOrderDO);
 
     //********* UPDATE ***********
 
-    // let updateDetailOrderDO= await FactoryLogic.OrderController().updateDetailOrderDO(3,3,3);
-    // console.log(updateDetailOrderDO);
+  //        FactoryLogic.OrderController().listOrdersCustomerDO().then(data1 => {
+  //     console.log(data1);
+  // FactoryLogic.OrderController().selectOrderDO(1).then(data2 => {
+  //     console.log(data2);
+  
+  // FactoryLogic.OrderController().updateDetailOrderDO(3,3,3).then(data7 => {
+  //     console.log(data7);
+      
+  // })
+  // })
+  // })
 
       //****** DELETE ALL **********/
 
-      //let deleteAllDO= await FactoryLogic.OrderController().deleteAllDO();
-    //console.log(deleteAllDO);
-
-  //*************************************** GETS *************************************************** */
-
-    // let getLOrder=  await FactoryLogic.OrderController().getLOrder(1);
-    // console.log(getLOrder);
-    // let searchbyCustomer= await FactoryLogic.OrderController().searchbyCustomer(2);
-    // console.log(searchbyCustomer);
-    // let searchbyCustomerExp= await FactoryLogic.OrderController().searchbyCustomerExp(1);
-    // console.log(searchbyCustomerExp);
-
-
-    // let getLOrders=  await FactoryLogic.OrderController().getLOrders();
-    // console.log(getLOrders);
-    // let sortbyCustomerName=  await FactoryLogic.OrderController().sortbyCustomerName();
-    // console.log(sortbyCustomerName);
-    // let sortbyNumberPeople=  await FactoryLogic.OrderController().sortbyNumberPeople();
-    // console.log(sortbyNumberPeople);
-    // let getPendingOrders=  await FactoryLogic.OrderController().getPendingOrders();
-    // console.log(getPendingOrders);
-    // let getConfirmedOrders=  await FactoryLogic.OrderController().getConfirmedOrders();
-    // console.log(getConfirmedOrders);
-    // let getCashedOrders=  await FactoryLogic.OrderController().getCashedOrders();
-    // console.log(getCashedOrders);
-    // let getCanceledOrders=  await FactoryLogic.OrderController().getCanceledOrders();
-    // console.log(getCanceledOrders);
+  //        FactoryLogic.OrderController().listOrdersCustomerDO().then(data1 => {
+  //     console.log(data1);
+  // FactoryLogic.OrderController().selectOrderDO(1).then(data2 => {
+  //     console.log(data2);
   
- 
+  // FactoryLogic.OrderController().deleteAllDO().then(data7 => {
+  //     console.log(data7);
+      
+  // })
+  // })
+  // })
+  
+  
+  
+    // ***************************** GETS ****************************************************
 
-    }
-    ordermaintenance().then()
 
+//   FactoryLogic.OrderController().getLOrder(1).then(data => {
+//       console.log(data);
+//   })
+//   FactoryLogic.OrderController().searchbyCustomer(2).then(data => {
+//     console.log(data);
+// })
+// FactoryLogic.OrderController().searchbyCustomerExp().then(data => {
+//   console.log(data);
+// })
 
+// //***************************** */
+
+//   FactoryLogic.OrderController().getLOrders().then(data => {
+//       console.log(data);
+//   })
+//   FactoryLogic.OrderController().sortbyCustomerName().then(data => {
+//     console.log(data);
+// })
+// FactoryLogic.OrderController().getPendingOrders().then(data => {
+//   console.log(data);
+// })
+// FactoryLogic.OrderController().getConfirmedOrders().then(data => {
+//   console.log(data);
+// })
+// FactoryLogic.OrderController().getCashedOrders().then(data => {
+//   console.log(data);
+// })
+// FactoryLogic.OrderController().getCanceledOrders().then(data => {
+//   console.log(data);
+// })
+
+//*
+       
 
 
 

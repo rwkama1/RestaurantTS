@@ -13,6 +13,8 @@ import IDataOrder from "./interfaces/IDataOrder";
 import IDataTable from "./interfaces/IDataTable";
 import IDataTableCustomer from "./interfaces/IDataTableCustomer";
 import IDataUsers from "./interfaces/IDataUser";
+import IDataBill from "./interfaces/IDataBill";
+import { DataBill } from "./class/DataBill";
 
 export class FactoryData {
     public static getDataUser(): IDataUsers {
@@ -35,5 +37,8 @@ export class FactoryData {
     }
     public static getDataOrder(): IDataOrder {
         return (DataOrder.getInstance());
+    }
+    public static getDataBill(): IDataBill {
+        return (DataBill.getInstance());
     }
 }

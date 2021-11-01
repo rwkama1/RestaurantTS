@@ -45,7 +45,7 @@ class LogicDetailOrder {
         this._amountdo = amount;
     }
     update = async (iddish, quantity) => {
-        let ldish = await LGetDish_1.LGetDish.getLDish(iddish);
+        let ldish = await LGetDish_1.LGetDish.getLDishWithoutI(iddish);
         this.dish = ldish;
         this.quantitydo = quantity;
     };

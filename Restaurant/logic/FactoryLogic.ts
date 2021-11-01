@@ -1,4 +1,5 @@
 
+import { BillController } from "./class/bill_maintenance/BillController";
 import { CategoryController } from "./class/category_maintenance/CategoryController";
 import { CustomerController } from "./class/customer_maintenance/CustomerController";
 import { DishController } from "./class/dish_maintenance/DishController";
@@ -6,6 +7,7 @@ import { OrderController } from "./class/order_maintenance/OrderController";
 import { TableCustomerController } from "./class/tablecustomer_maintenance/TableCustomerController";
 import { TableController } from "./class/table_maintenance/TableController";
 import { UserController } from "./class/user_maintenace/UserController";
+import IBillController from "./interfaces/IBillController";
 import ICategoryController from "./interfaces/ICategoryController";
 import ICustomerController from "./interfaces/ICustomerController";
 import IDishController from "./interfaces/IDishController";
@@ -37,5 +39,8 @@ export class FactoryLogic {
     }
     public static OrderController(): IOrderController {
         return (OrderController.getInstance());
+    }
+    public static BillController(): IBillController {
+        return (BillController.getInstance());
     }
 }

@@ -45,7 +45,7 @@ class LCUOrders {
         return this.orderobj.customer.getDTO();
     };
     listDishes = async () => {
-        let dishes = await LGetDish_1.LGetDish.getLDishes();
+        let dishes = await LGetDish_1.LGetDish.getLDishesWithoutI();
         let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayDish(dishes.arraydish);
         return arraydto;
     };

@@ -10,6 +10,11 @@ class LGetDish {
         let searchdish = datadishes.search(id);
         return searchdish;
     };
+    static getLDishWithoutI = async (id) => {
+        let datadishes = await this.getLDishesWithoutI();
+        let searchdish = datadishes.search(id);
+        return searchdish;
+    };
     static searchLDishCategory = async (name) => {
         let datadishes = await this.getLDishes();
         let searchdish = datadishes.searchbyCategory(name);
@@ -49,6 +54,16 @@ class LGetDish {
     static getLDishes = async () => {
         let arrayd = [];
         let datad = await FactoryData_1.FactoryData.getDataDish().getDishes();
+        for (var dtod of datad) {
+            const logicdish = await instanceBusinessClass_1.InstanceLogicClass.instanceLDish(dtod);
+            arrayd.push(logicdish);
+        }
+        let arraylogicdishes = new LArrayDish_1.ArrayDish(arrayd);
+        return arraylogicdishes;
+    };
+    static getLDishesWithoutI = async () => {
+        let arrayd = [];
+        let datad = await FactoryData_1.FactoryData.getDataDish().getDishesWithoutI();
         for (var dtod of datad) {
             const logicdish = await instanceBusinessClass_1.InstanceLogicClass.instanceLDish(dtod);
             arrayd.push(logicdish);
