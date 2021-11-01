@@ -21,6 +21,31 @@ export class ArrayBill{
       }
       return null;
     }
+    searchbyOrder=(id:number)=>
+    {
+    let listb=this.arraybill;
+    for(let bill of listb)
+      {
+        if(id===bill.lorder.idorder)
+        {
+          return bill;
+        }
+      }
+      return null;
+    }
+    searchbyCustomer=(name:string)=>
+    {
+      let listb=this.arraybill;
+      let newarray:LogicBill[]=[];
+      for(let bill of listb)
+        {
+          if(bill.lorder.customer.name.match(name))
+          {
+            newarray.push(bill);
+          }
+        }
+        return newarray;
+    }
 
     // getSort=()=>
     // {

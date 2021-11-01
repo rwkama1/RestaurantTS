@@ -1,3 +1,5 @@
+import DTOBill from "../../../shared/entity/DTOBill";
+import { LogicException } from "../../../shared/exceptions/logicexception";
 import LogicOrder from "./LOrder";
 
 export  default class LogicBill
@@ -37,22 +39,36 @@ export  default class LogicBill
         this._idbill = value;
     }
     public set subtotal(value: number) {
-        
-        this._subtotal = value;
+        let totalorder=this.lorder.calculateTotal();
+        this._subtotal = totalorder;
     }
     public set totalb(value: number) {
-        this._totalb = value;
+
+        this._totalb = this.subtotal+this.vat;
     }
     public set vat(value: number) {
-        this._vat = value;
+        let calcvat=value/100;
+        let vatsubtotal=this.subtotal*calcvat
+        this._vat = vatsubtotal;
     }
     public set state(value: string) {
+        if (value.trim()!="Pending" && value.trim()!="Confirmed"&& value.trim()!="Cashed"&&value.trim()!="Canceled")
+        {
+            throw new LogicException("The state can only be Pending,Confirmed,Canceled and Cashed");
+        }
+
         this._state = value;
     }
     public set lorder(value: LogicOrder) {
         this._lorder = value;
     }
-    
+    getDTO=()=>
+    {
+      let dtobill=new DTOBill(this.idbill,
+        this.subtotal,this.totalb,this.vat
+        ,this.state,this.lorder.idorder);
+       return dtobill
+    }
  
    constructor(pidbill:number,psubtotal:number,ptotalb:number,
     pvat:number,pstate:string,plorder:LogicOrder)
@@ -61,8 +77,7 @@ export  default class LogicBill
        this.idbill=pidbill;
        this.vat=pvat;
        this.subtotal=psubtotal;
-       this.totalb=ptotalb;
-      
+       this.totalb=ptotalb;   
        this.state=pstate;
            
    }

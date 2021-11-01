@@ -1,8 +1,10 @@
 
+import DTOBill from "../../../shared/entity/DTOBill";
 import DTODish from "../../../shared/entity/DTODish";
 import DTOOrder from "../../../shared/entity/DTOOrder";
 import DTOTable from "../../../shared/entity/DTOTable";
 import DTOTableCustomer from "../../../shared/entity/DTOTableCustomer";
+import LogicBill from "../business_class/LBill";
 import LogicCategory from "../business_class/LCategory";
 import LogicCustomer from "../business_class/LCustomer";
 import LogicDish from "../business_class/LDish";
@@ -91,7 +93,17 @@ export class InstanceArrayDTO
         }
         return arraydto;       
     }
-   
+    static instanceArrayBill=(larrayb:LogicBill[])=>
+    {
+        let arraydto:DTOBill[]=[];
+        for(let lbill of larrayb)
+        {
+            let dto=lbill.getDTO();
+            arraydto.push(dto);
+
+        }
+        return arraydto;       
+    }
 
 
 }

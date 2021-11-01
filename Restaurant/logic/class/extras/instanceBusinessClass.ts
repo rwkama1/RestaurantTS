@@ -1,4 +1,5 @@
 
+import DTOBill from "../../../shared/entity/DTOBill";
 import DTOCategory from "../../../shared/entity/DTOCategory";
 import DTOCustomer from "../../../shared/entity/DTOCustomer";
 import DTODeatilOrder from "../../../shared/entity/DTODetailOrder";
@@ -8,6 +9,7 @@ import DTOTable from "../../../shared/entity/DTOTable";
 import DTOTableCustomer from "../../../shared/entity/DTOTableCustomer";
 import DTOUser from "../../../shared/entity/DTOUser";
 import { LogicException } from "../../../shared/exceptions/logicexception";
+import LogicBill from "../business_class/LBill";
 import LogicCategory from "../business_class/LCategory";
 import LogicCustomer from "../business_class/LCustomer";
 import LogicDetailOrder from "../business_class/LDetailOrder";
@@ -21,6 +23,7 @@ import LogicUser from "../business_class/LUser";
 import { LGetCategory } from "../category_maintenance/maintenance/LGetCategory";
 import { LGetCustomer } from "../customer_maintenance/maintenance/LGetsCustomer";
 import { LGetDish } from "../dish_maintenance/maintenance/LGetDish";
+import { LGetOrders } from "../order_maintenance/maintenance/LGetOrders";
 import { LGetTable } from "../table_maintenance/maintenance/LGetTable";
 
 
@@ -110,6 +113,17 @@ export class InstanceLogicClass
          logicorder=new LogicOrder(dtoorder.idorder,dtoorder.dateorder,dtoorder.stateorder,dtoorder.specialrequirements,dtoorder.numberpeople,
             lcustomer,arraydetailo);
         return logicorder
+    }
+    static instanceLBill=async(dtob:DTOBill)=>
+    { 
+        let order=await LGetOrders.getLOrder(dtob.idorder);
+        if(order===null)
+        {
+            throw new LogicException("The Order does not exists in the system");
+            
+        }
+        let logic=new LogicBill(dtob.idbill,dtob.subtotal,dtob.totalb,dtob.vat,dtob.state,order);
+        return logic
     }
 
     
