@@ -58,6 +58,14 @@ class InstanceArrayDTO {
         }
         return arraydto;
     };
+    static instanceArrayBill = (larrayb) => {
+        let arraydto = [];
+        for (let lbill of larrayb) {
+            let dto = lbill.getDTO();
+            arraydto.push(dto);
+        }
+        return arraydto;
+    };
 }
 exports.InstanceArrayDTO = InstanceArrayDTO;
 //# sourceMappingURL=instanceArrayDTO.js.map

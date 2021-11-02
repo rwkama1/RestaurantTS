@@ -10,7 +10,8 @@ export  default class LogicBill
    private _vat: number;
    private _state: string;
    private _lorder: LogicOrder;
-
+private _date: Date;
+   
 
     //GETTERS
 
@@ -32,7 +33,9 @@ export  default class LogicBill
     public get lorder(): LogicOrder {
         return this._lorder;
     }
-
+    public get date(): Date {
+        return this._date;
+    }
     //SETTERS
 
     public set idbill(value: number) {
@@ -44,34 +47,44 @@ export  default class LogicBill
     }
     public set totalb(value: number) {
 
-        this._totalb = this.subtotal+this.vat;
+        this._totalb = this.subtotal+this.calculateSubtotalVAT();
     }
     public set vat(value: number) {
-        let calcvat=value/100;
-        let vatsubtotal=this.subtotal*calcvat
-        this._vat = vatsubtotal;
+       
+        this._vat = value;
     }
     public set state(value: string) {
-        if (value.trim()!="Pending" && value.trim()!="Confirmed"&& value.trim()!="Cashed"&&value.trim()!="Canceled")
+        if (value.trim()!="Pending" &&  value.trim()!="Cashed"&&value.trim()!="Canceled")
         {
-            throw new LogicException("The state can only be Pending,Confirmed,Canceled and Cashed");
+            throw new LogicException("The state can only be Pending,Canceled and Cashed");
         }
 
         this._state = value;
     }
     public set lorder(value: LogicOrder) {
         this._lorder = value;
+    } 
+    public set date(value: Date) {
+        this._date = value;
     }
+
+    
     getDTO=()=>
     {
       let dtobill=new DTOBill(this.idbill,
         this.subtotal,this.totalb,this.vat
-        ,this.state,this.lorder.idorder);
+        ,this.state,this.lorder.idorder,this.date);
        return dtobill
+    }
+    calculateSubtotalVAT=()=>
+    {
+        let calcvat=this.vat/100;
+        let vatsubtotal=this.subtotal*calcvat;
+        return vatsubtotal
     }
  
    constructor(pidbill:number,psubtotal:number,ptotalb:number,
-    pvat:number,pstate:string,plorder:LogicOrder)
+    pvat:number,pstate:string,plorder:LogicOrder,pdate:Date)
    {
       this.lorder=plorder; 
        this.idbill=pidbill;
@@ -79,7 +92,7 @@ export  default class LogicBill
        this.subtotal=psubtotal;
        this.totalb=ptotalb;   
        this.state=pstate;
-           
+       this.date=pdate;  
    }
  
 }

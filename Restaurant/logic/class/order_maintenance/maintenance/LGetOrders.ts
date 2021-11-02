@@ -66,10 +66,12 @@ export class LGetOrders
     static getLOrders=async()=>
     {
         let arrayo:LogicOrder[]=[];
+        let logico;
+        let dtoo;
         let datao= await FactoryData.getDataOrder().getOrders();
-        for(let dtoo of datao)
+        for( dtoo of datao)
         {
-            const logico=await InstanceLogicClass.instanceLOrder(dtoo);
+             logico=await InstanceLogicClass.instanceLOrder(dtoo);
             arrayo.push(logico);
         }
         let arraylogic=new ArrayOrder(arrayo);

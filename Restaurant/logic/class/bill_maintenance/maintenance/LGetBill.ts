@@ -23,13 +23,21 @@ export class LGetBill
       let searchc=datac.searchbyCustomer(name);
       return searchc
     }
+    static getLBillbyDates=async(date1:Date,date2:Date)=>
+    {
+      let datac= await this.getLBills();
+      let searchc=datac.searchbyDates(date1,date2);
+      return searchc
+    }
     static getLBills=async()=>
     {
     let arrayb=[];
-      let datab= await FactoryData.getDataBill().getBills();
-      for(let dtc of datab)
+    let logicc;
+    let dtc;
+    let datab= await FactoryData.getDataBill().getBills();
+      for( dtc of datab)
       {
-      const logicc=InstanceLogicClass.instanceLBill(dtc);
+       logicc=InstanceLogicClass.instanceLBill(dtc);
       arrayb.push(logicc);
       }
     let arraylogicc=new ArrayBill(arrayb);

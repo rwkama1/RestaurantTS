@@ -2,7 +2,7 @@
 import DTOBill from "../../../shared/entity/DTOBill";
 import DTOCategory from "../../../shared/entity/DTOCategory";
 import DTOCustomer from "../../../shared/entity/DTOCustomer";
-import DTODeatilOrder from "../../../shared/entity/DTODetailOrder";
+
 import DTODish from "../../../shared/entity/DTODish";
 import DTOOrder from "../../../shared/entity/DTOOrder";
 import DTOTable from "../../../shared/entity/DTOTable";
@@ -18,7 +18,6 @@ import LogicDishC from "../business_class/LDishC";
 import LogicOrder from "../business_class/LOrder";
 import LogicTable from "../business_class/LTable";
 import LogicTableCustomer from "../business_class/LTableCustomer";
-
 import LogicUser from "../business_class/LUser";
 import { LGetCategory } from "../category_maintenance/maintenance/LGetCategory";
 import { LGetCustomer } from "../customer_maintenance/maintenance/LGetsCustomer";
@@ -122,7 +121,7 @@ export class InstanceLogicClass
             throw new LogicException("The Order does not exists in the system");
             
         }
-        let logic=new LogicBill(dtob.idbill,dtob.subtotal,dtob.totalb,dtob.vat,dtob.state,order);
+        let logic=new LogicBill(dtob.idbill,dtob.subtotal,dtob.totalb,dtob.vat,dtob.state,order,dtob.date);
         return logic
     }
 

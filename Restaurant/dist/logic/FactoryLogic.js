@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FactoryLogic = void 0;
+const BillController_1 = require("./class/bill_maintenance/BillController");
 const CategoryController_1 = require("./class/category_maintenance/CategoryController");
 const CustomerController_1 = require("./class/customer_maintenance/CustomerController");
 const DishController_1 = require("./class/dish_maintenance/DishController");
@@ -29,6 +30,9 @@ class FactoryLogic {
     }
     static OrderController() {
         return (OrderController_1.OrderController.getInstance());
+    }
+    static BillController() {
+        return (BillController_1.BillController.getInstance());
     }
 }
 exports.FactoryLogic = FactoryLogic;

@@ -53,9 +53,11 @@ class LGetOrders {
     };
     static getLOrders = async () => {
         let arrayo = [];
+        let logico;
+        let dtoo;
         let datao = await FactoryData_1.FactoryData.getDataOrder().getOrders();
-        for (let dtoo of datao) {
-            const logico = await instanceBusinessClass_1.InstanceLogicClass.instanceLOrder(dtoo);
+        for (dtoo of datao) {
+            logico = await instanceBusinessClass_1.InstanceLogicClass.instanceLOrder(dtoo);
             arrayo.push(logico);
         }
         let arraylogic = new LArrayOrder_1.ArrayOrder(arrayo);

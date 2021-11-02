@@ -8,6 +8,7 @@ const DataTable_1 = require("./class/DataTable");
 const DataTableCustomer_1 = require("./class/DataTableCustomer");
 const DataUser_1 = require("./class/DataUser");
 const DataOrder_1 = require("./class/DataOrder");
+const DataBill_1 = require("./class/DataBill");
 class FactoryData {
     static getDataUser() {
         return (DataUser_1.default.getInstance());
@@ -29,6 +30,9 @@ class FactoryData {
     }
     static getDataOrder() {
         return (DataOrder_1.DataOrder.getInstance());
+    }
+    static getDataBill() {
+        return (DataBill_1.DataBill.getInstance());
     }
 }
 exports.FactoryData = FactoryData;

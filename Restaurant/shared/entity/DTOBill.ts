@@ -6,12 +6,14 @@ export  default class DTOBill
     vat: number;
     state: string;
     idorder: number;
+    date: Date;
     
  
    constructor(pidbill:number,psubtotal:number,ptotalb:number,
-    pvat:number,pstate:string,pidorder:number)
+    pvat:number,pstate:string,pidorder:number,pdate:Date)
    {
        this.idbill=pidbill;
+       this.date=pdate;
        this.subtotal=psubtotal;
        this.totalb=ptotalb;
        this.vat=pvat;

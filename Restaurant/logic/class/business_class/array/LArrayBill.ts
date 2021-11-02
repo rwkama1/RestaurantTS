@@ -46,11 +46,18 @@ export class ArrayBill{
         }
         return newarray;
     }
+    searchbyDates=(date1:Date,date2:Date)=>
+    {
+      let listb=this.arraybill;
+      let newarray:LogicBill[]=[];
+      for(let bill of listb)
+        {
+          if(date1<=bill.date&&bill.date<=date2)
+          {
+            newarray.push(bill);
+          }
+        }
+        return newarray;
+    }
 
-    // getSort=()=>
-    // {
-    //   let listc=this.arraycat
-    //  const sortarray=listc.sort((a, b) => a.name.localeCompare(b.name));
-    //  return sortarray
-    // }
 }

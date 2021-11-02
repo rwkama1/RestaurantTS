@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InstanceLogicClass = void 0;
 const logicexception_1 = require("../../../shared/exceptions/logicexception");
+const LBill_1 = require("../business_class/LBill");
 const LCategory_1 = require("../business_class/LCategory");
 const LCustomer_1 = require("../business_class/LCustomer");
 const LDetailOrder_1 = require("../business_class/LDetailOrder");
@@ -14,6 +15,7 @@ const LUser_1 = require("../business_class/LUser");
 const LGetCategory_1 = require("../category_maintenance/maintenance/LGetCategory");
 const LGetsCustomer_1 = require("../customer_maintenance/maintenance/LGetsCustomer");
 const LGetDish_1 = require("../dish_maintenance/maintenance/LGetDish");
+const LGetOrders_1 = require("../order_maintenance/maintenance/LGetOrders");
 const LGetTable_1 = require("../table_maintenance/maintenance/LGetTable");
 class InstanceLogicClass {
     static instanceLUser = (dtouser) => {
@@ -80,6 +82,14 @@ class InstanceLogicClass {
         }
         logicorder = new LOrder_1.default(dtoorder.idorder, dtoorder.dateorder, dtoorder.stateorder, dtoorder.specialrequirements, dtoorder.numberpeople, lcustomer, arraydetailo);
         return logicorder;
+    };
+    static instanceLBill = async (dtob) => {
+        let order = await LGetOrders_1.LGetOrders.getLOrder(dtob.idorder);
+        if (order === null) {
+            throw new logicexception_1.LogicException("The Order does not exists in the system");
+        }
+        let logic = new LBill_1.default(dtob.idbill, dtob.subtotal, dtob.totalb, dtob.vat, dtob.state, order, dtob.date);
+        return logic;
     };
 }
 exports.InstanceLogicClass = InstanceLogicClass;
