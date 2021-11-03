@@ -30,7 +30,16 @@ class LCUOrders {
     //*** ONLINE ************* */
     registerCustomer = async (dtc) => {
         let addc = await LCUCustomer_1.LCUCustomer.getInstance().registerCustomer(dtc);
-        return addc;
+        if (addc === true) {
+            let arayc = await LGetsCustomer_1.LGetCustomer.getLCustomers();
+            let getcustomers = arayc.arraycustomer;
+            let lengthlist = getcustomers.length;
+            let lastcustomer = getcustomers[lengthlist - 1];
+            let dtorder = new DTOOrder_1.default(0, new Date(), "Pending", "ASD", 2, lastcustomer.id, []);
+            let lorder = await instanceBusinessClass_1.InstanceLogicClass.instanceLOrder(dtorder);
+            this.orderobj = lorder;
+            return lastcustomer.getDTO();
+        }
     };
     //*** RESTAURANT ********* */
     getCustomerbyExpresionName = async (exp) => {

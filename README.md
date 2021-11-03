@@ -373,12 +373,8 @@ tablecustomermaintenance().then()
 
     *********************** RESTAURANT ******* */
 
-  FactoryLogic.OrderController().registerCustomer(dtcustomer).then(data => {
+    FactoryLogic.OrderController().registerCustomer(dtcustomer).then(data => {
       console.log(data);
-     FactoryLogic.OrderController().getCustomerbyExpresionName().then(data1 => {
-      console.log(data1);
-  FactoryLogic.OrderController().enterCustomer(9).then(data2 => {
-      console.log(data2);
   FactoryLogic.OrderController().listDishes().then(data3 => {
       console.log(data3);
       FactoryLogic.OrderController().registerDOrder(2,2).then(registerDOrder => {
@@ -398,8 +394,6 @@ tablecustomermaintenance().then()
 //})
   })
   })
-  })
-})
   })
 
        ************ ONLINE ************* */

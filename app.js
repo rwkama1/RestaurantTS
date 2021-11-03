@@ -1,7 +1,7 @@
 
-// const {FactoryLogic}=require("./Restaurant/dist/logic/FactoryLogic");
+ const {FactoryLogic}=require("./Restaurant/dist/logic/FactoryLogic");
 // const { default: DTOCategory } = require("./Restaurant/dist/shared/entity/DTOCategory");
-// const { default: DTOCustomer } = require("./Restaurant/dist/shared/entity/DTOCustomer");
+ const { default: DTOCustomer } = require("./Restaurant/dist/shared/entity/DTOCustomer");
 // const { default: DTODish } = require("./Restaurant/dist/shared/entity/DTODish");
 // const { default: DTODishC } = require("./Restaurant/dist/shared/entity/DTODishC");
 // const { default: DTOTable } = require("./Restaurant/dist/shared/entity/DTOTable");
@@ -336,16 +336,12 @@
 //    ***************** REGISTER ***************** */
 
 
-//        let dtcustomer=new DTOCustomer(0,"Customer9","LastName9");
+     //  let dtcustomer=new DTOCustomer(0,"Customer9","LastName9");
 
-//     *********************** RESTAURANT ******* */
+//     *********************** ONLINE ******* */
 
 //   FactoryLogic.OrderController().registerCustomer(dtcustomer).then(data => {
 //       console.log(data);
-//      FactoryLogic.OrderController().getCustomerbyExpresionName().then(data1 => {
-//       console.log(data1);
-//   FactoryLogic.OrderController().enterCustomer(9).then(data2 => {
-//       console.log(data2);
 //   FactoryLogic.OrderController().listDishes().then(data3 => {
 //       console.log(data3);
 //       FactoryLogic.OrderController().registerDOrder(2,2).then(registerDOrder => {
@@ -366,10 +362,9 @@
 //   })
 //   })
 //   })
-// })
-//   })
 
-//        *** ONLINE ************* */
+
+//  ********** RESTAURANT ************* */
 
 //      FactoryLogic.OrderController().getCustomerbyExpresionName().then(data1 => {
 //       console.log(data1);

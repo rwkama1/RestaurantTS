@@ -9,7 +9,7 @@ export default interface IOrderController
 
    
 
-    registerCustomer(dtc:DTOCustomer):Promise<boolean>;
+    registerCustomer(dtc:DTOCustomer):Promise<DTOCustomer>;
 
     
 

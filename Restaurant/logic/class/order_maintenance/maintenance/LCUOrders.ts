@@ -1,4 +1,3 @@
-import { throws } from "assert";
 import { FactoryData } from "../../../../data/FactoryData";
 import DTOCustomer from "../../../../shared/entity/DTOCustomer";
 import DTOOrder from "../../../../shared/entity/DTOOrder";
@@ -36,7 +35,19 @@ export class LCUOrders
     registerCustomer=async(dtc:DTOCustomer)=>
     {
         let addc=await LCUCustomer.getInstance().registerCustomer(dtc);
-        return addc
+        if(addc===true)
+        {
+          let arayc=await LGetCustomer.getLCustomers();
+          let getcustomers=arayc.arraycustomer;
+          let lengthlist=getcustomers.length;
+          let lastcustomer=getcustomers[lengthlist-1];
+          let dtorder=new DTOOrder(0,new Date(),"Pending","ASD",2,lastcustomer.id,[]);
+          let lorder=await InstanceLogicClass.instanceLOrder(dtorder);
+          this.orderobj=lorder;
+          return lastcustomer.getDTO()
+
+        }
+
         
     } 
     //*** RESTAURANT ********* */
