@@ -2,9 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LCBill = void 0;
 const FactoryData_1 = require("../../../../data/FactoryData");
+const DTOBill_1 = require("../../../../shared/entity/DTOBill");
 const logicexception_1 = require("../../../../shared/exceptions/logicexception");
-const LBill_1 = require("../../business_class/LBill");
 const instanceArrayDTO_1 = require("../../extras/instanceArrayDTO");
+const instanceBusinessClass_1 = require("../../extras/instanceBusinessClass");
 const LGetOrders_1 = require("../../order_maintenance/maintenance/LGetOrders");
 const LGetBill_1 = require("./LGetBill");
 class LCBill {
@@ -34,14 +35,15 @@ class LCBill {
         if (lorder === null) {
             throw new logicexception_1.LogicException("The Order does not exists in the system");
         }
-        let newobj = new LBill_1.default(0, 0, 0, 0, "Pending", lorder, new Date());
+        let dto = new DTOBill_1.default(0, 0, 0, 0, "Pending", id, new Date());
+        let newobj = await instanceBusinessClass_1.InstanceLogicClass.instanceLBill(dto);
         this.billobj = newobj;
         return this.billobj.lorder.getDTO();
     };
-    enterVATPercentage = (vat) => {
+    calculateTotal = (vat) => {
         if (this.billobj != null) {
             this.billobj.vat = vat;
-            let vatsubtotal = this.billobj.calculateSubtotalVAT();
+            let vatsubtotal = this.billobj.calculateTotal();
             return vatsubtotal;
         }
         else {
@@ -62,7 +64,7 @@ class LCBill {
             let dtobill = this.billobj.getDTO();
             let addb = await FactoryData_1.FactoryData.getDataBill().registerBill(dtobill);
             if (addb) {
-                return dtobill;
+                return this.billobj;
             }
         }
         else {
@@ -87,10 +89,11 @@ class LCBill {
         if (this.billobj != null) {
             if (customeramount > this.billobj.totalb) {
                 this.billobj.state = "Cashed";
+                let reimbursement = customeramount - this.billobj.totalb;
                 let dtobill = this.billobj.getDTO();
                 let addb = await FactoryData_1.FactoryData.getDataBill().updateState(dtobill);
                 if (addb) {
-                    return dtobill;
+                    return reimbursement;
                 }
             }
             else {
@@ -104,7 +107,7 @@ class LCBill {
     // CANCEL BILL
     cancelBill = async () => {
         if (this.billobj != null) {
-            this.billobj.state = "Cancel";
+            this.billobj.state = "Canceled";
             let dtobill = this.billobj.getDTO();
             let addb = await FactoryData_1.FactoryData.getDataBill().updateState(dtobill);
             if (addb) {

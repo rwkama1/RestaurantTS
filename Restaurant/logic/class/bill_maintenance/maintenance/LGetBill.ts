@@ -1,5 +1,6 @@
 import { FactoryData } from "../../../../data/FactoryData";
 import { ArrayBill } from "../../business_class/array/LArrayBill";
+import LogicBill from "../../business_class/LBill";
 import { InstanceLogicClass } from "../../extras/instanceBusinessClass";
 
 export class LGetBill
@@ -31,13 +32,13 @@ export class LGetBill
     }
     static getLBills=async()=>
     {
-    let arrayb=[];
+    let arrayb:LogicBill[]=[];
     let logicc;
-    let dtc;
+    
     let datab= await FactoryData.getDataBill().getBills();
-      for( dtc of datab)
+      for( let dtc of datab)
       {
-       logicc=InstanceLogicClass.instanceLBill(dtc);
+       logicc=await InstanceLogicClass.instanceLBill(dtc);
       arrayb.push(logicc);
       }
     let arraylogicc=new ArrayBill(arrayb);

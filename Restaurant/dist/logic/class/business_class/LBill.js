@@ -37,11 +37,10 @@ class LogicBill {
         this._idbill = value;
     }
     set subtotal(value) {
-        let totalorder = this.lorder.calculateTotal();
-        this._subtotal = totalorder;
+        this._subtotal = value;
     }
     set totalb(value) {
-        this._totalb = this.subtotal + this.calculateSubtotalVAT();
+        this._totalb = value;
     }
     set vat(value) {
         this._vat = value;
@@ -62,10 +61,13 @@ class LogicBill {
         let dtobill = new DTOBill_1.default(this.idbill, this.subtotal, this.totalb, this.vat, this.state, this.lorder.idorder, this.date);
         return dtobill;
     };
-    calculateSubtotalVAT = () => {
+    calculateTotal = () => {
+        let totalorder = this.lorder.calculateTotal();
+        this.subtotal = totalorder;
         let calcvat = this.vat / 100;
         let vatsubtotal = this.subtotal * calcvat;
-        return vatsubtotal;
+        this.totalb = vatsubtotal + this.subtotal;
+        return this.totalb;
     };
     constructor(pidbill, psubtotal, ptotalb, pvat, pstate, plorder, pdate) {
         this.lorder = plorder;

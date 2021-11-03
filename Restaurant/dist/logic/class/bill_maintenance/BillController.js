@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BillController = void 0;
+const logicexception_1 = require("../../../shared/exceptions/logicexception");
 const instanceArrayDTO_1 = require("../extras/instanceArrayDTO");
 const LCBill_1 = require("./maintenance/LCBill");
 const LGetBill_1 = require("./maintenance/LGetBill");
@@ -22,8 +23,8 @@ class BillController {
         let lbill = await LCBill_1.LCBill.getInstance().selectOrderB(id);
         return lbill;
     };
-    enterVATPercentage = (vat) => {
-        let lbill = LCBill_1.LCBill.getInstance().enterVATPercentage(vat);
+    calculateTotal = (vat) => {
+        let lbill = LCBill_1.LCBill.getInstance().calculateTotal(vat);
         return lbill;
     };
     enterDate = (date) => {
@@ -59,6 +60,9 @@ class BillController {
     };
     getLBillbyOrder = async (id) => {
         let lgetbill = await LGetBill_1.LGetBill.getLBillbyOrder(id);
+        if (lgetbill === null) {
+            throw new logicexception_1.LogicException("No Bill has that Order");
+        }
         return lgetbill.getDTO();
     };
     getLBillbyCustomer = async (name) => {

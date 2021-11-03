@@ -42,12 +42,12 @@ private _date: Date;
         this._idbill = value;
     }
     public set subtotal(value: number) {
-        let totalorder=this.lorder.calculateTotal();
-        this._subtotal = totalorder;
+        
+        this._subtotal = value;
     }
     public set totalb(value: number) {
 
-        this._totalb = this.subtotal+this.calculateSubtotalVAT();
+        this._totalb = value;
     }
     public set vat(value: number) {
        
@@ -76,11 +76,15 @@ private _date: Date;
         ,this.state,this.lorder.idorder,this.date);
        return dtobill
     }
-    calculateSubtotalVAT=()=>
+    
+    calculateTotal=()=>
     {
+        let totalorder=this.lorder.calculateTotal();
+        this.subtotal=totalorder;
         let calcvat=this.vat/100;
         let vatsubtotal=this.subtotal*calcvat;
-        return vatsubtotal
+        this.totalb=vatsubtotal+this.subtotal;
+        return this.totalb
     }
  
    constructor(pidbill:number,psubtotal:number,ptotalb:number,

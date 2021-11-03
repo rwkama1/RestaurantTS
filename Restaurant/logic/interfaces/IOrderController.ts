@@ -7,11 +7,11 @@ export default interface IOrderController
 {
     //***************** REGISTER ***************** */
 
-    //*** ONLINE ************* */
+   
 
     registerCustomer(dtc:DTOCustomer):Promise<boolean>;
 
-    //*** RESTAURANT ********* */
+    
 
     getCustomerbyExpresionName(exp:string):Promise<any[]>;
     enterCustomer(id:number):Promise<DTOCustomer>;

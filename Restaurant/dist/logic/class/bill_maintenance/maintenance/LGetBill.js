@@ -28,10 +28,9 @@ class LGetBill {
     static getLBills = async () => {
         let arrayb = [];
         let logicc;
-        let dtc;
         let datab = await FactoryData_1.FactoryData.getDataBill().getBills();
-        for (dtc of datab) {
-            logicc = instanceBusinessClass_1.InstanceLogicClass.instanceLBill(dtc);
+        for (let dtc of datab) {
+            logicc = await instanceBusinessClass_1.InstanceLogicClass.instanceLBill(dtc);
             arrayb.push(logicc);
         }
         let arraylogicc = new LArrayBill_1.ArrayBill(arrayb);

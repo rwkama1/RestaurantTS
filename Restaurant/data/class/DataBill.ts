@@ -66,13 +66,13 @@ export class DataBill implements IDataBill{
     getBills=async()=>
     {
       try {
-          let queryget = "select * from Bill"
+          let queryget = "select * from Bill";
           let pool = await Conection.conection();
           let arrayo:DTOBill[]=[];
           const result = await pool.request()
           .query(queryget)
           for (let p of result.recordset) {
-              let bill = new DTOBill(p.IDB,p.SubTotalB,
+              let bill = new DTOBill(p.IDB,p.SubtotalB,
                 p.TotalB,
                 p.VATB,p.StateB,p.IDOB,p.DateB);
               arrayo.push(bill);

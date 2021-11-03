@@ -56,7 +56,7 @@ class DataBill {
             const result = await pool.request()
                 .query(queryget);
             for (let p of result.recordset) {
-                let bill = new DTOBill_1.default(p.IDB, p.SubTotalB, p.TotalB, p.VATB, p.StateB, p.IDOB, p.DateB);
+                let bill = new DTOBill_1.default(p.IDB, p.SubtotalB, p.TotalB, p.VATB, p.StateB, p.IDOB, p.DateB);
                 arrayo.push(bill);
             }
             pool.close();

@@ -1,5 +1,6 @@
 import DTOBill from "../../shared/entity/DTOBill";
 import DTOOrder from "../../shared/entity/DTOOrder";
+import LogicBill from "../class/business_class/LBill";
 
 export default interface IBillController 
 {
@@ -8,16 +9,15 @@ export default interface IBillController
 
     listOrdersCustomerB(name:string):Promise<DTOOrder[]>;
     selectOrderB(id:number):Promise<DTOOrder>;
-    enterVATPercentage(vat:number):number;
+    calculateTotal(vat:number):number;
     enterDate(date:Date):DTOBill;
-    saveBill():Promise<DTOBill>;
+    saveBill():Promise<LogicBill>;
 
      // **************** COLLECT  BILL ************************ 
 
      listCustomerBill(name:string):Promise<DTOBill[]>;
      selectBill(id:number):Promise<DTOBill>;
-     saveBill():Promise<DTOBill>;
-     collectBill(customeramount:number):Promise<DTOBill>;
+     collectBill(customeramount:number):Promise<number>;
    
      // **************** CANCEL  BILL ************************ 
 

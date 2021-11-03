@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rwkama1/HotelTS"
+    "url": "https://github.com/rwkama1/RestaurantTS"
   },
   "keywords": ["backend",
     "typeScript",
     "ts",
     "js",
     "javascript",
-    "payment",
+    "bill",
     "amount",
     "total",
     "date",

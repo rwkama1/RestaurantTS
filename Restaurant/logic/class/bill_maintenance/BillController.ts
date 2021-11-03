@@ -1,3 +1,4 @@
+import { LogicException } from "../../../shared/exceptions/logicexception";
 import IBillController from "../../interfaces/IBillController";
 import { InstanceArrayDTO } from "../extras/instanceArrayDTO";
 import { LCBill } from "./maintenance/LCBill";
@@ -26,9 +27,9 @@ export class BillController implements IBillController{
         let lbill= await LCBill.getInstance().selectOrderB(id);
         return lbill
      }
-     enterVATPercentage=(vat:number)=>
+     calculateTotal=(vat:number)=>
      {
-        let lbill=  LCBill.getInstance().enterVATPercentage(vat);
+        let lbill=  LCBill.getInstance().calculateTotal(vat);
         return lbill
      }
      enterDate=(date:Date)=>
@@ -36,9 +37,9 @@ export class BillController implements IBillController{
         let lbill=  LCBill.getInstance().enterDate(date);
         return lbill
      }
-      saveBill=async()=>
+     saveBill=async()=>
      {
-        let lbill= await  LCBill.getInstance().saveBill();
+        let lbill= await LCBill.getInstance().saveBill();
         return lbill
      }
 
@@ -78,6 +79,10 @@ export class BillController implements IBillController{
    getLBillbyOrder=async(id:number)=>
   {
     let lgetbill= await LGetBill.getLBillbyOrder(id);
+    if (lgetbill===null) {
+        throw new LogicException("No Bill has that Order");
+        
+    }
     return lgetbill.getDTO();
   }
    getLBillbyCustomer=async(name:string)=>
