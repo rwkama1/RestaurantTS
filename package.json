@@ -1,6 +1,6 @@
 {
-  "name": "restaurantts",
-  "version": "1.0.0",
+  "name": "restaurantt",
+  "version": "1.0.2",
   "description": "This package contains a backend of what would be the logic of a restaurant software, the architecture used is made in 3 layers",
   "main": "app.js",
 

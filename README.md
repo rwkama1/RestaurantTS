@@ -404,8 +404,8 @@ tablecustomermaintenance().then()
 
        ************ ONLINE ************* */
 
-     FactoryLogic.OrderController().getCustomerbyExpresionName().then(data1 => {
-      console.log(data1);
+  FactoryLogic.OrderController().registerCustomer(dtcustomer).then(data => {
+      console.log(data);
   FactoryLogic.OrderController().enterCustomer(9).then(data2 => {
       console.log(data2);
   FactoryLogic.OrderController().listDishes().then(data3 => {
@@ -428,7 +428,7 @@ tablecustomermaintenance().then()
   })
   })
   })
-})
+
 
        ******************* UPDATE ********************** *
 
