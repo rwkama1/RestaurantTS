@@ -161,6 +161,23 @@ class LCUOrders {
             throw new logicexception_1.LogicException("The Order is null");
         }
     };
+    //****** CASHED STATE *******/
+    updateCashedState = async (idorder) => {
+        let getorder = await LGetOrders_1.LGetOrders.getLOrder(idorder);
+        if (getorder != null) {
+            getorder.stateorder = "Cashed";
+            for (let detailo of getorder.detailorders) {
+                detailo.dish.quantity = detailo.dish.quantity - detailo.quantitydo;
+                await FactoryData_1.FactoryData.getDataDish().updateQuantity(detailo.dish.getDTO());
+            }
+            let datao = getorder.getDTO();
+            let addo = await FactoryData_1.FactoryData.getDataOrder().updateOrder(datao);
+            return addo;
+        }
+        else {
+            throw new logicexception_1.LogicException("The Order does not exists in the system");
+        }
+    };
 }
 exports.LCUOrders = LCUOrders;
 //# sourceMappingURL=LCUOrders.js.map

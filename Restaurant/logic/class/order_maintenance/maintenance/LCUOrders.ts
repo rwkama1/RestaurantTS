@@ -219,4 +219,28 @@ export class LCUOrders
         throw new LogicException("The Order is null");
       }
     }
+
+      //****** CASHED STATE *******/
+
+      updateCashedState=async(idorder:number)=>
+      {
+        let getorder=await LGetOrders.getLOrder(idorder);
+        if (getorder!=null) {
+  
+          getorder.stateorder="Cashed";
+          for(let detailo of getorder.detailorders)
+          {
+           detailo.dish.quantity=detailo.dish.quantity-detailo.quantitydo;
+            await FactoryData.getDataDish().updateQuantity(detailo.dish.getDTO());
+          }
+          let datao=getorder.getDTO();
+          let addo=await FactoryData.getDataOrder().updateOrder(datao);
+          return addo
+  
+        }
+        else
+        {
+          throw new LogicException("The Order does not exists in the system");
+        }
+      }
 }

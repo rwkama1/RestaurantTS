@@ -6,6 +6,7 @@ const DTOBill_1 = require("../../../../shared/entity/DTOBill");
 const logicexception_1 = require("../../../../shared/exceptions/logicexception");
 const instanceArrayDTO_1 = require("../../extras/instanceArrayDTO");
 const instanceBusinessClass_1 = require("../../extras/instanceBusinessClass");
+const LCUOrders_1 = require("../../order_maintenance/maintenance/LCUOrders");
 const LGetOrders_1 = require("../../order_maintenance/maintenance/LGetOrders");
 const LGetBill_1 = require("./LGetBill");
 class LCBill {
@@ -93,7 +94,10 @@ class LCBill {
                 let dtobill = this.billobj.getDTO();
                 let addb = await FactoryData_1.FactoryData.getDataBill().updateState(dtobill);
                 if (addb) {
-                    return reimbursement;
+                    let updateo = await LCUOrders_1.LCUOrders.getInstance().updateCashedState(dtobill.idorder);
+                    if (updateo) {
+                        return reimbursement;
+                    }
                 }
             }
             else {

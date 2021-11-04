@@ -338,7 +338,7 @@
 
      //  let dtcustomer=new DTOCustomer(0,"Customer9","LastName9");
 
-//     *********************** ONLINE ******* */
+//     *********************** WITH REGISTER CUSTOMER ******* */
 
 //   FactoryLogic.OrderController().registerCustomer(dtcustomer).then(data => {
 //       console.log(data);
@@ -363,8 +363,7 @@
 //   })
 //   })
 
-
-//  ********** RESTAURANT ************* */
+//  ********** WITHOUT REGISTER CUSTOMER ************* */
 
 //      FactoryLogic.OrderController().getCustomerbyExpresionName().then(data1 => {
 //       console.log(data1);
@@ -537,7 +536,7 @@
 
 //  FactoryLogic.BillController().listCustomerBill().then(data1=> {
 //       console.log(data1);  
-//   FactoryLogic.BillController().selectBill(1).then(data2 => {
+//   FactoryLogic.BillController().selectBill(2).then(data2 => {
 //       console.log(data2);
 //   FactoryLogic.BillController().collectBill(80).then(data3 => {
 //       console.log("Reimbursement: "+data3);  

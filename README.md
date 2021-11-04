@@ -371,9 +371,9 @@ tablecustomermaintenance().then()
 
        let dtcustomer=new DTOCustomer(0,"Customer9","LastName9");
 
-    *********************** RESTAURANT ******* */
+       *********************** WITH REGISTERING CUSTOMER ******* */
 
-    FactoryLogic.OrderController().registerCustomer(dtcustomer).then(data => {
+  FactoryLogic.OrderController().registerCustomer(dtcustomer).then(data => {
       console.log(data);
   FactoryLogic.OrderController().listDishes().then(data3 => {
       console.log(data3);
@@ -396,10 +396,10 @@ tablecustomermaintenance().then()
   })
   })
 
-       ************ ONLINE ************* */
+ ********** WITHOUT REGISTERING CUSTOMER ************* */
 
-  FactoryLogic.OrderController().registerCustomer(dtcustomer).then(data => {
-      console.log(data);
+     FactoryLogic.OrderController().getCustomerbyExpresionName().then(data1 => {
+      console.log(data1);
   FactoryLogic.OrderController().enterCustomer(9).then(data2 => {
       console.log(data2);
   FactoryLogic.OrderController().listDishes().then(data3 => {
@@ -422,6 +422,7 @@ tablecustomermaintenance().then()
   })
   })
   })
+})
 
 
        ******************* UPDATE ********************** *

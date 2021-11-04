@@ -4,6 +4,7 @@ import { LogicException } from "../../../../shared/exceptions/logicexception";
 import LogicBill from "../../business_class/LBill";
 import { InstanceArrayDTO } from "../../extras/instanceArrayDTO";
 import { InstanceLogicClass } from "../../extras/instanceBusinessClass";
+import { LCUOrders } from "../../order_maintenance/maintenance/LCUOrders";
 import { LGetOrders } from "../../order_maintenance/maintenance/LGetOrders";
 import { LGetBill } from "./LGetBill";
 
@@ -119,7 +120,12 @@ export class LCBill {
             let dtobill=this.billobj.getDTO(); 
             let addb=await FactoryData.getDataBill().updateState(dtobill);
              if (addb) {
-                    return reimbursement
+                 let updateo=await LCUOrders.getInstance().updateCashedState(dtobill.idorder);
+                 if (updateo) {
+                    return reimbursement 
+                 }
+              
+                    
                 }
         } 
         else {
