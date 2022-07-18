@@ -1,5 +1,6 @@
 # Restaurant
 
+
 This package contains a backend of what would be the logic of a restaurant software, the architecture used is made in 3 layers
 
 ## Requirements
@@ -734,8 +735,6 @@ ADD MANY TABLE
   )
  
 
-
-
-
-
 ```
+
+

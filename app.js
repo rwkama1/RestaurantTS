@@ -1,7 +1,144 @@
 
- const {FactoryLogic}=require("./Restaurant/dist/logic/FactoryLogic");
+
+
+const { DataUser } = require("./data/DataUser");
+const { DTOUser } = require("./DTO/DTOUser");
+const { HashPassword } = require("./Hash_Login/hashPassword");
+const { LoginUser } = require("./Hash_Login/LoginUser");
+
+//#region USERS
+
+let usermaintenance=async()=>
+{
+
+    // async function registerUser() {
+    //     for (let i = 1; i < 10; i++) {
+
+    //         let dtouser = new DTOUser();
+    //         dtouser.IDCardU=`11111111111${i}` ;
+    //         dtouser.NamesUserU=`User${i}`;
+    //         dtouser.CityU=`City${i}`;
+    //         dtouser.TypeUserU="Administrator" ;
+    //         dtouser.PasswordUserU=`Password${i}`;
+
+    //         const passh = HashPassword.hashPassword(dtouser.PasswordUserU);
+    //         dtouser.PasswordUserU = passh.hash;
+    //         dtouser.HashhU = passh.salt;
+    //         let registeruser = await DataUser.registerUser(dtouser);
+    //         if (registeruser===-1) {
+    //             throw new Error("User already exists");
+    //         }
+    //          console.log("The user registered successfully");
+    //     }
+    // }
+    //  await registerUser();
+
+
+
+    // async function updateNameCityTypeUser() {
+    //     let typeuser = "Cashier";
+    //     if (typeuser != "Administrator" && typeuser != "Waiter" && typeuser != "Chef"
+    //         && typeuser != "Cashier") {
+    //         throw new Error("The user can only be of the type Administrator,Waiter,Chef and Cashier");
+    //     }
+    //     let updateNameCityUser = await DataUser.updateNameCityTypeUser("111111111111",
+    //         "NameUpdated", "CityUpdated", typeuser);
+    //     if (updateNameCityUser === -1) {
+    //         throw new Error("User no exists");
+    //     }
+    //     console.log("The user updated successfully");
+    // }
+    // await updateNameCityTypeUser();
+
+
+
+    // async function updateUserNamePassword() {
+
+    //     const passh = HashPassword.hashPassword("PasswordUpdated");
+    //     let hashpassword = passh.hash;
+    //     let salt = passh.salt;
+
+    //         let updatePasswordUser = await DataUser.updatePasswordUser("111111111111",hashpassword, salt);
+    //         if (updatePasswordUser===-1) {
+    //             throw new Error("The user does not exists");
+    //         }
+    //         console.log("The password was updated successfully");
+
+    //     }
+    //   await updateUserNamePassword();
+
+
+    //     let deleteUser = await DataUser.deleteUser("111111111117");
+    //      if (deleteUser===-1) {
+    //          throw new Error("The user does not exists");
+    //      }
+    //    console.log("The user was deleted successfully");
+
+
+    // let autenticationuser=async()=>
+    // {
+    //     let loginuser = await LoginUser.loginUser('111111111111','PasswordUpdated')
+    //     console.log(loginuser);
+
+
+    //     let getuserlogin = await LoginUser.getUserLogin()
+    //     console.log(getuserlogin);
+
+    //     let logout = await LoginUser.logoutUser()
+    //     console.log(logout);
+
+    // }
+    // autenticationuser().then()
+
+
+        // let getUser = await DataUser.getUser('111111111111')
+        // console.log(getUser);
+
+        // let getUsers = await DataUser.getUsers()
+        // console.log(getUsers);
+
+        //   let getSearchUsers = await DataUser.getSearchUsers()
+        // console.log(getSearchUsers);
+
+}
+usermaintenance().then()
+
+//#endregion
+
+//#region CUSTOMER
+
+let customermaintenace=async()=>
+{
+      async function registerCustomer() {
+        for (let i = 1; i < 10; i++) {
+
+            let dtouser = new DTOUser();
+            dtouser.IDCardU=`11111111111${i}` ;
+            dtouser.NamesUserU=`User${i}`;
+            dtouser.CityU=`City${i}`;
+            dtouser.TypeUserU="Administrator" ;
+            dtouser.PasswordUserU=`Password${i}`;
+
+            const passh = HashPassword.hashPassword(dtouser.PasswordUserU);
+            dtouser.PasswordUserU = passh.hash;
+            dtouser.HashhU = passh.salt;
+            let registeruser = await DataUser.registerUser(dtouser);
+            if (registeruser===-1) {
+                throw new Error("User already exists");
+            }
+             console.log("The user registered successfully");
+        }
+    }
+     await registerCustomer();
+}
+customermaintenace().then()
+
+//#endregion
+
+//#region OTHERS
+ //const {FactoryLogic}=require("./Restaurant/dist/logic/FactoryLogic");
 // const { default: DTOCategory } = require("./Restaurant/dist/shared/entity/DTOCategory");
- const { default: DTOCustomer } = require("./Restaurant/dist/shared/entity/DTOCustomer");
+ //const { default: DTOCustomer } = require("./Restaurant/dist/shared/entity/DTOCustomer");
 // const { default: DTODish } = require("./Restaurant/dist/shared/entity/DTODish");
 // const { default: DTODishC } = require("./Restaurant/dist/shared/entity/DTODishC");
 // const { default: DTOTable } = require("./Restaurant/dist/shared/entity/DTOTable");
@@ -53,7 +190,7 @@
 
 // let customermaintenace=async()=>
 // {
- 
+
 //     REGISTER CUSTOMER
 
 //     let addc=await FactoryLogic.CustomerController().registerCustomer(dtcustomer);
@@ -125,7 +262,7 @@
 // let dishmaintenance=async()=>
 // {
 //     REGISTER DISH
-    
+
 //    let enterdd=await FactoryLogic.DishController().enterDataDish(dtodish);
 //    console.log(enterdd);
 
@@ -159,20 +296,20 @@
 
 //     let getDish=await FactoryLogic.DishController().getDish(1);
 //    console.log(getDish);
-  
+
 //     let searchLDishCategory=await FactoryLogic.DishController().searchLDishCategory("Category1");
 //    console.log(searchLDishCategory);
-  
+
 
 //     let sortDishbyName=await FactoryLogic.DishController().sortDishbyName();
 //    console.log(sortDishbyName);
-  
+
 //     let sortbyDishCategoryName=await FactoryLogic.DishController().sortbyDishCategoryName();
 //    console.log(sortbyDishCategoryName);
 
 //     let sortbyDishPriceAscending=await FactoryLogic.DishController().sortbyDishPriceAscending();
 //    console.log(sortbyDishPriceAscending);
-    
+
 //     let sortbyDishPriceDescending=await FactoryLogic.DishController().sortbyDishPriceDescending();
 //    console.log(sortbyDishPriceDescending);
 
@@ -197,7 +334,7 @@
 
 //     let selectIngredient=await FactoryLogic.DishController().selectIngredient(0);
 //     console.log(selectIngredient);
- 
+
 //      let updateIngredient=await FactoryLogic.DishController().updateIngredient(
 //        new DTODishC(0,"Ingredientupdate",5,4));
 //      console.log(updateIngredient);
@@ -212,7 +349,7 @@
 
 //      let registerIngredient=await FactoryLogic.DishController().registerIngredient(new DTODishC(
 //        0,"Ingredientadded",6,5));
-  
+
 //     console.log(registerIngredient);
 
 //     REGISTER QUANTITY
@@ -275,7 +412,7 @@
 
 // let tablecustomermaintenance=async()=>
 // {
-  
+
 //   let dtcustomer=new DTOCustomer(0,"Customer10","LastName15");
 
 //   ********* ADD WITHOUT PREVIOUS RESERVATION ******* */
@@ -290,7 +427,7 @@
 
 //    let enterCustomer=await FactoryLogic.TableCustomerController().enterCustomer(7);
 //    console.log(enterCustomer);
-   
+
 //    let listAvailableTable=await FactoryLogic.TableCustomerController().listAvailableTable();
 //    console.log(listAvailableTable);
 
@@ -299,7 +436,7 @@
 
 //    let registerTableCustomer=await FactoryLogic.TableCustomerController().registerTableCustomer();
 //    console.log(registerTableCustomer);
-  
+
 //   ********** DELETE **************** */
 
 //    let getLTablesCustomers=await FactoryLogic.TableCustomerController().getLTablesCustomers();
@@ -318,7 +455,7 @@
 //    let getLTablesCustomers=await FactoryLogic.TableCustomerController().getLTablesCustomers();
 //    console.log(getLTablesCustomers);
 
-  
+
 //    let getLTableC=await FactoryLogic.TableCustomerController().getLTableC(2);
 //    console.log(getLTableC);
 //    let getLTCbyCustomer=await FactoryLogic.TableCustomerController().getLTCbyCustomer("","LastName5");
@@ -331,8 +468,8 @@
 
 //  ***************************** ORDER **************************************** */
 
-  
-       
+
+
 //    ***************** REGISTER ***************** */
 
 
@@ -356,7 +493,7 @@
 //         console.log(data6);
 //   FactoryLogic.OrderController().saveOrder().then(data7 => {
 //       console.log(data7);
-      
+
 //   })
 // //})
 //   })
@@ -383,7 +520,7 @@
 //         console.log(data6);
 //   FactoryLogic.OrderController().saveOrder().then(data7 => {
 //       console.log(data7);
-      
+
 //   })
 // //})
 //   })
@@ -405,7 +542,7 @@
 //         console.log(data6);
 //   FactoryLogic.OrderController().updateOrder().then(data7 => {
 //       console.log(data7);
-      
+
 //   })
 //   })
 //   })
@@ -419,12 +556,12 @@
 //         console.log(data2);
 //     FactoryLogic.OrderController().updateState("Canceled").then(data7 => {
 //         console.log(data7);
-        
+
 //     })
 //     })
 //     })
-  
-    
+
+
 //      ***********************************  DETAIL ORDER ***************************************** */
 
 //     ******** REGISTER ********
@@ -440,7 +577,7 @@
 //       console.log(data5);
 //   FactoryLogic.OrderController().saveDOrderDO().then(data7 => {
 //       console.log(data7);
-      
+
 //   })
 //   })
 //   })
@@ -453,10 +590,10 @@
 //       console.log(data1);
 //   FactoryLogic.OrderController().selectOrderDO(1).then(data2 => {
 //       console.log(data2);
-  
+
 //   FactoryLogic.OrderController().updateDetailOrderDO(3,3,3).then(data7 => {
 //       console.log(data7);
-      
+
 //   })
 //   })
 //   })
@@ -467,16 +604,16 @@
 //       console.log(data1);
 //   FactoryLogic.OrderController().selectOrderDO(1).then(data2 => {
 //       console.log(data2);
-  
+
 //   FactoryLogic.OrderController().deleteAllDO().then(data7 => {
 //       console.log(data7);
-      
+
 //   })
 //   })
 //   })
-  
-  
-  
+
+
+
 //     ***************************** GETS ****************************************************
 
 
@@ -512,7 +649,7 @@
 // })
 
 
-//  *************************************  BILL MAINTENANCE ********************************************** */    
+//  *************************************  BILL MAINTENANCE ********************************************** */
 
 //    ************ REGISTER ********************** */
 
@@ -527,19 +664,19 @@
 //       let enterDate=FactoryLogic.BillController().enterDate(date);
 //       console.log(enterDate);
 //   FactoryLogic.BillController().saveBill().then(data3 => {
-//       console.log(data3);  
+//       console.log(data3);
 //   })
 //   })
 //   })
- 
+
 // ************************** COLLECT BILL ************************* */
 
 //  FactoryLogic.BillController().listCustomerBill().then(data1=> {
-//       console.log(data1);  
+//       console.log(data1);
 //   FactoryLogic.BillController().selectBill(2).then(data2 => {
 //       console.log(data2);
 //   FactoryLogic.BillController().collectBill(80).then(data3 => {
-//       console.log("Reimbursement: "+data3);  
+//       console.log("Reimbursement: "+data3);
 //   })
 //   })
 //     })
@@ -547,33 +684,33 @@
 // ************************** CANCEL BILL ************************* */
 
 //  FactoryLogic.BillController().listCustomerBill().then(data1=> {
-//       console.log(data1);  
+//       console.log(data1);
 //   FactoryLogic.BillController().selectBill(1).then(data2 => {
 //       console.log(data2);
 //   FactoryLogic.BillController().cancelBill().then(data3 => {
-//       console.log(data3);  
+//       console.log(data3);
 //   })
 //   })
 //     })
 //   *************************** GETS ************************ */
 
 //  FactoryLogic.BillController().getLBill(1).then(data3 => {
-//       console.log(data3);  
+//       console.log(data3);
 //   })
 //  FactoryLogic.BillController().getLBillbyOrder(2).then(data3 => {
-//       console.log(data3);  
+//       console.log(data3);
 //   })
 
 //  FactoryLogic.BillController().getLBillbyCustomer("Customer2").then(data3 => {
-//       console.log(data3);  
+//       console.log(data3);
 //   })
 // let date1=new Date("November 2, 2021");
 // let date2=new Date("November 5, 2021");
 //  FactoryLogic.BillController().getLBillbyDates(date1,date2).then(data3 => {
-//       console.log(data3);  
+//       console.log(data3);
 //   })
 //  FactoryLogic.BillController().getLBills().then(data3 => {
-//       console.log(data3);  
+//       console.log(data3);
 //   })
 
 //  *********************************************************** */
@@ -698,5 +835,6 @@
 //      addmanytable().then(
 
 //   )
- 
 
+
+//#endregion

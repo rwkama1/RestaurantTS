@@ -16,8 +16,9 @@ export class CategoryController implements ICategoryController{
 
         return CategoryController.instancia;
  }
+//#region Maintenance
 
-     //************ MAINTENANCE ********************** */
+
 
      listCategories=async()=>
      {
@@ -43,31 +44,34 @@ export class CategoryController implements ICategoryController{
          return cat
    
           }
-     //********************* GETS ************************ */
+  //#endregion
 
-     getLSortCategories=async()=>
-     {
-         let categories= await LGetCategory.getLSortCategories();
-         let arraydto=InstanceArrayDTO.instanceArrayCategory(categories);
-         return arraydto
-     }
-     getLCategory=async(name:string)=>
-     {
-        let cat= await LGetCategory.getLCategory(name);
-        if(cat===null)
-        {
-            throw new LogicException("The Category does not exists in the system");
-            
-        }
-       return cat.getDTO()
-         
-     }
-     getLCategories=async()=>
-      {
-         let cate= await LGetCategory.getLCategories();
-         let arraydto=InstanceArrayDTO.instanceArrayCategory(cate.arraycat);
-         return arraydto
+//#region Gets
+getLSortCategories=async()=>
+{
+    let categories= await LGetCategory.getLSortCategories();
+    let arraydto=InstanceArrayDTO.instanceArrayCategory(categories);
+    return arraydto
+}
+getLCategory=async(name:string)=>
+{
+   let cat= await LGetCategory.getLCategory(name);
+   if(cat===null)
+   {
+       throw new LogicException("The Category does not exists in the system");
+       
+   }
+  return cat.getDTO()
+    
+}
+getLCategories=async()=>
+ {
+    let cate= await LGetCategory.getLCategories();
+    let arraydto=InstanceArrayDTO.instanceArrayCategory(cate.arraycat);
+    return arraydto
+
+ }
+//#endregion
    
-      }
      
 }

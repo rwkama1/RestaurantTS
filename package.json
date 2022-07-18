@@ -1,17 +1,21 @@
 {
   "name": "restaurantt",
-  "version": "1.0.4",
-  "description": "This package contains a backend of what would be the logic of a restaurant software, the architecture used is made in 3 layers",
+  "version": "1.0.10",
+  "description": "This package contains a backend of what would be the logic of a restaurant software",
   "main": "app.js",
 
   "scripts": {
     "start": "node app"
   },
+  "dependencies": {
+    "mssql": "8.1.1"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/rwkama1/RestaurantTS"
   },
-  "keywords": ["backend",
+  "keywords": [
+    "backend",
     "typeScript",
     "ts",
     "js",
