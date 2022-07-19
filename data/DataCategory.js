@@ -1,49 +1,38 @@
 const { VarChar,Int, Money } = require("mssql");
-const { DTORoom } = require("../DTO/DTORoom");
 
 const { Conection } = require("./Conection");
 
-class DataRoom
+class DataCategory
 {
     //#region CRUD
 
-    static registerRoom=async(dtoroom)=>
+    static registerCategory=async(dtocategory)=>
     {
-          let queryinsert = `  
-
-            insert into Room values (@Typee,@Typebed,
-            @Accommodation,@Descriptionn,@Value,'Active',@Squaremeter,@Imagee)
-              
+          let queryinsert = ` 
+            insert into Category values (@NameC,@DescriptionC)           
           `;
           let pool = await Conection.conection();
           const result = await pool.request()
-          .input('Typee', VarChar, dtoroom.Typee)
-          .input('Typebed', VarChar, dtoroom.Typebed)
-          .input('Accommodation', VarChar, dtoroom.Accommodation)
-          .input('Descriptionn',VarChar, dtoroom.Descriptionn)
-          .input('Value', Money, dtoroom.Value)
-          .input('Imagee', VarChar, dtoroom.Imagee)
-          .input('Squaremeter', Int, dtoroom.Squaremeter)
+          .input('NameC', VarChar, dtocategory.NameC)
+          .input('DescriptionC', VarChar, dtocategory.DescriptionC)
           .query(queryinsert)
           pool.close();
           return true;
   
     }
-    static updateRoom=async(dtoroom)=>
+    static updateCategory=async(dtocategory)=>
     {
       let resultquery;
           let queryupdate = `
 
-          IF NOT EXISTS ( SELECT * FROM Room WHERE NumberRoomm=@NumberRoomm and Statee='Active')
+          IF NOT EXISTS ( SELECT IDCategory FROM Category WHERE IDCategory=@IDCategory)
           BEGIN
-            select -1 as notexistroom
+            select -1 as notexistcategory
           END
           ELSE
           BEGIN
-            Update Room Set Typee=@Typee,Typebed=@Typebed,
-            Accommodation=@Accommodation,
-            Descriptionn=@Descriptionn,Value=@Value,
-            Imagee=@Imagee where NumberRoomm=@NumberRoomm
+            UPDATE Category Set NameC=@NameC,DescriptionC=@DescriptionC
+            WHERE IDCategory=@IDCategory
             select 1 as updatesuccess
           END
 
@@ -51,17 +40,11 @@ class DataRoom
           let pool = await Conection.conection();
          
           const result = await pool.request()
-          .input('NumberRoomm', Int, dtoroom.NumberRoomm)
-          .input('Typee', VarChar, dtoroom.Typee)
-          .input('Typebed', VarChar, dtoroom.Typebed)
-          .input('Accommodation', VarChar, dtoroom.Accommodation)
-          .input('Descriptionn',VarChar, dtoroom.Descriptionn)
-          .input('Value', Money, dtoroom.Value)
-          .input('Imagee', VarChar, dtoroom.Imagee)
-          .input('Squaremeter', Int, dtoroom.Squaremeter)
-      
+          .input('IDCategory', Int, dtocategory.IDCategory)
+          .input('NameC', VarChar, dtocategory.NameC)
+          .input('DescriptionC', VarChar, dtocategory.DescriptionC)
           .query(queryupdate)
-          resultquery = result.recordset[0].notexistroom;
+          resultquery = result.recordset[0].notexistcategory;
           if(resultquery===undefined)
           {
               resultquery = result.recordset[0].updatesuccess;
@@ -70,36 +53,7 @@ class DataRoom
           return resultquery;
        
     }
-    static inactiveRoom=async(numberroom)=>
-    {
-          let resultquery;
-          let queryupdate =`
-
-          IF NOT EXISTS ( SELECT * FROM Room WHERE NumberRoomm=@NumberRoomm and Statee='Active')
-          BEGIN
-            select -1 as notexistroom
-          END
-          ELSE
-          BEGIN
-            Update Room Set Statee='Inactive'
-            where NumberRoomm=@NumberRoomm
-            select 1 as updatesuccess
-          END
-
-          `;
-          let pool = await Conection.conection();  
-          const result = await pool.request()
-          .input('NumberRoomm', Int,numberroom)
-          .query(queryupdate)
-          resultquery = result.recordset[0].notexistroom;
-          if(resultquery===undefined)
-          {
-              resultquery = result.recordset[0].updatesuccess;
-          }
-          pool.close();
-          return resultquery;
   
-    }
     
     //#endregion
 
@@ -258,4 +212,4 @@ class DataRoom
    }
    //#endregion
 }
-module.exports = { DataRoom };
+module.exports = { DataCategory };

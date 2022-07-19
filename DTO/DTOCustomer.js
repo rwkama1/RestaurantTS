@@ -4,11 +4,11 @@ class DTOCustomer
     NamesC="";
     LastNameC="";
     PhoneNumberC="";
-    
+
     constructor()
     {
 
-    }
+    }             
    
 }
 module.exports = { DTOCustomer };

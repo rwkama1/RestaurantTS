@@ -1,4 +1,5 @@
 const { VarChar,Int } = require("mssql");
+const { DTOCustomer } = require("../DTO/DTOCustomer");
 
 const { Conection } = require("./Conection");
 
@@ -17,9 +18,9 @@ class DataCustomer
           `;
           let pool = await Conection.conection();
           const result = await pool.request()
-          .input('NamesC', VarChar, dtocustomer.idcard)
-          .input('LastNameC', VarChar, dtocustomer.name)
-          .input('PhoneNumberC', VarChar, dtocustomer.surname)
+          .input('NamesC', VarChar, dtocustomer.NamesC)
+          .input('LastNameC', VarChar, dtocustomer.LastNameC)
+          .input('PhoneNumberC', VarChar, dtocustomer.PhoneNumberC)
           .query(queryinsert)
           pool.close();
           return true;
@@ -37,8 +38,10 @@ class DataCustomer
           END
           ELSE
           BEGIN
-            UPDATEd Customer 
-            Set Names=@Names,LastName=@LastName,Country=@Country,Town=@Town,Addresss=@Addresss,PhoneNumber=@PhoneNumber,Mail=@Mail where IDCard=@IDCard
+            UPDATE Customer 
+            Set NamesC=@NamesC,LastNameC=@LastNameC,
+            PhoneNumberC=@PhoneNumberC
+             WHERE IDCustomer=@IDCustomer
             select 1 as updatesuccess
           END
 
@@ -46,9 +49,10 @@ class DataCustomer
           let pool = await Conection.conection();
          
           const result = await pool.request()
-          .input('IDCard', VarChar, dtopassenger.idcard)
-          .input('Names', VarChar, dtopassenger.name)
-          .input('LastName', VarChar, dtopassenger.surname)
+          .input('IDCustomer', Int, dtocustomer.IDCustomer)
+          .input('NamesC', VarChar, dtocustomer.NamesC)
+          .input('LastNameC', VarChar, dtocustomer.LastNameC)
+          .input('PhoneNumberC', VarChar, dtocustomer.PhoneNumberC)
           .query(queryupdate)
           resultquery = result.recordset[0].notexistcustomer;
           if(resultquery===undefined)
@@ -59,97 +63,36 @@ class DataCustomer
           return resultquery;
        
     }
-    static updatePasswordPassenger=async(idcard,password,salt)=>
-    {
-           let resultquery;
-          let queryupdate = `
-
-          IF NOT EXISTS ( SELECT * FROM Passenger WHERE IDCard=@IDCard and Statee='Active')
-          BEGIN
-            select -1 as notexistpassenger
-          END
-          ELSE
-          BEGIN
-            Update Passenger 
-            Set Salt=@Salt,Passwordd=@Passwordd where IDCard=@IDCard
-            select 1 as updatesuccess
-          END
-
-          `;
-          let pool = await Conection.conection();
-          const result = await pool.request()
-          .input('IDCard', VarChar, idcard)
-          .input('Salt', VarChar, salt)
-          .input('Passwordd', VarChar, password)
-          .query(queryupdate)
-          resultquery = result.recordset[0].notexistpassenger;
-          if(resultquery===undefined)
-          {
-              resultquery = result.recordset[0].updatesuccess;
-          }
-          pool.close();
-          return resultquery;
-       
-    }
-    static inactivePassenger=async(idcard)=>
-    {
-          let resultquery;
-          let queryupdate =`
-
-          IF NOT EXISTS ( SELECT * FROM Passenger WHERE IDCard=@IDCard and Statee='Active')
-          BEGIN
-            select -1 as notexistpassenger
-          END
-          ELSE
-          BEGIN
-            Update Passenger Set Statee='Inactive' where IDCard=@IDCard
-            select 1 as updatesuccess
-          END
-
-          `;
-          let pool = await Conection.conection();  
-          const result = await pool.request()
-          .input('IDCard', VarChar,idcard)
-          .query(queryupdate)
-          resultquery = result.recordset[0].notexistpassenger;
-          if(resultquery===undefined)
-          {
-              resultquery = result.recordset[0].updatesuccess;
-          }
-          pool.close();
-          return resultquery;
-  
-    }
-    
+   
     //#endregion
 
     //#region GETS
 
-    static getPassenger=async(idcard)=>
+    static getCustomer=async(idcustomer)=>
     {
             let resultquery;
             let querysearch = `
 
-            IF NOT EXISTS ( SELECT * FROM Passenger WHERE IDCard=@IDCard and Statee='Active')
+            IF NOT EXISTS ( SELECT IDCustomer FROM Customer WHERE IDCustomer=@IDCustomer)
             BEGIN
-              select -1 as notexistpassenger
+              select -1 as notexistcustomer
             END
             ELSE
             BEGIN
-               SELECT * FROM Passenger WHERE IDCard=@IDCard and Statee='Active'
+               SELECT * FROM Customer WHERE IDCustomer=@IDCustomer
             END
 
             `
             let pool = await Conection.conection();
              const result = await pool.request()
-             .input('IDCard', VarChar, idcard)
+             .input('IDCustomer', Int, idcustomer)
              .query(querysearch)
-              resultquery = result.recordset[0].notexistpassenger; 
+              resultquery = result.recordset[0].notexistcustomer; 
             if (resultquery===undefined) {
               let resultrecordset=result.recordset[0];
-              let passenger = new DTOPassenger();
-              this.getinformation(passenger, resultrecordset);
-              resultquery=passenger
+              let customer = new DTOCustomer();
+              this.getinformation(customer, resultrecordset);
+              resultquery=customer
             }
            pool.close();
            return resultquery;
@@ -157,22 +100,22 @@ class DataCustomer
     
      }
 
-     static getPassengers=async(orderby="idcard")=>
+     static getCustomers=async(orderby="IDCustomer")=>
     {
             let array=[];
             let querysearch = `
 
-               SELECT * FROM Passenger WHERE Statee='Active'
+               SELECT * FROM Customer
                ORDER BY ${orderby} desc
 
             `
             let pool = await Conection.conection();
              const result = await pool.request()
              .query(querysearch)
-             for (var p of result.recordset) {
-              let passenger = new DTOPassenger();
-              this.getinformation(passenger, p);
-              array.push(passenger);
+             for (var cust of result.recordset) {
+              let customer = new DTOCustomer();
+              this.getinformation(customer, cust);
+              array.push(customer);
             } 
            pool.close();
            return array;
@@ -180,20 +123,18 @@ class DataCustomer
     
      }
 
-     static getSearchPassengers=async(name="",lastname="",country="",town="",address="",phone="",mail=""
-     ,orderby="idcard")=>
+     static getSearchCustomers=async(idcustomer1=0,idcustomer2=99999
+      ,namec="",lastnamec="",phonename=""
+     ,orderby="IDCustomer")=>
      {
              let array=[];
              let querysearch = `
  
-                SELECT * FROM Passenger WHERE Statee='Active'
-                AND  Names LIKE '%${name}%' 
-                AND LastName LIKE '%${lastname}%' 
-                AND Country LIKE '%${country}%' 
-                AND Town LIKE '%${town}%' 
-                AND Addresss LIKE '%${address}%' 
-                AND PhoneNumber LIKE '%${phone}%' 
-                AND Mail LIKE '%${mail}%' 
+                SELECT * FROM Customer WHERE
+                IDCustomer between ${idcustomer1} and ${idcustomer2}
+                AND NamesC LIKE '%${namec}%' 
+                AND LastNameC LIKE '%${lastnamec}%'
+                AND PhoneNumberC LIKE '%${phonename}%'  
                 ORDER BY ${orderby} desc
              `
 
@@ -201,11 +142,11 @@ class DataCustomer
              let pool = await Conection.conection();
               const result = await pool.request()
               .query(querysearch)
-              for (var p of result.recordset) {
-               let passenger = new DTOPassenger();
-               this.getinformation(passenger, p);
-               array.push(passenger);
-             } 
+              for (var cust of result.recordset) {
+                let customer = new DTOCustomer();
+                this.getinformation(customer, cust);
+                array.push(customer);
+              } 
             pool.close();
             return array;
        
@@ -216,19 +157,12 @@ class DataCustomer
 
    //#region GET INFORMATION
 
-   static getinformation(passenger, result) {
+   static getinformation(customer, result) {
 
-    passenger.idcard = result.IDCard;
-    passenger.name = result.Names;
-    passenger.surname = result.LastName;
-    passenger.country = result.Country;
-    passenger.town = result.Town; 
-    passenger.address = result.Addresss;
-    passenger.phone = result.PhoneNumber; 
-    passenger.maill = result.Mail;
-    passenger.salt = result.Salt; 
-    passenger.password = result.Passwordd;
-    passenger.statee = result.Statee; 
+    customer.IDCustomer = result.IDCustomer;
+    customer.NamesC = result.NamesC;
+    customer.LastNameC = result.LastNameC;
+    customer.PhoneNumberC = result.PhoneNumberC;
 
    }
 

@@ -1,7 +1,6 @@
-
-
-
+const { DataCustomer } = require("./data/DataCustomer");
 const { DataUser } = require("./data/DataUser");
+const { DTOCustomer } = require("./DTO/DTOCustomer");
 const { DTOUser } = require("./DTO/DTOUser");
 const { HashPassword } = require("./Hash_Login/hashPassword");
 const { LoginUser } = require("./Hash_Login/LoginUser");
@@ -97,44 +96,91 @@ let usermaintenance=async()=>
         // let getUsers = await DataUser.getUsers()
         // console.log(getUsers);
 
-        //   let getSearchUsers = await DataUser.getSearchUsers()
+        //   let getSearchUsers = await DataUser.getSearchUsers(
+        //    "","","","Cash","CityU"
+        // )
         // console.log(getSearchUsers);
 
 }
 usermaintenance().then()
 
 //#endregion
-
 //#region CUSTOMER
 
 let customermaintenace=async()=>
 {
-      async function registerCustomer() {
-        for (let i = 1; i < 10; i++) {
+    //   async function registerCustomer() {
+    //     for (let i = 1; i < 20; i++) {
 
-            let dtouser = new DTOUser();
-            dtouser.IDCardU=`11111111111${i}` ;
-            dtouser.NamesUserU=`User${i}`;
-            dtouser.CityU=`City${i}`;
-            dtouser.TypeUserU="Administrator" ;
-            dtouser.PasswordUserU=`Password${i}`;
+    //         let dtocust = new DTOCustomer();
+    //         dtocust.NamesC=`Customer${i}`;
+    //         dtocust.LastNameC=`LastNameCustomer${i}`;
+    //         dtocust.PhoneNumberC=`1111111111${i}` ;
+           
+    //         let registerCustomer = await DataCustomer.registerCustomer(dtocust);
+    //          console.log("The customer registered successfully");
+    //     }
+    // }
+    //  await registerCustomer();
 
-            const passh = HashPassword.hashPassword(dtouser.PasswordUserU);
-            dtouser.PasswordUserU = passh.hash;
-            dtouser.HashhU = passh.salt;
-            let registeruser = await DataUser.registerUser(dtouser);
-            if (registeruser===-1) {
-                throw new Error("User already exists");
-            }
-             console.log("The user registered successfully");
-        }
-    }
-     await registerCustomer();
+
+    // async function updateCustomer() {
+    //         let dtocust = new DTOCustomer();
+    //         dtocust.IDCustomer=1;
+    //         dtocust.NamesC=`NameUpdated`;
+    //         dtocust.LastNameC=`LastNameCustomer`;
+    //         dtocust.PhoneNumberC=`11111111111` ;
+    //     let updateCustomer = await DataCustomer.updateCustomer(dtocust);
+    //     if (updateCustomer === -1) {
+    //         throw new Error("Customer no exists");
+    //     }
+    //     console.log("The customer updated successfully");
+    // }
+    // await updateCustomer();
+
+    
+        // let getCustomer = await DataCustomer.getCustomer(1)
+        // console.log(getCustomer);
+
+        // let getCustomers = await DataCustomer.getCustomers()
+        // console.log(getCustomers);
+
+        //   let getSearchCustomers = await DataCustomer.getSearchCustomers(
+        //     0,5,"","","","NamesC"
+        //   )
+        // console.log(getSearchCustomers);
+
+
+
 }
 customermaintenace().then()
 
 //#endregion
+//#region CATEGORY
 
+let categorymaintenance=async()=>
+{
+    //   async function registerCustomer() {
+    //     for (let i = 1; i < 20; i++) {
+
+    //         let dtocust = new DTOCustomer();
+    //         dtocust.NamesC=`Customer${i}`;
+    //         dtocust.LastNameC=`LastNameCustomer${i}`;
+    //         dtocust.PhoneNumberC=`1111111111${i}` ;
+           
+    //         let registerCustomer = await DataCustomer.registerCustomer(dtocust);
+    //          console.log("The customer registered successfully");
+    //     }
+    // }
+    //  await registerCustomer();
+
+
+
+
+
+}
+categorymaintenance().then()
+//#endregion
 //#region OTHERS
  //const {FactoryLogic}=require("./Restaurant/dist/logic/FactoryLogic");
 // const { default: DTOCategory } = require("./Restaurant/dist/shared/entity/DTOCategory");
@@ -835,6 +881,4 @@ customermaintenace().then()
 //      addmanytable().then(
 
 //   )
-
-
 //#endregion

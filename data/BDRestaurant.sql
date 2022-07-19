@@ -106,14 +106,5 @@ go
 --drop table Users
 
 
---select * from users
---select * from Bill
---select * from DetailOrder
---select * from Orderr
---select * from Table_Customer
---select * from TablesR
---select * from Ingredient
---select * from Dish
---select * from Category
---select * from Customer
-
+ 
+ select * from Users
