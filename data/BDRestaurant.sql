@@ -107,4 +107,4 @@ go
 
 
  
- select * from Users
+-- select * from Category

@@ -1,8 +1,7 @@
 const { Money, VarChar, Int } = require("mssql");
-const { DTOService } = require("../DTO/DTOService");
 const { Conection } = require("./Conection");
 
-class DataService
+class DataDish
 {
     //#region CRUD
 
@@ -85,7 +84,11 @@ class DataService
       }
 
     //#endregion
+    //#region INGREDIENTS
 
+    
+
+    //#endregion
     //#region GETS
       
     static getService=async(idservice)=>
@@ -254,4 +257,4 @@ class DataService
      }
     //#endregion
 }
-module.exports = { DataService };
+module.exports = { DataDish };

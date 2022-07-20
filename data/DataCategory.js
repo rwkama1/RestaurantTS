@@ -1,4 +1,5 @@
 const { VarChar,Int, Money } = require("mssql");
+const { DTOCategory } = require("../DTO/DTOCategory");
 
 const { Conection } = require("./Conection");
 
@@ -59,157 +60,97 @@ class DataCategory
 
     //#region GETS
 
-    static getRoom=async(numberoom)=>
+    static getCategory=async(idcategory)=>
     {
             let resultquery;
             let querysearch = `
 
-            IF NOT EXISTS ( SELECT * FROM Room WHERE NumberRoomm=@NumberRoomm and Statee='Active')
+            IF NOT EXISTS ( SELECT IDCategory FROM Category WHERE IDCategory=@IDCategory)
             BEGIN
-              select -1 as notexistroom
+              select -1 as notexistcategory
             END
             ELSE
             BEGIN
-                SELECT * FROM Room
-                WHERE NumberRoomm=@NumberRoomm and Statee='Active'
+                SELECT * FROM Category
+                WHERE IDCategory=@IDCategory
             END
 
             `
             let pool = await Conection.conection();
              const result = await pool.request()
-             .input('NumberRoomm', Int, numberoom)
+             .input('IDCategory', Int, idcategory)
              .query(querysearch)
-            resultquery = result.recordset[0].notexistroom; 
+            resultquery = result.recordset[0].notexistcategory; 
             if (resultquery===undefined) {
              let resultrecordset=result.recordset[0];
-              let room = new DTORoom();
-              this.getinformation(room, resultrecordset);
-              resultquery=room
+              let cat = new DTOCategory();
+              this.getinformation(cat, resultrecordset);
+              resultquery=cat
             }
            pool.close();
            return resultquery;
       
     
      }
-
-     static getRooms=async(orderby="NumberRoomm")=>
+     static getCategories=async(orderby="NameC")=>
     {
             let array=[];
             let querysearch = `
 
-               SELECT * FROM Room WHERE Statee='Active'
+               SELECT * FROM Category 
                ORDER BY ${orderby} desc
 
             `
             let pool = await Conection.conection();
              const result = await pool.request()
              .query(querysearch)
-             for (var r of result.recordset) {
-              let room = new DTORoom();
-              this.getinformation(room,  r);
-              array.push(room);
+             for (var resultrecordset of result.recordset) {
+              let cat = new DTOCategory();
+              this.getinformation(cat, resultrecordset);
+              array.push(cat);
             } 
            pool.close();
            return array;
       
     
      }
-
-     static getSearchRoom=async(type="",typebed="",accommodation="",
-     value1=0,value2=99999, squarem1=0,squarem2=99999,orderby="NumberRoomm")=>
+     static getSearchCategories=async(idcategory1=0,idcategory2=9999,NameC="",
+     orderby="NameC")=>
      {
              let array=[];
              let querysearch = `
  
-                SELECT * FROM Room WHERE Statee='Active'
-                AND  Typee LIKE '%${type}%' 
-                AND Typebed LIKE '%${typebed}%' 
-                AND Accommodation LIKE '%${accommodation}%' 
-                AND Squaremeter BETWEEN ${squarem1}  AND ${squarem2}
-                AND Value BETWEEN ${value1} AND ${value2} 
-                ORDER BY ${orderby} desc
+             SELECT * FROM Category 
+             WHERE IDCategory between ${idcategory1} and ${idcategory2}
+             AND NameC like '%${NameC}%'
+             ORDER BY ${orderby} desc
              `
 
              let pool = await Conection.conection();
               const result = await pool.request()
               .query(querysearch)
               for (var r of result.recordset) {
-                let room = new DTORoom();
-                this.getinformation(room,  r);
-                array.push(room);
+                let cat = new DTOCategory();
+                this.getinformation(cat, r);
+                array.push(cat);
              } 
             pool.close();
             return array;
-       
-     
+
       }
-
-     static getRoomsMultipleNumbers=async(arrayroom,orderby="NumberRoomm")=>
-    {
-            let array=[];
-            let querysearch = `
-
-               SELECT * FROM Room WHERE Statee='Active'
-               AND numberroomm in (
-                ${
-                  this.forinsidestring(arrayroom)
-                }
-                )
-               ORDER BY ${orderby} desc
-
-            `
-            let pool = await Conection.conection();
-             const result = await pool.request()
-             .query(querysearch)
-             for (var r of result.recordset) {
-              let room = new DTORoom();
-              this.getinformation(room,  r);
-              array.push(room);
-            } 
-           pool.close();
-           return array;
-      
-    
-     }
-
-    
-    
-
     //#endregion
 
    //#region GET INFORMATION
 
-   static getinformation(room, result) {
+   static getinformation(category, result) {
 
-    room.NumberRoomm = result.NumberRoomm;
-    room.Typee = result.Typee;
-    room.Typebed = result.Typebed;
-    room.Accommodation = result.Accommodation;
-    room.Descriptionn = result.Descriptionn; 
-    room.Value = result.Value;
-    room.Statee = result.Statee; 
-    room.Imagee = result.Imagee;
-    room.Squaremeter = result.Squaremeter; 
-    
-   }
-
-   static forinsidestring(array)
-   {
-    let stringelement="";
-    for (let index = 0; index < array.length; index++) {
-      const element = array[index];
-      if (index===array.length-1) {
-        stringelement=stringelement+element
-      }
-      else
-      {
-        stringelement=stringelement+element+","
-      }
-     
-    }
-    return stringelement
+    category.IDCategory = result.IDCategory;
+    category.NameC = result.NameC;
+    category.DescriptionC = result.DescriptionC;
    
    }
+
+ 
    //#endregion
 }
 module.exports = { DataCategory };

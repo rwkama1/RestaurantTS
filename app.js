@@ -1,5 +1,7 @@
+const { DataCategory } = require("./data/DataCategory");
 const { DataCustomer } = require("./data/DataCustomer");
 const { DataUser } = require("./data/DataUser");
+const { DTOCategory } = require("./DTO/DTOCategory");
 const { DTOCustomer } = require("./DTO/DTOCustomer");
 const { DTOUser } = require("./DTO/DTOUser");
 const { HashPassword } = require("./Hash_Login/hashPassword");
@@ -160,27 +162,52 @@ customermaintenace().then()
 
 let categorymaintenance=async()=>
 {
-    //   async function registerCustomer() {
-    //     for (let i = 1; i < 20; i++) {
+    //   async function registerCategory() {
+    //     for (let i = 1; i < 10; i++) {
 
-    //         let dtocust = new DTOCustomer();
-    //         dtocust.NamesC=`Customer${i}`;
-    //         dtocust.LastNameC=`LastNameCustomer${i}`;
-    //         dtocust.PhoneNumberC=`1111111111${i}` ;
+    //         let dtocat = new DTOCategory();
+    //         dtocat.NameC=`Category${i}`;
+    //         dtocat.DescriptionC=`Description${i}`;
            
-    //         let registerCustomer = await DataCustomer.registerCustomer(dtocust);
-    //          console.log("The customer registered successfully");
+    //         let registerCategory = await DataCategory.registerCategory(dtocat);
+    //          console.log("The category registered successfully");
     //     }
     // }
-    //  await registerCustomer();
+    //  await registerCategory();
 
 
+    // async function updateCategory() {
+    //         let dtocat = new DTOCategory();
+    //         dtocat.IDCategory=9;
+    //         dtocat.NameC=`CategoryUpdate`;
+    //         dtocat.DescriptionC=`DescriptionUpdate`;
+    //     let updateCategory = await DataCategory.updateCategory(dtocat);
+    //     if (updateCategory === -1) {
+    //         throw new Error("Category no exists");
+    //     }
+    //     console.log("The category updated successfully");
+    // }
+    // await updateCategory();
+
+    //  let getCategory = await DataCategory.getCategory(1)
+    //     console.log(getCategory);
+
+    //  let getSearchCategories = await DataCategory.getSearchCategories(
+    //     0,5,"","idcategory"
+    //  )
+    //  console.log(getSearchCategories);
 
 
 
 }
 categorymaintenance().then()
 //#endregion
+//#region  DISHES
+
+
+
+//#endregion
+
 //#region OTHERS
  //const {FactoryLogic}=require("./Restaurant/dist/logic/FactoryLogic");
 // const { default: DTOCategory } = require("./Restaurant/dist/shared/entity/DTOCategory");
