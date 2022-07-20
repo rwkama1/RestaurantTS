@@ -208,6 +208,7 @@ categorymaintenance().then()
 let dishesmaintenace=async()=>
 {
     //#region REGISTER
+
     let registerIngredient1=DishIngredients.registerIngredient("Ingredient1",20,2);
     if (registerIngredient1===-1) {
         throw new Error("The name ingredient already exist in the list")
@@ -221,8 +222,14 @@ let dishesmaintenace=async()=>
     }
     console.log(registerIngredient2);
 
+    // let removeIngredient=DishIngredients.removeIngredient("Ingredient2");
+    // if (removeIngredient===-1) {
+    //     throw new Error("The name ingredient not exist in the list")
+    // }
+    // console.log(removeIngredient);
 
-    let registerIngredient3=DishIngredients.registerIngredient("Ingredient2",21,1);
+
+    let registerIngredient3=DishIngredients.registerIngredient("Ingredient3",21,1);
     if (registerIngredient3===-1) {
         throw new Error("The name ingredient already exist in the list")
     }
@@ -232,8 +239,14 @@ let dishesmaintenace=async()=>
     let getArrayIngredients=DishIngredients.getArrayIngredients();
     console.log(getArrayIngredients);
 
+    // let clearArrayIngredients=DishIngredients.clearArrayIngredients();
+    // console.log(clearArrayIngredients);
+
+    // let getArrayIngredients2=DishIngredients.getArrayIngredients();
+    // console.log(getArrayIngredients2);
+
    
-//#endregion
+    //#endregion
    
 }
 dishesmaintenace().then()

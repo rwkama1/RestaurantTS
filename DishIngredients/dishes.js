@@ -40,12 +40,14 @@ class DishIngredients
     }
     static calculateTotal=async()=>
     {
-      
+        let total=0,amount=0;
         let arrayingredients=this._ingredientsarray;
         if(arrayingredients.length>0)
         {
-           let getDetailReservations=await DataReservation.getDetailReservationMultipleRooms(arrayroom);
-           return getDetailReservations
+          for (let index = 0; index < array.length; index++) {
+            const element = array[index];
+            
+          }
         }
         else
         {
@@ -55,17 +57,17 @@ class DishIngredients
 
     //************************************ */
 
-    static  removeNumberRoomArray(name)
+    static removeIngredient(name)
     {
         let arrayingredients=this._ingredientsarray;
         if(this.arrayingredients!=[])
         {
-            if (!arrayingredients.includes(numberroom)) {
+            if (this.searchNameIngredient(name)==="") {
                 throw new Error("That ingredient name does not exist in the list");
               } 
              for( var i = 0; i < arrayingredients.length; i++){ 
     
-                if ( arrayingredients[i] === numberroom) { 
+                if ( arrayingredients[i].name === name) { 
             
                     arrayingredients.splice(i, 1); 
                 }
