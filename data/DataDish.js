@@ -5,7 +5,7 @@ class DataDish
 {
     //#region CRUD
 
-    static registerService=async(names,value)=>
+    static registerDish=async(names,value)=>
       {
        
             let queryinsert = ` 
@@ -84,11 +84,13 @@ class DataDish
       }
 
     //#endregion
+
     //#region INGREDIENTS
 
     
 
     //#endregion
+    
     //#region GETS
       
     static getService=async(idservice)=>

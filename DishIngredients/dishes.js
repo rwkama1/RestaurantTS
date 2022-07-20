@@ -4,7 +4,8 @@ class DishIngredients
 
     //#region Properties
 
-     static _ingredientsarray = [];
+    static _ingredientsarray = [];
+
     static get ingredientsarray() {
         return this._ingredientsarray;
     }
@@ -18,15 +19,21 @@ class DishIngredients
 
   //#region Ingredients
   
-    static registerRoom=(numberroom)=>
+
+    static registerIngredient=(name,cost,quantity)=>
     {
-       let arrayroom=this.roomarray;
-       if (arrayroom.includes(numberroom)) {
-         return -1
+       
+       let arrayingredients=this._ingredientsarray;
+       let ingredient={name,cost,quantity};
+
+       let existname=this.searchNameIngredient(name);
+
+       if (existname!="") {
+         return -1 //Ingredient already exist
        } 
        else
        {
-        arrayroom.push(numberroom);
+         arrayingredients.push(ingredient);
          return 1
        }
        
@@ -34,8 +41,8 @@ class DishIngredients
     static calculateTotal=async()=>
     {
       
-        let arrayroom=this.roomarray;
-        if(arrayroom.length>0)
+        let arrayingredients=this._ingredientsarray;
+        if(arrayingredients.length>0)
         {
            let getDetailReservations=await DataReservation.getDetailReservationMultipleRooms(arrayroom);
            return getDetailReservations
@@ -48,19 +55,19 @@ class DishIngredients
 
     //************************************ */
 
-    static  removeNumberRoomArray(numberroom)
+    static  removeNumberRoomArray(name)
     {
-        let arrayroom=this.roomarray;
-        if(this.arrayroom!=[])
+        let arrayingredients=this._ingredientsarray;
+        if(this.arrayingredients!=[])
         {
-            if (!arrayroom.includes(numberroom)) {
-                throw new Error("That room number does not exist in the list");
+            if (!arrayingredients.includes(numberroom)) {
+                throw new Error("That ingredient name does not exist in the list");
               } 
-             for( var i = 0; i < arrayroom.length; i++){ 
+             for( var i = 0; i < arrayingredients.length; i++){ 
     
-                if ( arrayroom[i] === numberroom) { 
+                if ( arrayingredients[i] === numberroom) { 
             
-                    arrayroom.splice(i, 1); 
+                    arrayingredients.splice(i, 1); 
                 }
             
             }
@@ -71,11 +78,11 @@ class DishIngredients
            return -1
         }
     }
-     static  getNumberRoomsArray()
+     static  getArrayIngredients()
     {
-        if(this.roomarray!=[])
+        if(this.ingredientsarray!=[])
         {
-            return this.roomarray;
+            return this.ingredientsarray;
              
         }
         else
@@ -84,11 +91,11 @@ class DishIngredients
         }
     }
 
-     static cleanNumberRoomsArray()
+     static clearArrayIngredients()
     {
-        if(this.roomarray!=[])
+        if(this.ingredientsarray!=[])
         {
-            this.roomarray=[];
+            this.ingredientsarray=[];
             return 1
              
         }
@@ -98,7 +105,20 @@ class DishIngredients
         }
     }
 
+    static searchNameIngredient(name)
+    {
+        let namefound="";
+        let arrayingredients=this._ingredientsarray;
+        for (let index = 0; index < arrayingredients.length; index++) {
+            const element = arrayingredients[index];
+            if (element.name===name) {
+                namefound=element.name;
+            }
+            
+        }
+       return namefound;
+    }
     //#endregion
 
 }
-module.exports = { Reservation };
+module.exports = { DishIngredients };

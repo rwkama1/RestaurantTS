@@ -1,6 +1,7 @@
 const { DataCategory } = require("./data/DataCategory");
 const { DataCustomer } = require("./data/DataCustomer");
 const { DataUser } = require("./data/DataUser");
+const { DishIngredients } = require("./DishIngredients/dishes");
 const { DTOCategory } = require("./DTO/DTOCategory");
 const { DTOCustomer } = require("./DTO/DTOCustomer");
 const { DTOUser } = require("./DTO/DTOUser");
@@ -204,8 +205,38 @@ categorymaintenance().then()
 //#endregion
 //#region  DISHES
 
+let dishesmaintenace=async()=>
+{
+    //#region REGISTER
+    let registerIngredient1=DishIngredients.registerIngredient("Ingredient1",20,2);
+    if (registerIngredient1===-1) {
+        throw new Error("The name ingredient already exist in the list")
+    }
+    console.log(registerIngredient1);
 
 
+    let registerIngredient2=DishIngredients.registerIngredient("Ingredient2",20,1);
+    if (registerIngredient2===-1) {
+        throw new Error("The name ingredient already exist in the list")
+    }
+    console.log(registerIngredient2);
+
+
+    let registerIngredient3=DishIngredients.registerIngredient("Ingredient2",21,1);
+    if (registerIngredient3===-1) {
+        throw new Error("The name ingredient already exist in the list")
+    }
+    console.log(registerIngredient3);
+
+
+    let getArrayIngredients=DishIngredients.getArrayIngredients();
+    console.log(getArrayIngredients);
+
+   
+//#endregion
+   
+}
+dishesmaintenace().then()
 //#endregion
 
 //#region OTHERS
