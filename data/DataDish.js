@@ -1,82 +1,128 @@
 const { Money, VarChar, Int } = require("mssql");
+const { DTODish } = require("../DTO/DTODish");
 const { Conection } = require("./Conection");
 
 class DataDish
 {
     //#region CRUD
 
-    static registerDish=async(names,value)=>
-      {
-       
-            let queryinsert = ` 
-                insert into Servicee values (@NameS,@Value,'Active')
-            `;
-            let pool = await Conection.conection();
-            const result = await pool.request()
-            .input('NameS', VarChar, names)
-            .input('Value', Money, value)
-            .query(queryinsert)
-            pool.close();
-            return true;
-    
-      }
-    static updateService=async(idservice,value,names)=>
+    static registerDish=async(dtodishes,arrayingredients)=>
       {
             let resultquery;
-            let queryinsert = `
-
-            IF NOT EXISTS ( SELECT * FROM Servicee WHERE IDService=@IDService and Statee='Active')
-            BEGIN
-              select -1 as notexistservicee
-            END
-            ELSE
-            BEGIN
-              Update Servicee Set NameS=@NameS,Value=@Value where IDService=@IDService
-              select 1 as updatesucess
-
-            END
-
+            let queryinsert = 
+            `         
+              IF NOT EXISTS ( SELECT IDCategory FROM Category WHERE IDCategory=@IDCategory)
+              BEGIN
+                select -1 as notexistcategory
+              END
+              ELSE
+              BEGIN
+                 BEGIN TRANSACTION  
+                    insert into Dish values (@NameD,@IDCategory,@DescriptionD,@ImgD,@PriceD,@CostD,@QuantityAD)
+                    ${this.forAddIngredients(arrayingredients)}
+                      select 1 as insertsuccess
+                  IF(@@ERROR > 0)  
+                  BEGIN  
+                      ROLLBACK TRANSACTION  
+                  END  
+                  ELSE  
+                  BEGIN  
+                   COMMIT TRANSACTION  
+                  END   
+              END
             `;
             let pool = await Conection.conection();
             const result = await pool.request()
-            .input('IDService', Int, idservice)
-            .input('Value', Money, value)
-            .input('NameS', VarChar, names)
+            .input('NameD', VarChar, dtodishes.NameD)
+            .input('IDCategory', Int, dtodishes.Category.IDCategory)
+            .input('DescriptionD', VarChar, dtodishes.DescriptionD)
+            .input('ImgD', VarChar, dtodishes.ImgD)
+            .input('PriceD', Money, dtodishes.PriceD)
+            .input('CostD', Money, dtodishes.CostD)
+            .input('QuantityAD', Int, dtodishes.QuantityAD)
             .query(queryinsert)
-            resultquery = result.recordset[0].notexistservicee;
-            if(resultquery===undefined)
-            {
-                resultquery = result.recordset[0].updatesucess;
+            resultquery = result.recordset[0].notexistcategory; 
+            if (resultquery===undefined) {
+              resultquery = result.recordset[0].insertsuccess; 
             }
             pool.close();
             return resultquery;
     
       }
-    static disableService=async(idservice)=>
+    static updateDish=async(dtodish)=>
       {
             let resultquery;
             let queryinsert = `
 
-            IF NOT EXISTS ( SELECT * FROM Servicee WHERE IDService=@IDService and Statee='Active')
+            IF NOT EXISTS ( SELECT IDDishh FROM Dish WHERE IDDishh=@IDDishh)
             BEGIN
-              select -1 as notexistservicee
+              select -1 as notexistdish
             END
             ELSE
             BEGIN
-              Update Servicee Set Statee='Inactive' where IDService=@IDService
-              select 1 as disablesucess
+              IF NOT EXISTS ( SELECT IDCategory FROM Category WHERE IDCategory=@IDCategory)
+              BEGIN
+                select -2 as notexistcategory
+              END
+              ELSE
+              BEGIN
+                  Update Dish Set NameD=@NameD,
+                  IDCategory=@IDCategory,ImgD=@ImgD,
+                  PriceD=@PriceD where IDDishh=@IDDishh
+                  select 1 as updatesucess
+              END
 
             END
 
             `;
             let pool = await Conection.conection();
             const result = await pool.request()
-            .input('IDService', Int, idservice)
+            .input('IDDishh', Int, dtodish.IDDishh)
+            .input('NameD', VarChar, dtodish.NameD)
+            .input('ImgD', VarChar, dtodish.ImgD)
+            .input('PriceD', Money, dtodish.PriceD)
+            .input('IDCategory', Int, dtodish.Category.IDCategory)
             .query(queryinsert)
-            resultquery = result.recordset[0].notexistservicee;
+            resultquery = result.recordset[0].notexistdish;
             if(resultquery===undefined)
             {
-                resultquery = result.recordset[0].disablesucess;
+              resultquery = result.recordset[0].notexistcategory;
+              if(resultquery===undefined)
+              {
+                  resultquery = result.recordset[0].updatesucess;
+              }
+            }
+            pool.close();
+            return resultquery;
+    
+      }
+     static deleteDish=async(iddish)=>
+      {
+            let resultquery;
+            let queryinsert = `
+
+            IF NOT EXISTS ( SELECT IDDishh FROM Dish WHERE IDDishh=@IDDishh)
+            BEGIN
+              select -1 as notexistdish
+            END
+            ELSE
+            BEGIN
+           
+              DELETE   FROM  Ingredient where IDDishh=@IDDishh
+              DELETE   FROM  Dish where IDDishh=@IDDishh
+              select 1 as deletsuccess
+
+            END
+
+            `;
+            let pool = await Conection.conection();
+            const result = await pool.request()
+            .input('IDDishh', Int, iddish)
+            .query(queryinsert)
+            resultquery = result.recordset[0].notexistdish;
+            if(resultquery===undefined)
+            {
+                resultquery = result.recordset[0].deletsuccess;
             }
             pool.close();
             return resultquery;
@@ -86,7 +132,7 @@ class DataDish
     //#endregion
 
     //#region INGREDIENTS
-
+      
     
 
     //#endregion
@@ -240,18 +286,18 @@ class DataDish
      
   
      }
-     static forinsidestring(array)
+     static forAddIngredients(array)
      {
       let stringelement="";
       for (let index = 0; index < array.length; index++) {
         const element = array[index];
-        if (index===array.length-1) {
-          stringelement=stringelement+element
-        }
-        else
-        {
-          stringelement=stringelement+element+","
-        }
+       
+  
+          stringelement=stringelement+
+          `
+          insert into Ingredient values (IDENT_CURRENT('Dish'),'${element.NameI}',${element.CostI},${element.QuantityI})
+      
+          `
        
       }
       return stringelement

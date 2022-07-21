@@ -106,5 +106,12 @@ go
 --drop table Users
 
 
- 
--- select * from Category
+  select * from Category
+  
+  select * from Dish
+
+   select * from Ingredient
+
+   delete  from Dish
+
+    delete  from Ingredient

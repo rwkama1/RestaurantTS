@@ -1,3 +1,4 @@
+const { DTOIngredients } = require("../DTO/DTOIngredients");
 
 class DishIngredients
 {
@@ -17,15 +18,14 @@ class DishIngredients
     
     //#endregion
 
-  //#region Ingredients
+     //#region Ingredients
   
 
     static registerIngredient=(name,cost,quantity)=>
     {
        
        let arrayingredients=this._ingredientsarray;
-       let ingredient={name,cost,quantity};
-
+     
        let existname=this.searchNameIngredient(name);
 
        if (existname!="") {
@@ -33,25 +33,31 @@ class DishIngredients
        } 
        else
        {
-         arrayingredients.push(ingredient);
-         return 1
+        let dtoingredient=new DTOIngredients();
+        dtoingredient.Dishh=null;
+        dtoingredient.NameI=name;
+        dtoingredient.CostI=cost;
+        dtoingredient.QuantityI=quantity;
+        arrayingredients.push(dtoingredient);
+        return 1
        }
        
     }
-    static calculateTotal=async()=>
+    static calculateCostDish=()=>
     {
-        let total=0,amount=0;
+        let total=0;
         let arrayingredients=this._ingredientsarray;
         if(arrayingredients.length>0)
         {
-          for (let index = 0; index < array.length; index++) {
-            const element = array[index];
-            
+          for (let index = 0; index < arrayingredients.length; index++) {
+            const element = arrayingredients[index];
+            total=total+element.Amount();
           }
+          return total
         }
         else
         {
-           return  -1
+           return  -1  //Ingredients list empty
         }
     }
 
@@ -92,7 +98,6 @@ class DishIngredients
            return -1
         }
     }
-
      static clearArrayIngredients()
     {
         if(this.ingredientsarray!=[])
@@ -106,7 +111,6 @@ class DishIngredients
            return -1
         }
     }
-
     static searchNameIngredient(name)
     {
         let namefound="";

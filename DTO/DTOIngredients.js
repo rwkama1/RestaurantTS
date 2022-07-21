@@ -10,6 +10,16 @@ class DTOIngredients
 	CostI=0;
 	QuantityI=0;
     
+
+    Amount()
+    {
+        let amount=0,cost=0,quantity=0;
+        cost=this.CostI;
+        quantity=this.QuantityI;
+        amount=cost*quantity;
+        return amount
+    }
+
     constructor()
     {
 

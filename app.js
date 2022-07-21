@@ -1,9 +1,11 @@
 const { DataCategory } = require("./data/DataCategory");
 const { DataCustomer } = require("./data/DataCustomer");
+const { DataDish } = require("./data/DataDish");
 const { DataUser } = require("./data/DataUser");
 const { DishIngredients } = require("./DishIngredients/dishes");
 const { DTOCategory } = require("./DTO/DTOCategory");
 const { DTOCustomer } = require("./DTO/DTOCustomer");
+const { DTODish } = require("./DTO/DTODish");
 const { DTOUser } = require("./DTO/DTOUser");
 const { HashPassword } = require("./Hash_Login/hashPassword");
 const { LoginUser } = require("./Hash_Login/LoginUser");
@@ -209,47 +211,81 @@ let dishesmaintenace=async()=>
 {
     //#region REGISTER
 
-    let registerIngredient1=DishIngredients.registerIngredient("Ingredient1",20,2);
-    if (registerIngredient1===-1) {
-        throw new Error("The name ingredient already exist in the list")
-    }
-    console.log(registerIngredient1);
+//     let registerIngredient1=DishIngredients.registerIngredient("Ingredient1",20,2);
+//     if (registerIngredient1===-1) {
+//         throw new Error("The name ingredient already exist in the list")
+//     }
+//     console.log(registerIngredient1);
 
 
-    let registerIngredient2=DishIngredients.registerIngredient("Ingredient2",20,1);
-    if (registerIngredient2===-1) {
-        throw new Error("The name ingredient already exist in the list")
-    }
-    console.log(registerIngredient2);
+//     // let registerIngredient2=DishIngredients.registerIngredient("Ingredient2",20,1);
+//     // if (registerIngredient2===-1) {
+//     //     throw new Error("The name ingredient already exist in the list")
+//     // }
+//     // console.log(registerIngredient2);
 
-    // let removeIngredient=DishIngredients.removeIngredient("Ingredient2");
-    // if (removeIngredient===-1) {
-    //     throw new Error("The name ingredient not exist in the list")
-    // }
-    // console.log(removeIngredient);
-
-
-    let registerIngredient3=DishIngredients.registerIngredient("Ingredient3",21,1);
-    if (registerIngredient3===-1) {
-        throw new Error("The name ingredient already exist in the list")
-    }
-    console.log(registerIngredient3);
+//     // let removeIngredient=DishIngredients.removeIngredient("Ingredient2");
+//     // if (removeIngredient===-1) {
+//     //     throw new Error("The name ingredient not exist in the list")
+//     // }
+//     // console.log(removeIngredient);
 
 
-    let getArrayIngredients=DishIngredients.getArrayIngredients();
-    console.log(getArrayIngredients);
+//     // let registerIngredient3=DishIngredients.registerIngredient("Ingredient3",21,1);
+//     // if (registerIngredient3===-1) {
+//     //     throw new Error("The name ingredient already exist in the list")
+//     // }
+//     // console.log(registerIngredient3);
 
-    // let clearArrayIngredients=DishIngredients.clearArrayIngredients();
-    // console.log(clearArrayIngredients);
 
-    // let getArrayIngredients2=DishIngredients.getArrayIngredients();
-    // console.log(getArrayIngredients2);
+//     let getArrayIngredients=DishIngredients.getArrayIngredients();
+//     console.log(getArrayIngredients);
 
-   
+//     // let clearArrayIngredients=DishIngredients.clearArrayIngredients();
+//     // console.log(clearArrayIngredients);
+
+//     // let getArrayIngredients2=DishIngredients.getArrayIngredients();
+//     // console.log(getArrayIngredients2);
+
+//     let calculateCostDish=DishIngredients.calculateCostDish();
+//     if (calculateCostDish===-1) {
+//         throw new Error("The ingredient lists is empty")
+//     }
+//     console.log(calculateCostDish);
+
+//   let dtodishes=new DTODish();
+//   dtodishes.NameD="NameDish3";
+//   dtodishes.Category.IDCategory=3;
+//   dtodishes.DescriptionD="Description";
+//   dtodishes.ImgD="UrlImg";
+//   dtodishes.CostD=calculateCostDish;
+//   dtodishes.PriceD=50;//this is the price that is indicated once knowing the cost
+//   dtodishes.QuantityAD=0;
+ 
+//   let registerDish=await DataDish.registerDish(dtodishes,getArrayIngredients);
+//     if (registerDish===-1) {
+//         throw new Error("Category no exists")
+//     }
+//     console.log(registerDish);
+
+
+
     //#endregion
-   
+    //#region  MAINTENACE
+
+    let updateDish=await DataDish.updateDish("Ingredient1",20,2);
+    if (updateDish===-1) {
+        throw new Error("Dish no exist")
+    }
+    if (updateDish===-2) {
+        throw new Error("Category no exist")
+    }
+    console.log(updateDish);
+
+    //#endregion
 }
 dishesmaintenace().then()
+
 //#endregion
 
 //#region OTHERS
