@@ -273,14 +273,29 @@ let dishesmaintenace=async()=>
     //#endregion
     //#region  MAINTENACE
 
-    let updateDish=await DataDish.updateDish("Ingredient1",20,2);
-    if (updateDish===-1) {
+    // let dtodishes=new DTODish();
+    // dtodishes.IDDishh=3;
+    // dtodishes.NameD="NameUpdate";
+    // dtodishes.Category.IDCategory=3;
+    // dtodishes.PriceD=65;
+    // dtodishes.DescriptionD="DescriptionUpdate";
+    // dtodishes.ImgD="UrlImgUpdate";
+    // let updateDish=await DataDish.updateDish(dtodishes);
+    // if (updateDish===-1) {
+    //     throw new Error("Dish no exist")
+    // }
+    // if (updateDish===-2) {
+    //     throw new Error("Category no exist")
+    // }
+    // console.log(updateDish);
+
+
+ let deleteDish=await DataDish.deleteDish(3);
+    if (deleteDish===-1) {
         throw new Error("Dish no exist")
     }
-    if (updateDish===-2) {
-        throw new Error("Category no exist")
-    }
-    console.log(updateDish);
+   
+    console.log(deleteDish);
 
     //#endregion
 }

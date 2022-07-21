@@ -67,7 +67,7 @@ class DataDish
               ELSE
               BEGIN
                   Update Dish Set NameD=@NameD,
-                  IDCategory=@IDCategory,ImgD=@ImgD,
+                  IDCategory=@IDCategory,ImgD=@ImgD,DescriptionD=@DescriptionD,
                   PriceD=@PriceD where IDDishh=@IDDishh
                   select 1 as updatesucess
               END
@@ -80,6 +80,7 @@ class DataDish
             .input('IDDishh', Int, dtodish.IDDishh)
             .input('NameD', VarChar, dtodish.NameD)
             .input('ImgD', VarChar, dtodish.ImgD)
+            .input('DescriptionD', VarChar, dtodish.DescriptionD)
             .input('PriceD', Money, dtodish.PriceD)
             .input('IDCategory', Int, dtodish.Category.IDCategory)
             .query(queryinsert)
