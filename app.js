@@ -290,12 +290,51 @@ let dishesmaintenace=async()=>
     // console.log(updateDish);
 
 
- let deleteDish=await DataDish.deleteDish(3);
-    if (deleteDish===-1) {
-        throw new Error("Dish no exist")
-    }
+//  let deleteDish=await DataDish.deleteDish(3);
+//     if (deleteDish===-1) {
+//         throw new Error("Dish no exist")
+//     }
    
-    console.log(deleteDish);
+//     console.log(deleteDish);
+
+    //#endregion
+
+    //#region INGREDIENTS
+
+    //  let registerIngredient=await DataDish.registerIngredient(4,"Ingredient3",20,2);
+    // if (registerIngredient===-1) {
+    //     throw new Error("Dish no exist")
+    // }
+   
+    // console.log(registerIngredient);
+
+
+    //  let updateIngredientName=await DataDish.updateIngredientName(13,"IngredientUpdate",5);
+    //     if (updateIngredientName===-1) {
+    //         throw new Error("Ingredient no exist")
+    //     }
+   
+    // console.log(updateIngredientName);
+
+
+    //      let addQuantity=await DataDish.addQuantity(5,12);
+    //     if (addQuantity===-1) {
+    //         throw new Error("Dish no exist")
+    //     }
+   
+    // console.log(addQuantity);
+
+
+
+    //   let removeIngredient=await DataDish.removeIngredient(12,5);
+    //     if (removeIngredient===-1) {
+    //         throw new Error("Ingredient no exist")
+    //     }
+   
+    // console.log(removeIngredient);
+
+
+ 
 
     //#endregion
 }

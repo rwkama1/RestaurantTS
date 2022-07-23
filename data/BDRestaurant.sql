@@ -110,8 +110,10 @@ go
   
   select * from Dish
 
-   select * from Ingredient
+  select * from Ingredient
 
    delete  from Dish
 
     delete  from Ingredient
+	
+			

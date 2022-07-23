@@ -1,5 +1,5 @@
 const { Money, VarChar, Int } = require("mssql");
-const { DTODish } = require("../DTO/DTODish");
+
 const { Conection } = require("./Conection");
 
 class DataDish
@@ -97,7 +97,7 @@ class DataDish
             return resultquery;
     
       }
-     static deleteDish=async(iddish)=>
+    static deleteDish=async(iddish)=>
       {
             let resultquery;
             let queryinsert = `
@@ -109,8 +109,8 @@ class DataDish
             ELSE
             BEGIN
            
-              DELETE   FROM  Ingredient where IDDishh=@IDDishh
-              DELETE   FROM  Dish where IDDishh=@IDDishh
+              DELETE FROM  Ingredient where IDDishh=@IDDishh
+              DELETE FROM  Dish where IDDishh=@IDDishh
               select 1 as deletsuccess
 
             END
@@ -129,13 +129,165 @@ class DataDish
             return resultquery;
     
       }
+    static addQuantity=async(iddish,quantity)=>
+      {
+            let resultquery;
+            let queryinsert = `
+
+            IF NOT EXISTS ( SELECT IDDishh FROM Dish WHERE IDDishh=@IDDishh)
+            BEGIN
+              select -1 as notexistdish
+            END
+            ELSE
+            BEGIN
+              
+                  Update Dish Set QuantityAD=QuantityAD+@QuantityAD
+                   where IDDishh=@IDDishh
+                  select 1 as updatesucess
+            END
+
+            `;
+            let pool = await Conection.conection();
+            const result = await pool.request()
+            .input('IDDishh', Int, iddish)
+            .input('QuantityAD', Money,quantity )
+            .query(queryinsert)
+            resultquery = result.recordset[0].notexistdish;
+            if(resultquery===undefined)
+            {
+                  resultquery = result.recordset[0].updatesucess;
+            }
+            pool.close();
+            return resultquery;
+    
+      }
 
     //#endregion
 
     //#region INGREDIENTS
       
-    
+    static registerIngredient=async(iddish,namei,costi,quantity)=>
+    {
+          let resultquery;
+          let queryinsert = 
+          `         
+          IF NOT EXISTS ( SELECT IDDishh FROM Dish WHERE IDDishh=@IDDishh)
+          BEGIN
+            select -1 as notexistdish
+          END
+          ELSE
+          BEGIN
+            BEGIN TRANSACTION  
+                insert into Ingredient values (@IDDishh,@NameI,@CostI,@QuantityI)
+                UPDATE Dish set CostD=CostD+@CostI*@QuantityI where IDDishh=@IDDishh
+                select 1 as insertsuccess
+              IF(@@ERROR > 0)  
+              BEGIN  
+                  ROLLBACK TRANSACTION  
+              END  
+              ELSE  
+              BEGIN  
+              COMMIT TRANSACTION  
+              END         
+             
+          END
+          `;
+          let pool = await Conection.conection();
+          const result = await pool.request()
+          .input('IDDishh', Int, iddish)
+          .input('NameI', VarChar,namei )
+          .input('CostI', Money,costi )
+          .input('QuantityI', Int, quantity)
+          .query(queryinsert)
+          resultquery = result.recordset[0].notexistdish; 
+          if (resultquery===undefined) {
+            resultquery = result.recordset[0].insertsuccess; 
+          }
+          pool.close();
+          return resultquery;
+  
+    }
+    static updateIngredientName=async(idingredientt,namei,iddish)=>
+    {
+          let resultquery;
+          let queryinsert = 
+          `         
+          IF NOT EXISTS ( SELECT IDDishh FROM Ingredient WHERE IDDishh=@IDDishh and IDIngredientt=@IDIngredientt)
+          BEGIN
+            select -1 as notexistingredient
+          END
+          ELSE
+          BEGIN
+          
+                UPDATE Ingredient set NameI=@NameI
+                WHERE IDDishh=@IDDishh and IDIngredientt=@IDIngredientt     
+                select 1 as updatesuccess  
+          END
 
+          `;
+          let pool = await Conection.conection();
+          const result = await pool.request()
+          .input('IDDishh', Int, iddish)
+          .input('IDIngredientt', Int, idingredientt)
+          .input('NameI', VarChar,namei )
+          .query(queryinsert)
+          resultquery = result.recordset[0].notexistingredient; 
+          if (resultquery===undefined) {
+            resultquery = result.recordset[0].updatesuccess; 
+          }
+          pool.close();
+          return resultquery;
+  
+    }
+    static removeIngredient=async(idingredientt,iddish)=>
+    {
+          let resultquery;
+          let queryinsert = 
+          `         
+          IF NOT EXISTS ( SELECT IDDishh FROM Ingredient WHERE IDDishh=@IDDishh and IDIngredientt=@IDIngredientt)
+          BEGIN
+            select -1 as notexistingredient
+          END
+          ELSE
+          BEGIN
+                BEGIN TRANSACTION  
+
+                UPDATE Dish set CostD=CostD-(CostI*QuantityI) FROM Dish,Ingredient
+                WHERE Dish.IDDishh=@IDDishh and IDIngredientt=@IDIngredientt
+
+                  DELETE  FROM Ingredient
+                  WHERE IDDishh=@IDDishh and IDIngredientt=@IDIngredientt     
+
+                
+
+                  select 1 as deletesucess  
+
+                IF(@@ERROR > 0)  
+                BEGIN  
+                    ROLLBACK TRANSACTION  
+                END  
+                ELSE  
+                BEGIN  
+                COMMIT TRANSACTION  
+                END        
+          END
+
+          `;
+          let pool = await Conection.conection();
+          const result = await pool.request()
+          .input('IDDishh', Int, iddish)
+          .input('IDIngredientt', Int, idingredientt)
+          
+          .query(queryinsert)
+          resultquery = result.recordset[0].notexistingredient; 
+          if (resultquery===undefined) {
+            resultquery = result.recordset[0].deletesucess; 
+          }
+          pool.close();
+          return resultquery;
+  
+    }
+    
     //#endregion
     
     //#region GETS
