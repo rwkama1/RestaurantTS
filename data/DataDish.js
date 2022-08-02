@@ -1,4 +1,6 @@
 const { Money, VarChar, Int } = require("mssql");
+const { DTODish } = require("../DTO/DTODish");
+const { DTOIngredients } = require("../DTO/DTOIngredients");
 
 const { Conection } = require("./Conection");
 
@@ -287,36 +289,46 @@ class DataDish
           return resultquery;
   
     }
-    
-    //#endregion
-    
-    //#region GETS
-      
-    static getService=async(idservice)=>
+    static getIngredient=async(idingredientt)=>
     {
             let resultquery;
             let querysearch = `
 
-            IF NOT EXISTS ( SELECT * FROM Servicee WHERE idservice=@idservice and Statee='Active')
+            IF NOT EXISTS ( SELECT IDIngredientt FROM Ingredient WHERE IDIngredientt=@IDIngredientt)
             BEGIN
-              select -1 as noexistservice
+              select -1 as noexistingredientt
             END
             ELSE
             BEGIN
-                SELECT * FROM Servicee
-                WHERE idservice=@idservice and Statee='Active'
+                SELECT 
+                i.IDIngredientt,
+                i.iddishh,
+                i.NameI,
+                i.CostI,
+                i.QuantityI,
+
+                d.NameD,
+                d.IDCategory,
+                d.DescriptionD,
+                d.ImgD,
+                d.PriceD,
+                d.CostD,
+                d.QuantityAD
+                FROM Ingredient i inner join Dish d
+                ON i.iddishh=d.iddishh          
+                WHERE IDIngredientt=@IDIngredientt
             END
 
             `
             let pool = await Conection.conection();
              const result = await pool.request()
-             .input('idservice', Int, idservice)
+             .input('IDIngredientt', Int, idingredientt)
              .query(querysearch)
-            resultquery = result.recordset[0].noexistservice; 
+            resultquery = result.recordset[0].noexistingredientt; 
             if (resultquery===undefined) {
               let resultrecordset=result.recordset[0];
-              let service = new DTOService();
-              this.getinformation(service, resultrecordset);
+              let ingredient = new DTOIngredients();
+              this.getIngredientInformation(ingredient, resultrecordset);
               resultquery=service
             }
            pool.close();
@@ -324,122 +336,364 @@ class DataDish
       
     
      }
-
-     static getServices=async(orderby="idservice")=>
+    static getIngredientsDish=async(iddish,orderby=`idingredientt`)=>
      {
+             let resultquery;
              let array=[];
              let querysearch = `
  
-                SELECT * FROM Servicee WHERE Statee='Active'
-                ORDER BY ${orderby} desc
+             IF NOT EXISTS ( SELECT IDDishh FROM Dish WHERE IDDishh=@IDDishh)
+             BEGIN
+               select -1 as noexistdish
+             END
+             ELSE
+             BEGIN
+                 SELECT 
+                 i.IDIngredientt,
+                 i.iddishh,
+                 i.NameI,
+                 i.CostI,
+                 i.QuantityI,
+ 
+                 d.NameD,
+                 d.IDCategory,
+                 d.DescriptionD,
+                 d.ImgD,
+                 d.PriceD,
+                 d.CostD,
+                 d.QuantityAD
+
+                 FROM Ingredient i inner join Dish d
+                 ON i.iddishh=d.iddishh          
+                 WHERE d.IDDishh=@IDDishh
+                 order by ${orderby} 
+             END
+ 
+             `
+             let pool = await Conection.conection();
+              const result = await pool.request()
+              .input('IDDishh', Int, iddish)
+              .query(querysearch)
+              resultquery = result.recordset[0].noexistdish; 
+              if(resultquery===undefined)
+              {
+                for (var r of result.recordset) {
+                  let ingredient = new DTOIngredients();
+                  this.getIngredientInformation(ingredient, r);
+                  array.push(ingredient);
+                } 
+                resultquery=array
+              }
+
+            pool.close();
+            return resultquery;
+       
+     
+      }
+
+    //#endregion
+    
+    //#region GETS
+      
+    static getDish=async(iddish,orderby=`idingredientt`)=>
+    {
+            let resultquery;
+            let array=[];
+            let querysearch = `
+
+            IF NOT EXISTS ( SELECT IDDishh FROM Dish WHERE IDDishh=@IDDishh)
+            BEGIN
+              select -1 as noexistdish
+            END
+            ELSE
+            BEGIN
+              SELECT 
+              i.IDIngredientt,
+              i.iddishh,
+              i.NameI,
+              i.CostI,
+              i.QuantityI,
+
+              d.NameD,
+              d.IDCategory,
+              d.DescriptionD,
+              d.ImgD,
+              d.PriceD,
+              d.CostD,
+              d.QuantityAD,
+
+              c.NameC,
+              c.DescriptionC
+            
+              FROM Ingredient i inner join Dish d
+              ON i.iddishh=d.iddishh  inner join Category c
+              on c.idcategory=d.idcategory        
+              WHERE d.IDDishh=@IDDishh
+              order by ${orderby}
+               
+            END
+
+            `
+            let pool = await Conection.conection();
+             const result = await pool.request()
+             .input('IDDishh', Int, iddish)
+             .query(querysearch)
+            resultquery = result.recordset[0].noexistdish; 
+            if(resultquery===undefined)
+              {
+                for (var r of result.recordset) {
+                  let ingredient = new DTOIngredients();
+                  this.getDishInformation(ingredient, r);
+                  array.push(ingredient);
+                } 
+                resultquery=array
+              }
+           pool.close();
+           return resultquery;
+      
+    
+     }
+     static getDishByCategory=async(idcategory,orderby=`iddishh`)=>
+    {
+            let resultquery;
+            let array=[];
+            let querysearch = `
+
+            IF NOT EXISTS ( SELECT idcategory FROM Category WHERE idcategory=@idcategory)
+            BEGIN
+              select -1 as noexistcategory
+            END
+            ELSE
+            BEGIN
+              SELECT 
+              i.IDIngredientt,
+              i.iddishh,
+              i.NameI,
+              i.CostI,
+              i.QuantityI,
+
+              d.NameD,
+              d.IDCategory,
+              d.DescriptionD,
+              d.ImgD,
+              d.PriceD,
+              d.CostD,
+              d.QuantityAD,
+
+              c.NameC,
+              c.DescriptionC
+            
+              FROM Ingredient i inner join Dish d
+              ON i.iddishh=d.iddishh  inner join Category c
+              on c.idcategory=d.idcategory        
+              WHERE d.idcategory=@idcategory
+              order by ${orderby}
+               
+            END
+
+            `
+            let pool = await Conection.conection();
+             const result = await pool.request()
+             .input('idcategory', Int, idcategory)
+             .query(querysearch)
+            resultquery = result.recordset[0].noexistcategory; 
+            if(resultquery===undefined)
+              {
+                for (var r of result.recordset) {
+                  let ingredient = new DTOIngredients();
+                  this.getDishInformation(ingredient, r);
+                  array.push(ingredient);
+                } 
+                resultquery=array
+              }
+           pool.close();
+           return resultquery;
+      
+    
+     }
+     static getSearchDish=async(iddish1=0,iddish2=9999
+      ,named="",idcategory1=0,idcategory2=9999,price1=0,price2=9999
+      ,cost1=0,cost2=9999,quantity1=0,quantity2=9999,namei="",
+      quantityi1=0,quantityi2=9999,costi1=0,costi2=9999,
+      idingredient1=0,idingredient2=9999,namecategory=""
+      ,orderby=`IDDishh`)=>
+    {
+          
+            let array=[];
+            let querysearch = `
+
+              SELECT 
+              i.IDIngredientt,
+              i.iddishh,
+              i.NameI,
+              i.CostI,
+              i.QuantityI,
+
+              d.NameD,
+              d.IDCategory,
+              d.DescriptionD,
+              d.ImgD,
+              d.PriceD,
+              d.CostD,
+              d.QuantityAD,
+
+              c.NameC,
+              c.DescriptionC
+            
+              FROM Ingredient i inner join Dish d
+              ON i.iddishh=d.iddishh  inner join Category c
+              on c.idcategory=d.idcategory        
+              WHERE 
+              d.IDDishh between ${iddish1} and ${iddish2}
+              and d.NameD like '%${named}%'
+              and d.IDCategory between ${idcategory1} and ${idcategory2}
+              and d.PriceD between ${price1} and ${price2}
+              and d.CostD between ${cost1} and ${cost2}
+              and d.QuantityAD between ${quantity1} and ${quantity2}
+
+              and i.IDIngredientt between ${idingredient1} and ${idingredient2}
+              and i.NameI like '%${namei}%'
+              and i.CostI between ${costi1} and ${costi2}
+              and i.QuantityI between ${quantityi1} and ${quantityi2}
+
+              and c.NameC like '%${namecategory}%'
+              order by ${orderby}
+              
+            `
+            let pool = await Conection.conection();
+             const result = await pool.request()
+             .query(querysearch)
+                for (var r of result.recordset) {
+                  let ingredient = new DTOIngredients();
+                  this.getDishInformation(ingredient, r);
+                  array.push(ingredient);
+                } 
+              
+              
+           pool.close();
+           return array;
+      
+    
+     }
+     static getDishesMultipleID=async(arrayydish,orderby=`iddishh`)=>
+     {
+          
+             let array=[];
+             let querysearch = `
+
+               SELECT 
+               Dish.*,
+               Category.NameC,
+               Category.DescriptionC
+               FROM
+               Dish inner join Category
+               ON Dish.IdCategory=Category.IdCategory      
+               WHERE IDDishh in
+                (
+                  ${this.forinsidestringdish(arrayydish)}
+                )
+               order by ${orderby}           
  
              `
              let pool = await Conection.conection();
               const result = await pool.request()
               .query(querysearch)
-              for (var r of result.recordset) {
-               let service = new DTOService();
-               this.getinformation(service,  r);
-               array.push(service);
-             } 
+           
+                 for (var r of result.recordset) {
+                   let dish = new DTODish();
+                   this.getWithoutIngredientsDishInformation(dish, r);
+                   array.push(dish);
+            
+               }
             pool.close();
             return array;
        
      
       }
-    static getServicesMultipleID=async(arrayservices,orderby="idservice")=>
-      {
-              let array=[];
-              let querysearch = `
-  
-                 SELECT * FROM Servicee
-                  WHERE Statee='Active' and 
-                  idservice in (
-                    ${
-                      this.forinsidestring(arrayservices)
-                    }
-                    )
-                 ORDER BY ${orderby} desc
-  
-              `
-              let pool = await Conection.conection();
-               const result = await pool.request()
-               .query(querysearch)
-               for (var r of result.recordset) {
-                let service = new DTOService();
-                this.getinformation(service,  r);
-                array.push(service);
-              } 
-             pool.close();
-             return array;
-        
-      
-       }
-
-      static getServicesBetweenValues=async(value1=0,value2=9999,orderby="idservice")=>
-      {
-              let array=[];
-              let querysearch = `
-  
-                 SELECT * FROM Servicee 
-                 WHERE 
-                 Value between ${value1} AND ${value2}
-                  AND
-                 Statee='Active'
-                 ORDER BY ${orderby} desc
-  
-              `
-              let pool = await Conection.conection();
-               const result = await pool.request()
-               .query(querysearch)
-               for (var r of result.recordset) {
-                let service = new DTOService();
-                this.getinformation(service,  r);
-                array.push(service);
-              } 
-             pool.close();
-             return array;
-        
-      
-       }
-       static getSearchServices=async(name="",value1=0,value2=99999,orderby="idservice")=>
-       {
-               let array=[];
-               let querysearch = `
-   
-                  SELECT * FROM Servicee WHERE Statee='Active'
-                  AND  NameS LIKE '%${name}%' 
-                  AND Value BETWEEN ${value1} AND ${value2} 
-                  ORDER BY ${orderby} desc
-   
-               `
-               let pool = await Conection.conection();
-                const result = await pool.request()
-                .query(querysearch)
-                for (var r of result.recordset) {
-                 let service = new DTOService();
-                 this.getinformation(service,  r);
-                 array.push(service);
-               } 
-              pool.close();
-              return array;
-         
-       
-        }
-
     //#endregion
-    //#region  Get Information
+    //#region  GET INFORMATION
 
-    static getinformation(service, result) {
 
-      service.idservice = result.IDService;
-      service.name= result.NameS;
-      service.value = result.Value;
-      service.statee = result.Statee;
+    static getIngredientInformation(ingredient, result) {
+
+      ingredient.IDIngredientt=result.IDIngredientt
+      ingredient.iddishh=result.iddishh
+      ingredient.NameI=result.NameI
+      ingredient.CostI=result.CostI
+      ingredient.QuantityI=result.QuantityI
+
+      ingredient.NameD=result.NameD
+      ingredient.IDCategory=result.IDCategory
+      ingredient.DescriptionD=result.DescriptionD
+      ingredient.ImgD=result.ImgD
+      ingredient.PriceD=result.PriceD
+      ingredient.CostD=result.CostD
+      ingredient.QuantityAD=result.QuantityAD
+
+      ingredient.Dishh=null;
+     
      
   
      }
-     static forAddIngredients(array)
+     static getDishInformation(dish, result) {
+
+      dish.NameD=result.NameD
+      dish.IDCategory=result.IDCategory
+      dish.DescriptionD=result.DescriptionD
+      dish.ImgD=result.ImgD
+      dish.PriceD=result.PriceD
+      dish.CostD=result.CostD
+      dish.QuantityAD=result.QuantityAD
+
+      dish.IDIngredientt=result.IDIngredientt
+      dish.iddishh=result.iddishh
+      dish.NameI=result.NameI
+      dish.CostI=result.CostI
+      dish.QuantityI=result.QuantityI
+
+      dish.NameC=result.NameC
+      dish.DescriptionC=result.DescriptionC
+
+      dish.Dishh=null;
+
+     }
+     static getWithoutIngredientsDishInformation(dish, result) {
+
+      dish.IDDishh=result.IDDishh
+      dish.NameD=result.NameD
+      dish.DescriptionD=result.DescriptionD
+      dish.ImgD=result.ImgD
+      dish.PriceD=result.PriceD
+      dish.CostD=result.CostD
+      dish.QuantityAD=result.QuantityAD
+
+      dish.Category.IDCategory=result.IDCategory
+      dish.Category.NameC=result.NameC
+      dish.Category.DescriptionC=result.DescriptionC
+
+     }
+ 
+    //#endregion
+    //#region OTHERS
+
+    static forinsidestringdish(array)//pass all id to string for sql query
+    {
+     let stringelement="";
+     for (let index = 0; index < array.length; index++) {
+       const element = array[index];
+       if (index===array.length-1) {
+         stringelement=stringelement+element.iddish
+       }
+       else
+       {
+         stringelement=stringelement+element.iddish+","
+       }
+      
+     }
+     return stringelement
+    
+    }
+    static forAddIngredients(array)
      {
       let stringelement="";
       for (let index = 0; index < array.length; index++) {
@@ -456,6 +710,7 @@ class DataDish
       return stringelement
      
      }
+
     //#endregion
 }
 module.exports = { DataDish };

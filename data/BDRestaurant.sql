@@ -111,9 +111,16 @@ go
   select * from Dish
 
   select * from Ingredient
+  select * from Customer
+  select * from TablesR
+  select * from Orderr
+  select *  from DetailOrder
 
-   delete  from Dish
+   delete from Orderr
+    delete from DetailOrder
+	  delete from Customer where idcustomer in (27,24,22)
+    
 
-    delete  from Ingredient
-	
-			
+ 
+   --delete  from Dish
+

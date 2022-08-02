@@ -1,14 +1,18 @@
 const { DataCategory } = require("./data/DataCategory");
 const { DataCustomer } = require("./data/DataCustomer");
 const { DataDish } = require("./data/DataDish");
+const { DataOrder } = require("./data/DataOrder");
+const { DataTable } = require("./data/DataTable");
 const { DataUser } = require("./data/DataUser");
 const { DishIngredients } = require("./DishIngredients/dishes");
 const { DTOCategory } = require("./DTO/DTOCategory");
 const { DTOCustomer } = require("./DTO/DTOCustomer");
 const { DTODish } = require("./DTO/DTODish");
+const { DTOOrder } = require("./DTO/DTOOrder");
 const { DTOUser } = require("./DTO/DTOUser");
 const { HashPassword } = require("./Hash_Login/hashPassword");
 const { LoginUser } = require("./Hash_Login/LoginUser");
+const { Order } = require("./Orders/order");
 
 //#region USERS
 
@@ -218,11 +222,11 @@ let dishesmaintenace=async()=>
 //     console.log(registerIngredient1);
 
 
-//     // let registerIngredient2=DishIngredients.registerIngredient("Ingredient2",20,1);
-//     // if (registerIngredient2===-1) {
-//     //     throw new Error("The name ingredient already exist in the list")
-//     // }
-//     // console.log(registerIngredient2);
+//     let registerIngredient2=DishIngredients.registerIngredient("Ingredient2",20,1);
+//     if (registerIngredient2===-1) {
+//         throw new Error("The name ingredient already exist in the list")
+//     }
+//     console.log(registerIngredient2);
 
 //     // let removeIngredient=DishIngredients.removeIngredient("Ingredient2");
 //     // if (removeIngredient===-1) {
@@ -231,11 +235,11 @@ let dishesmaintenace=async()=>
 //     // console.log(removeIngredient);
 
 
-//     // let registerIngredient3=DishIngredients.registerIngredient("Ingredient3",21,1);
-//     // if (registerIngredient3===-1) {
-//     //     throw new Error("The name ingredient already exist in the list")
-//     // }
-//     // console.log(registerIngredient3);
+//     let registerIngredient3=DishIngredients.registerIngredient("Ingredient3",21,1);
+//     if (registerIngredient3===-1) {
+//         throw new Error("The name ingredient already exist in the list")
+//     }
+//     console.log(registerIngredient3);
 
 
 //     let getArrayIngredients=DishIngredients.getArrayIngredients();
@@ -254,9 +258,9 @@ let dishesmaintenace=async()=>
 //     console.log(calculateCostDish);
 
 //   let dtodishes=new DTODish();
-//   dtodishes.NameD="NameDish3";
-//   dtodishes.Category.IDCategory=3;
-//   dtodishes.DescriptionD="Description";
+//   dtodishes.NameD="NameDish5";
+//   dtodishes.Category.IDCategory=4;
+//   dtodishes.DescriptionD="Description4";
 //   dtodishes.ImgD="UrlImg";
 //   dtodishes.CostD=calculateCostDish;
 //   dtodishes.PriceD=50;//this is the price that is indicated once knowing the cost
@@ -267,8 +271,6 @@ let dishesmaintenace=async()=>
 //         throw new Error("Category no exists")
 //     }
 //     console.log(registerDish);
-
-
 
     //#endregion
     //#region  MAINTENACE
@@ -296,7 +298,12 @@ let dishesmaintenace=async()=>
 //     }
    
 //     console.log(deleteDish);
-
+   //      let addQuantity=await DataDish.addQuantity(5,12);
+    //     if (addQuantity===-1) {
+    //         throw new Error("Dish no exist")
+    //     }
+   
+    // console.log(addQuantity);
     //#endregion
 
     //#region INGREDIENTS
@@ -317,15 +324,6 @@ let dishesmaintenace=async()=>
     // console.log(updateIngredientName);
 
 
-    //      let addQuantity=await DataDish.addQuantity(5,12);
-    //     if (addQuantity===-1) {
-    //         throw new Error("Dish no exist")
-    //     }
-   
-    // console.log(addQuantity);
-
-
-
     //   let removeIngredient=await DataDish.removeIngredient(12,5);
     //     if (removeIngredient===-1) {
     //         throw new Error("Ingredient no exist")
@@ -334,14 +332,181 @@ let dishesmaintenace=async()=>
     // console.log(removeIngredient);
 
 
- 
+    // let getIngredient=await DataDish.getIngredient(20);
+    // console.log(getIngredient);
+
+    //     let getIngredientsDish=await DataDish.getIngredientsDish(8);
+    // console.log(getIngredientsDish);
+
+    //#endregion
+    //#region GETS
+
+    // let getDish=await DataDish.getDish(9);
+    // console.log(getDish);
+
+    //     let getDishByCategory=await DataDish.getDishByCategory(4);
+    // console.log(getDishByCategory);
+
+    // let getSearchDish=await DataDish.getSearchDish(0,9999,
+    //    "",0,9999,0,9999,0,9999,0,9999,"",0,9999,0,9999,
+    //    0,9999,"2" );
+    // console.log(getSearchDish);
+
 
     //#endregion
 }
 dishesmaintenace().then()
 
 //#endregion
+//#region TABLES
+let tablemaintenance=async()=>
+{
+    
+    // async function registerTable() {
+    //     for (let index = 0; index < 15; index++) {
 
+    //         let registerTable = await DataTable.registerTable(4);
+    //         console.log(registerTable);
+    //     }
+    // }
+    // await registerTable();
+
+    //  let disableTable = await DataTable.disableTable(20);
+    // console.log(disableTable);
+
+    // let enableTable = await DataTable.enableTable(20);
+    // console.log(enableTable);
+
+    // let getTable=await DataTable.getTable(1);
+    // console.log(getTable);
+
+    // let getSearchTables=await DataTable.getSearchTables();
+    // console.log(getSearchTables);
+
+
+}
+tablemaintenance().then()
+//#endregion
+//#region ORDER
+let ordermaintenance=async()=>
+{
+    //#region ONLINE ORDER
+
+//     let registerDish1=Order.registerDish(6,40,2);
+//     if (registerDish1===-1) {
+//         throw new Error("The number dish already exist in the list")
+//     }
+//     console.log(registerDish1);
+
+//     let registerDish2=Order.registerDish(7,60,1);
+//     if (registerDish2===-1) {
+//         throw new Error("The number dish already exist in the list")
+//     }
+//     console.log(registerDish2);
+
+//     let registerDish3=Order.registerDish(8,81,3);
+//     if (registerDish3===-1) {
+//         throw new Error("The number dish already exist in the list")
+//     }
+//     console.log(registerDish3);
+
+  
+//     let getDishArray=Order.getDishArray();
+//     console.log(getDishArray);
+
+
+//     // let cleanIDDishArray=Order.cleanIDDishArray(8);
+//     // console.log(cleanIDDishArray);
+
+//     // let removeIDDish=Order.removeIDDish(8);
+//     // console.log(removeIDDish);
+
+//     // let getDishArray2=Order.getDishArray();
+//     // console.log(getDishArray2);
+
+//     let getDishesMultipleID=await DataDish.getDishesMultipleID(getDishArray);
+//     console.log(getDishesMultipleID);
+
+//     let dtocustomer=new DTOCustomer();
+//     dtocustomer.NamesC=`NameCustomer`;
+//     dtocustomer.LastNameC=`LastNameCustomer`;
+//     dtocustomer.PhoneNumberC=`111111111111`;
+
+//     let dtoorder=new DTOOrder();
+
+  
+// let newdate=new Date(2022,08,27);
+// newdate.setUTCHours(15,00);
+
+//    dtoorder.SpecialRequirement="SpecialRequirement"; 
+//    dtoorder.NumberPeople=4;  
+//    dtoorder.Customer=dtocustomer;   
+
+//   let registerOnlineOrder=await DataOrder.registerOnlineOrder(dtoorder,getDishArray);
+//   console.log(registerOnlineOrder)
+
+    //#endregion
+    //#region RESTAURANT ORDER
+           
+//         let dtocustomer=new DTOCustomer();
+//         dtocustomer.IDCustomer=8;
+//         dtocustomer.NamesC="NameCustomerorder";
+//         dtocustomer.LastNameC="LastNameCustomer";
+
+//     let registerDish1=Order.registerDish(6,40,2);
+//     if (registerDish1===-1) {
+//         throw new Error("The number dish already exist in the list")
+//     }
+//     console.log(registerDish1);
+
+
+
+  
+//     let getDishArray=Order.getDishArray();
+//     console.log(getDishArray);
+
+
+
+//     let getDishesMultipleID=await DataDish.getDishesMultipleID(getDishArray);
+//     console.log(getDishesMultipleID);
+
+
+
+//     let dtoorder=new DTOOrder();
+
+//    let newdate=new Date(2022,08,27);
+//    newdate.setUTCHours(15,00);
+//    dtoorder.DateO=newdate;
+//    dtoorder.SpecialRequirement="SpecialRequirement"; 
+//    dtoorder.NumberPeople=2;  
+//    dtoorder.Customer=dtocustomer;   
+
+//   let registerOrderRestaurant=await DataOrder.registerOrderRestaurant(dtoorder,getDishArray);
+//   console.log(registerOrderRestaurant)
+
+    //#endregion
+    //#region MAINTENANCE
+
+        // let addDetailOrder=await DataOrder.addDetailOrder(58,1,20);
+        // console.log(addDetailOrder);
+
+        // let removeDetailOrder=await DataOrder.removeDetailOrder(20,7);
+        // console.log(removeDetailOrder);
+        
+        // let updateDetailOrderQuantity=await DataOrder.updateDetailOrderQuantity(20,6,3);
+        // console.log(updateDetailOrderQuantity);
+
+          
+        let cancelOrder=await DataOrder.cancelOrder(10);
+        console.log(cancelOrder);
+
+        
+        
+
+    //#endregion
+}
+ordermaintenance().then()
+//#endregion
 //#region OTHERS
  //const {FactoryLogic}=require("./Restaurant/dist/logic/FactoryLogic");
 // const { default: DTOCategory } = require("./Restaurant/dist/shared/entity/DTOCategory");
