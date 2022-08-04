@@ -103,7 +103,7 @@ class DataOrder
           `;
           let pool = await Conection.conection();
           const result = await pool.request()
-          .input('DateO', Date, dtoorder.DateO)
+          .input('DateO', DateTime, dtoorder.DateO)
           .input('SpecialRequirement', VarChar, dtoorder.SpecialRequirement)
           .input('NumberPeople', Int, dtoorder.NumberPeople)
           .input('NameC', VarChar, dtoorder.Customer.NamesC)
@@ -176,46 +176,67 @@ class DataOrder
           return resultquery;
        
     }
-    static updateDepartureDateReservation=async(numberreservation,enddate)=>
+    static updateSpecialRequirementsNumberPeople=async(idorder,speacilr,numberpeople)=>
     {
           let resultquery;
           let queryupdate = `
 
-          IF NOT EXISTS ( SELECT * FROM Reservation WHERE  NumberReservationn=@NumberReservation)
+          IF NOT EXISTS ( SELECT IDOrder FROM Orderr WHERE  IDOrder=@IDOrder)
+            BEGIN
+              select -1 as notexistorder
+            END
+          ELSE
           BEGIN
-            select -1 as notexistreservation
+             UPDATE Orderr SET NumberPeople=@NumberPeople,
+             SpecialRequirement=@SpecialRequirement
+             WHERE IDOrder=@IDOrder
+             select 1 as updatesuccess
+          END
+
+          `;
+          let pool = await Conection.conection(); 
+          const result = await pool.request()
+          .input('IDOrder', Int,idorder)
+          .input('NumberPeople', Int,numberpeople)
+          .input('SpecialRequirement', VarChar,speacilr)
+          .query(queryupdate)
+          resultquery = result.recordset[0].notexistorder;
+          if(resultquery===undefined)
+          {
+              resultquery = result.recordset[0].updatesuccess;
+          }
+          pool.close();
+          return resultquery;
+       
+    }
+    static updateDateOOrder=async(idorder,dateo)=>
+    {
+          let resultquery;
+          let queryupdate = `
+
+          IF NOT EXISTS ( SELECT IDOrder FROM Orderr WHERE  IDOrder=@IDOrder)
+          BEGIN
+            select -1 as notexistorder
           END
           ELSE
-          BEGIN   
-              IF  EXISTS ( SELECT * FROM Reservation WHERE arrivaldate>=@DepartureDate and NumberReservationn=@NumberReservation)
-              BEGIN
-                select -2 as dateincorrect
-              END
-              ELSE
-              BEGIN 
-                  UPDATE Reservation SET DepartureDate=@DepartureDate
-                  WHERE NumberReservationn=@NumberReservation
-                  select 1 as confirmsuccess
-              END
-             
+          BEGIN
+            UPDATE Orderr SET DateO=@DateO
+            WHERE IDOrder=@IDOrder
+            select 1 as updatesuccess
           END
 
           `;
           let pool = await Conection.conection();
          
           const result = await pool.request()
-          .input('NumberReservation', Int,numberreservation)
-          .input('DepartureDate', Date,enddate)
+          .input('IDOrder', Int,idorder)
+          .input('DateO', DateTime,dateo)
           .query(queryupdate)
-          resultquery = result.recordset[0].notexistreservation;
+          resultquery = result.recordset[0].notexistorder;
           if(resultquery===undefined)
           {
-            resultquery = result.recordset[0].dateincorrect;
-            if(resultquery===undefined)
-              {
-                  resultquery = result.recordset[0].confirmsuccess;
-              }
-             
+            resultquery = result.recordset[0].updatesuccess;
+
           }
           pool.close();
           return resultquery;
@@ -347,143 +368,247 @@ class DataOrder
           return resultquery;
        
     } 
-
-    //#endregion
-
-    //#region GETS
-
-    static getReservation=async(numberreservation)=>
+    static getDetailOrder=async(idorder,iddish)=>
     {
             let resultquery;
             let querysearch = `
 
-            IF NOT EXISTS ( SELECT * FROM Reservation WHERE NumberReservationn=@NumberReservationn)
+            IF NOT EXISTS ( SELECT IDDetailO FROM DetailOrder WHERE IDOrder=@IDOrder AND IDDishh=@IDDishh )
             BEGIN
-              select -1 as notexistreservation
+              select -1 as noexistdetailorder
             END
             ELSE
-            BEGIN
-                SELECT * FROM Reservation inner join Passenger
-                on Reservation.IDCardPassengerr=Passenger.IDCard
-                WHERE NumberReservationn=@NumberReservationn
+            BEGIN  
+                    SELECT
+                    o.*,
+
+                    do.IDDetailO,
+                    do.QuantityDO,
+                    do.AmountDO,
+                    do.IDDishh,
+
+                    c.NamesC,
+                    c.LastNameC,
+                    c.PhoneNumberC
+
+                    FROM Orderr o
+                    INNER JOIN  DetailOrder do
+                    ON do.idorder=o.idorder
+                    INNER JOIN Customer c ON c.IDCustomer=o.IDCustomer
+                    WHERE do.idorder=@IDOrder and do.iddishh=@IDDishh
             END
 
             `
             let pool = await Conection.conection();
              const result = await pool.request()
-             .input('NumberReservationn', Int, numberreservation)
+              .input('IDOrder', Int, idorder)
+              .input('IDDishh', Int,iddish)
              .query(querysearch)
-            resultquery = result.recordset[0].notexistreservation; 
+            resultquery = result.recordset[0].noexistdetailorder; 
             if (resultquery===undefined) {
-             let resultrecordset=result.recordset[0];
-              let resr = new DTOReservation();
-              this.getinformationReservation(resr, resultrecordset);
-              resultquery=resr
+              let resultrecordset=result.recordset[0];
+              let detailorder = new DTOOrderDetail();
+              this.getinformationOrderWithDetailOrder(detailorder, resultrecordset);
+              resultquery=detailorder
             }
            pool.close();
            return resultquery;
       
     
      }
+    //#endregion
 
-    static getSearchReservations=async(valueroom1=0,valueroom2=9999,
-      numberroom1=0,numberroom2=9999
-      ,numberres1=0,numberres2=0,
-      processstatus="",origin="",total1=0,total2=99999,idpassenger=""
-      ,departdate1='2000-08-08',departdate2='2100-08-08',
-      arrdate1='2000-08-08',arrdate2='2100-08-08',
-      reservdate1='2000-08-08',reservdate2='2100-08-08',
-      orderby="NumberReservationn")=>
+    //#region GETS
+
+    static getOrder=async(idorder)=>
+    {
+            let resultquery;
+            let array=[];
+            let querysearch = `
+
+            IF NOT EXISTS ( SELECT IDOrder from Orderr WHERE IDOrder=@IDOrder)
+            BEGIN
+              select -1 as noexistorder
+            END
+            ELSE
+            BEGIN  
+                    SELECT
+                    o.*,
+
+                    do.IDDetailO,
+                    do.QuantityDO,
+                    do.AmountDO,
+                    do.IDDishh,
+
+                    c.NamesC,
+                    c.LastNameC,
+                    c.PhoneNumberC
+
+                    FROM Orderr o
+                    INNER JOIN  DetailOrder do
+                    ON do.idorder=o.idorder
+                    INNER JOIN Customer c ON c.IDCustomer=o.IDCustomer
+                    WHERE o.idorder=@IDOrder
+            END
+
+            `
+            let pool = await Conection.conection();
+             const result = await pool.request()
+             .input('IDOrder', Int, idorder)
+             .query(querysearch)
+             resultquery = result.recordset[0].noexistorder; 
+             if (resultquery===undefined) {
+              for (var r of result.recordset) {
+                let orderdetail = new DTOOrderDetail();
+                this.getinformationOrderWithDetailOrder(orderdetail,r);
+                array.push(orderdetail);
+                resultquery=array;
+               } 
+             }
+           pool.close();
+           return resultquery;
+      
+    
+     }
+    static getSearchOrder=async(idorder1=0,idorder2=99999,
+      dateo1='2000-08-08',dateo2='2100-08-08'
+      ,stateo="",specialr="",numberpeople1=0,numberpeople2=99999,
+      IDCustomer1=0,IDCustomer2=99999,
+      namecustomer="",lastnamecustomer="",
+      QuantityDO1=0,QuantityDO2=99999,
+      AmountDO1=0,AmountDO2=99999,
+      IDDishh1=0,IDDishh2=99999,
+      orderby="IDOrder")=>
           {
                    let array=[];
                   let querysearch = `
    	
-                  SELECT 
-                  Reservation.*,
-                  ReservationDetail.NumberRD,
-                  ReservationDetail.NumberReservation,
-                  ReservationDetail.NumberRoom,
-                  Room.*
-                  FROM ReservationDetail 
-                  INNER JOIN Room
-                  on Room.NumberRoomm=ReservationDetail.NumberRoom
-                  INNER JOIN Reservation on Reservation.NumberReservationn=ReservationDetail.NumberReservation
-                  WHERE NumberReservationn between ${numberres1} and ${numberres2}
-                  and ReservationDate between @reservdate1 and @reservdate2
-                  and ArrivalDate between @arrdate1 and @arrdate2 
-                  and DepartureDate between  @departdate1  and @departdate2 
-                  and ProcessStatus like '%${processstatus}%'
-                  and Origin like '%${origin}%'
-                  and Total between ${total1} and ${total2}
-                  and IDCardPassengerr like '%${idpassenger}%'
-                  and ReservationDetail.Value between ${valueroom1} and ${valueroom2}
-                  and ReservationDetail.NumberRoom between ${numberroom1} and ${numberroom2}
+                  SELECT
+                  o.*,
+
+                  do.IDDetailO,
+                  do.QuantityDO,
+                  do.AmountDO,
+                  do.IDDishh,
+
+                  c.NamesC,
+                  c.LastNameC,
+                  c.PhoneNumberC
+
+                  FROM Orderr o
+                  INNER JOIN  DetailOrder do
+                  ON do.idorder=o.idorder
+                  INNER JOIN Customer c ON c.IDCustomer=o.IDCustomer
+
+                  WHERE 
+                   o.IDOrder between ${idorder1} and ${idorder2}
+                  and o.DateO between @DateO1 and @DateO2
+                  and o.StateO like '%${stateo}%'
+                  and o.SpecialRequirement like '%${specialr}%'
+                  and o.NumberPeople between ${numberpeople1} and ${numberpeople2}
+
+                  and c.IDCustomer between ${IDCustomer1} and ${IDCustomer2}
+                  and c.NamesC like '%${namecustomer}%'
+                  and c.LastNameC like '%${lastnamecustomer}%'
+
+                  and do.QuantityDO between ${QuantityDO1} and ${QuantityDO2}
+                  and do.AmountDO between ${AmountDO1} and ${AmountDO2}
+                  and do.IDDishh between ${IDDishh1} and ${IDDishh2}
+
                   ORDER BY ${orderby} desc
      
                   `
                   let pool = await Conection.conection();
                    const result = await pool.request()
-                   .input('reservdate1', Date, reservdate1)
-                    .input('reservdate2', Date, reservdate2)
-                    .input('arrdate1', Date, arrdate1)
-                    .input('arrdate2', Date, arrdate2)
-                    .input('departdate1', Date, departdate1)
-                    .input('departdate2', Date, departdate2)
+                    .input('DateO1', DateTime, dateo1)
+                    .input('DateO2', DateTime, dateo2)
                    .query(querysearch)        
                    for (var r of result.recordset) {
-                    let detailreservation = new DTOReservationDetail();
-                    this.getinformationDetailReservation(detailreservation,r);
-                    array.push(detailreservation);
+                    let detailorder = new DTOOrderDetail();
+                    this.getinformationOrderWithDetailOrder(detailorder,r);
+                    array.push(detailorder);
                    } 
                  pool.close();
                  return array;
-            
+
+             
           
-           }
+      }
+    static getMultipleIdOrder=async(arrayidorder,orderby="IDOrder")=>
+            {
+                    let array=[];
+                    let querysearch = `
+       
+                    SELECT
+
+                    o.*,
+  
+                    do.IDDetailO,
+                    do.QuantityDO,
+                    do.AmountDO,
+                    do.IDDishh,
+  
+                    c.NamesC,
+                    c.LastNameC,
+                    c.PhoneNumberC
+  
+                    FROM Orderr o
+                    INNER JOIN  DetailOrder do
+                    ON do.idorder=o.idorder
+                    INNER JOIN Customer c ON c.IDCustomer=o.IDCustomer
+  
+                    WHERE 
+                    o.IDOrder in
+                    (
+                      ${this.forinsidestringorder(arrayidorder)}
+                    ) 
+                    ORDER BY ${orderby} desc
+       
+                    `
+                    let pool = await Conection.conection();
+                     const result = await pool.request()
+                     .query(querysearch)        
+                     for (var r of result.recordset) {
+                      let detailorder = new DTOOrderDetail();
+                      this.getinformationOrderWithDetailOrder(detailorder,r);
+                      array.push(detailorder);
+                     } 
+                   pool.close();
+                   return array;
+  
+               
+            
+        }
     //#endregion
 
    //#region GET INFORMATION
 
-   static getinformationReservation(reservation, result) {
+   static getinformationOrderWithDetailOrder(detailorder, result) {
 
+    detailorder.Order.IDOrder=result.IDOrder;
+    detailorder.Order.DateO=result.DateO;
+    detailorder.Order.StateO=result.StateO;
+    detailorder.Order.SpecialRequirement=result.SpecialRequirement;
+    detailorder.Order.NumberPeople=result.NumberPeople;
+   
 
-    reservation.NumberReservationn=result.NumberReservationn;
-    reservation.ReservationDate=result.ReservationDate;
-    reservation.ArrivalDate=result.ArrivalDate;
-    reservation.DepartureDate=result.DepartureDate;
-    reservation.ProcessStatus=result.ProcessStatus;
-    reservation.ConfirmationStatus=result.ConfirmationStatus;
-    reservation.Origin=result.Origin;
-    reservation.Total=result.Total;
+    detailorder.IDDetailO=result.IDDetailO;
+    detailorder.QuantityDO=result.QuantityDO;
+    detailorder.AmountDO=result.AmountDO;
+    detailorder.IDDishh=result.IDDishh;   
+    detailorder.Dish=null;
+
     
+    detailorder.Order.Customer.IDCustomer = result.IDCustomer;
+    detailorder.Order.Customer.NamesC = result.NamesC;
+    detailorder.Order.Customer.LastNameC = result.LastNameC;
+    detailorder.Order.Customer.PhoneNumberC = result.PhoneNumberC;
+   
     
    }
    
-   static getinformationDetailOrder(detailorder, result) {
-
-    detailorder.Total=result.Total;
-    detailorder.Value=result.Value;
-    detailorder.Dish=null;
-    detailorder.Order=null;
-
-    detailorder.NameD=result.NameD
-    detailorder.IDCategory=result.IDCategory
-    detailorder.DescriptionD=result.DescriptionD
-    detailorder.ImgD=result.ImgD
-    detailorder.PriceD=result.PriceD
-    detailorder.CostD=result.CostD
-    detailorder.QuantityAD=result.QuantityAD
-
-  
-
-   }
-   static getinformationDetailReservation(detailreservation, result) {
-
-    detailreservation.NumberRD=result.NumberRD;
-    DataReservation.getinformationReservation(detailreservation.Reservation,result)
-    DataRoom.getinformation(detailreservation.Room,result)
-
-   }
+   
+ 
 
    //#region OTHERS
 
@@ -505,7 +630,24 @@ class DataOrder
     return stringelement
    
    }
-  
+   static forinsidestringorder(array)//pass all id to string for sql query
+   {
+    let stringelement="";
+    for (let index = 0; index < array.length; index++) {
+      const idorder = array[index];
+      if (index===array.length-1) {
+        stringelement=stringelement+idorder
+      }
+      else
+      {
+        stringelement=stringelement+idorder+","
+      }
+     
+    }
+    return stringelement
+   
+   }
+
    //#endregion
 }
 module.exports = { DataOrder };

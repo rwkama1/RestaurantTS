@@ -1,31 +1,43 @@
-const { VarChar,Int, Money ,Date} = require("mssql");
-const { DTODetailPassengerService } = require("../DTO/DTODetailPassengerService");
-const { DTOPassengerService } = require("../DTO/DTOPassengerService");
-
-
+const { VarChar,Int ,Date} = require("mssql");
 const { Conection } = require("./Conection");
-const { DataPassenger } = require("./DataPassenger");
-const { DataService } = require("./DataService");
 
-class DataPassengerService
+
+class DataTableCustomer
 {
     //#region CRUD
 
-    static registerPassengerService=async(idcardpassenger,startdate,enddate,total,observation,arraydetailps)=>
+    static registerTableCustomer=async(IDTable,IDCustomer)=>
     {
-      let resultquery;
+        let resultquery;
        let queryinsert = `  
 
-          IF NOT EXISTS ( SELECT * FROM Passenger WHERE IDCard=@IDCard and Statee='Active')
+          IF NOT EXISTS ( SELECT IDTable FROM TablesR WHERE IDTable=@IDTable AND StateT='Active')
           BEGIN
-            select -1 as notexistpassenger
+            select -1 as notexisttable
           END
           ELSE
           BEGIN
-            BEGIN TRANSACTION  
-                insert into PassengerServicee values (@IDCard,@startdate,@enddate,@Total,@observation)
-                  ${this.forAddDetailPS(arraydetailps)}
-                    select 1 as insertsuccess
+            IF NOT EXISTS ( SELECT IDCustomer FROM Customer WHERE IDCustomer=@IDCustomer)
+            BEGIN
+              select -2 as noexistcustomer
+            END
+            ELSE
+            BEGIN
+              IF EXISTS ( SELECT IDTableC FROM Table_Customer WHERE IDTable=@IDTable AND IDCustomer=@IDCustomer)
+              BEGIN
+                select -3 as existtablecustomer
+              END
+              ELSE
+              BEGIN 
+               BEGIN TRANSACTION  
+
+                INSERT INTO Table_Customer values (@IDTable,@IDCustomer)
+
+                UPDATE TablesR SET StateT='Inactive' WHERE IDTable=@IDTable
+
+                select 1 as insertsuccess
+
+                
                 IF(@@ERROR > 0)  
                 BEGIN  
                     ROLLBACK TRANSACTION  
@@ -34,311 +46,111 @@ class DataPassengerService
                 BEGIN  
                 COMMIT TRANSACTION  
                 END   
+              END
+            END         
           END       
          
             
           `;
           let pool = await Conection.conection();
           const result = await pool.request()
-          .input('IDCard', VarChar, idcardpassenger)
-          .input('startdate', Date, startdate)
-          .input('enddate', Date, enddate)
-          .input('observation', VarChar, observation)
-          .input('Total', Money, total)
+          .input('IDTable', Int, IDTable)
+          .input('IDCustomer', Int, IDCustomer)
           .query(queryinsert)
-          resultquery = result.recordset[0].notexistpassenger;
+          resultquery = result.recordset[0].notexisttable;
           if(resultquery===undefined)
           {
-              resultquery = result.recordset[0].insertsuccess;
+            resultquery = result.recordset[0].noexistcustomer;
+            if(resultquery===undefined)
+            {
+                resultquery = result.recordset[0].existtablecustomer;
+                if(resultquery===undefined)
+                {
+                    resultquery = result.recordset[0].insertsuccess;
+                }
+            }
           }
           pool.close();
           return resultquery;
   
     }
-    static updateEndDatePassengerService=async(idpassengerservice,enddate)=>
+
+    static updateIDTableTableCustomer=async(IDTable,IDCustomer)=>
     {
-          let resultquery;
-          let queryupdate = `
+        let resultquery;
+       let queryinsert = ` 
+        
+       IF NOT EXISTS ( SELECT IDTable FROM TablesR WHERE IDTable=@IDTable AND StateT='Active')
+       BEGIN
+         select -1 as notexisttable
+       END
+       ELSE
+       BEGIN
+         IF NOT EXISTS ( SELECT IDCustomer FROM Customer WHERE IDCustomer=@IDCustomer)
+         BEGIN
+           select -2 as noexistcustomer
+         END
+         ELSE
+         BEGIN
+           IF  EXISTS ( SELECT IDTableC FROM Table_Customer WHERE IDTable=@IDTable AND IDCustomer=@IDCustomer)
+           BEGIN
+             select -3 as existtablecustomer
+           END
+           ELSE
+           BEGIN 
+            BEGIN TRANSACTION  
 
-          IF NOT EXISTS ( SELECT * FROM PassengerServicee WHERE  numberps=@numberps)
-          BEGIN
-            select -1 as notexistps
-          END
-          ELSE
-          BEGIN   
-              IF  EXISTS ( SELECT * FROM PassengerServicee WHERE startdate>=@enddate and numberps=@numberps)
-              BEGIN
-                select -2 as dateincorrect
-              END
-              ELSE
-              BEGIN 
-                  UPDATE PassengerServicee SET enddate=@enddate
-                  WHERE numberps=@numberps
-                  select 1 as confirmsuccess
-              END
+
+             UPDATE Table_Customer SET IDTable=@IDTable WHERE IDCustomer=@IDCustomer
+
+             UPDATE TablesR SET StateT='Inactive' WHERE IDTable=@IDTable
+
+             UPDATE TablesR SET TablesR.StateT='Active' FROM  TablesR INNER JOIN
+             Table_Customer ON  Table_Customer.IDTable=TablesR.IDTable
+             WHERE  Table_Customer.IDCustomer=@IDCustomer
+
+             select 1 as insertsuccess
+
              
-          END
-
+             IF(@@ERROR > 0)  
+             BEGIN  
+                 ROLLBACK TRANSACTION  
+             END  
+             ELSE  
+             BEGIN  
+             COMMIT TRANSACTION  
+             END   
+           END
+         END         
+       END  
+         
+            
           `;
           let pool = await Conection.conection();
-         
           const result = await pool.request()
-          .input('numberps', Int,idpassengerservice)
-          .input('enddate', Date,enddate)
-          .query(queryupdate)
-          resultquery = result.recordset[0].notexistps;
+          .input('IDTable', Int, IDTable)
+          .input('IDCustomer', Int, IDCustomer)
+          .query(queryinsert)
+          resultquery = result.recordset[0].notexisttable;
           if(resultquery===undefined)
           {
-            resultquery = result.recordset[0].dateincorrect;
+            resultquery = result.recordset[0].noexistcustomer;
             if(resultquery===undefined)
-              {
-                  resultquery = result.recordset[0].confirmsuccess;
-              }
-             
+            {
+                resultquery = result.recordset[0].existtablecustomer;
+                if(resultquery===undefined)
+                {
+                    resultquery = result.recordset[0].insertsuccess;
+                }
+            }
           }
           pool.close();
           return resultquery;
-       
+  
     }
     
     //#endregion
-    //#region  Detail Passenger Services
-
-    static addDetailPS=async(numberps,idservice)=>
-    {
-          let resultquery;
-          let queryupdate = `
-
-          IF EXISTS ( SELECT * FROM DetailPassengerService WHERE IdServicee=@idservice and numberpservice=@numberps)
-          BEGIN
-            select -1 as existdetailps
-          END
-          ELSE
-          BEGIN
-          
-            IF NOT  EXISTS ( SELECT * FROM PassengerServicee WHERE  numberps=@numberps)
-            BEGIN
-              select -2 as notexistpassengerservice
-            END
-            ELSE
-            BEGIN
-              IF NOT EXISTS ( SELECT * FROM servicee WHERE  idservice=@idservice and Statee='Active')
-              BEGIN
-                select -3 as notexistservice
-              END
-              ELSE
-              BEGIN
-                BEGIN TRANSACTION  
-
-                  INSERT INTO  DetailPassengerService
-                  SELECT numberps,idservice,value 
-                  FROM PassengerServicee,servicee			 
-                  WHERE idservice=@idservice and numberps=@numberps
-
-                  UPDATE PassengerServicee SET Total=Total+Value FROM PassengerServicee,Servicee
-                  WHERE idservice=@idservice and numberps=@numberps
-
-
-                  select 1 as insertsuccess 
-
-                IF(@@ERROR > 0)  
-                BEGIN  
-                    ROLLBACK TRANSACTION  
-                END  
-                ELSE  
-                BEGIN  
-                 COMMIT TRANSACTION  
-                END  
-              END 
-            END
-          END
-
-          `;
-          let pool = await Conection.conection();
-         
-          const result = await pool.request()
-          .input('idservice', Int, idservice)
-          .input('numberps', Int,numberps)
-         
-          .query(queryupdate)
-          resultquery = result.recordset[0].existdetailps;
-          if(resultquery===undefined)
-          {
-              resultquery = result.recordset[0].notexistpassengerservice;
-              if(resultquery===undefined)
-              {
-                  resultquery = result.recordset[0].notexistservice;
-                  if(resultquery===undefined)
-                  {
-                      resultquery = result.recordset[0].insertsuccess;
-                  }
-              }
-              
-          }
-          pool.close();
-          return resultquery;
-       
-    } 
-    static removeDetailPS=async(numberps,idservice)=>
-    {
-          let resultquery;
-          let queryupdate = `
-
-          IF NOT EXISTS ( SELECT * FROM DetailPassengerService WHERE idservicee=@idservice and numberpservice=@numberps)
-          BEGIN
-            select -1 as notexistdetailps
-          END
-          ELSE
-          BEGIN
-          
-            IF NOT EXISTS ( SELECT * FROM PassengerServicee WHERE  numberps=@numberps)
-            BEGIN
-              select -2 as noexistpservice
-            END
-            ELSE
-            BEGIN
-              IF NOT EXISTS ( SELECT * FROM servicee WHERE  idservice=@idservice and Statee='Active')
-              BEGIN
-                select -3 as notexistservice
-              END
-              ELSE
-              BEGIN
-                BEGIN TRANSACTION  
-
-                  DELETE FROM DetailPassengerService WHERE idservicee=@idservice 
-                  and numberpservice=@numberps
-
-
-                  UPDATE PassengerServicee SET Total=Total-Value FROM PassengerServicee,servicee
-                  WHERE idservice=@idservice and numberps=@numberps
-
-                  select 1 as deletesuccess 
-
-                  IF(@@ERROR > 0)  
-                  BEGIN  
-                      ROLLBACK TRANSACTION  
-                  END  
-                  ELSE  
-                  BEGIN  
-                     COMMIT TRANSACTION  
-                  END  
-              END 
-            END
-          END
-
-          `;
-          let pool = await Conection.conection();
-         
-          const result = await pool.request()
-          .input('idservice', Int, idservice)
-          .input('numberps', Int,numberps)
-          .query(queryupdate)
-          resultquery = result.recordset[0].notexistdetailps;
-          if(resultquery===undefined)
-          {
-              resultquery = result.recordset[0].noexistpservice;
-              if(resultquery===undefined)
-              {
-                  resultquery = result.recordset[0].notexistservice;
-                  if(resultquery===undefined)
-                  {
-                      resultquery = result.recordset[0].deletesuccess;
-                  }
-              }
-              
-          }
-          pool.close();
-          return resultquery;
-       
-    }
-    static getDetailPSByPassengerService=async(numberps,orderby="iddpassangerservice")=>
-    {
-            let array=[];
-             let querysearch =
-             `
-             SELECT 
-             PassengerServicee.*,
-     
-             DetailPassengerService.IDDPassangerService,
-             DetailPassengerService.numberpservice,
-             DetailPassengerService.idservicee,
-     
-             Servicee.*
-         
-             FROM DetailPassengerService 
-             INNER JOIN Servicee
-             on Servicee.idservice=DetailPassengerService.idservicee
-             INNER JOIN PassengerServicee on PassengerServicee.numberps=DetailPassengerService.numberpservice
-             WHERE DetailPassengerService.numberpservice=${numberps}
-             ORDER BY ${orderby} desc
-
-             
-             `
-
-            let pool = await Conection.conection();
-             const result = await pool.request()
-             .query(querysearch)
-             for (var r of result.recordset) {
-               let dtodps = new DTODetailPassengerService();
-             this.getinformationDetailPS(dtodps,r);
-             array.push(dtodps);
-             
-            } 
-           pool.close();
-           return array;
-
-
-     }
-    static getMultipleDetailPassengerServices=async(arrayservices,orderby="idservice")=>
-     {
-             let array=[];
-              let querysearch =
-              `
-                  SELECT 
-                     *, 
-                     (
-                     select 
-                         SUM(value) as total 
-                     from 
-                         servicee 
-                     where 
-                         statee = 'Active' and 
-                         idservice in (
-                             ${
-                              this.forinsidestring(arrayservices)
-                              }
-                         ) 
-                     
-                     ) as Total 
-                     FROM 
-                     servicee 
-                     WHERE 
-                     idservice IN 
-                     (
-                      ${
-                       this.forinsidestring(arrayservices)
-                      }
-                     ) 
-                     AND  statee = 'Active'
-                     ORDER BY ${orderby} desc
-               
-              `
- 
-             let pool = await Conection.conection();
-              const result = await pool.request()
-              .query(querysearch)
-              for (var r of result.recordset) {
-               let dtodps = new DTODetailPassengerService();
-               this.getinformationDetailPSTotal(dtodps,r);
-               array.push(dtodps);
-             } 
-            pool.close();
-            return array;
- 
- 
-      }
-
-    //#endregion
+   
     //#region GETS
 
     static getPassengerService=async(numberps)=>
@@ -374,9 +186,6 @@ class DataPassengerService
       
     
      }
-
-
-     
     static getPassengerServicesMultipleNumber=async(arraynumberps,orderby="numberps")=>
     {
              let array=[];
@@ -608,7 +417,7 @@ class DataPassengerService
 
    //#region GET INFORMATION
 
-   static getinformationPS(passengerservice, result) {
+   static getinformationTableCustomer(passengerservice, result) {
 
     
     passengerservice.NumberPS=result.NumberPS;
@@ -619,21 +428,7 @@ class DataPassengerService
     DataPassenger.getinformation(passengerservice.Passenger,result)
     
    }
-   static getinformationDetailPS(detailps, result) {
-
-    detailps.IDDPassangerService=result.IDDPassangerService;
-    this.getinformationPS(detailps.PassengerService,result)
-    DataService.getinformation(detailps.Servicee,result)
-    detailps.Amount=detailps.Servicee.value;
-   }
-   static getinformationDetailPSTotal(detailps, result) {
-
-    detailps.Total=result.Total;
-    detailps.Amount=result.Amount;
-    detailps.PassengerService=null;
-    DataService.getinformation(detailps.Servicee,result)
-
-   }
+ 
    //#endregion
 
    //#region OTHERS
@@ -676,4 +471,4 @@ class DataPassengerService
    }
    //#endregion
 }
-module.exports = { DataPassengerService };
+module.exports = { DataTableCustomer };

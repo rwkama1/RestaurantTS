@@ -3,6 +3,7 @@ const { DataCustomer } = require("./data/DataCustomer");
 const { DataDish } = require("./data/DataDish");
 const { DataOrder } = require("./data/DataOrder");
 const { DataTable } = require("./data/DataTable");
+const { DataTableCustomer } = require("./data/DataTableCustomer");
 const { DataUser } = require("./data/DataUser");
 const { DishIngredients } = require("./DishIngredients/dishes");
 const { DTOCategory } = require("./DTO/DTOCategory");
@@ -398,17 +399,17 @@ let ordermaintenance=async()=>
 //     }
 //     console.log(registerDish1);
 
-//     let registerDish2=Order.registerDish(7,60,1);
-//     if (registerDish2===-1) {
-//         throw new Error("The number dish already exist in the list")
-//     }
-//     console.log(registerDish2);
+//     // let registerDish2=Order.registerDish(7,60,1);
+//     // if (registerDish2===-1) {
+//     //     throw new Error("The number dish already exist in the list")
+//     // }
+//     // console.log(registerDish2);
 
-//     let registerDish3=Order.registerDish(8,81,3);
-//     if (registerDish3===-1) {
-//         throw new Error("The number dish already exist in the list")
-//     }
-//     console.log(registerDish3);
+//     // let registerDish3=Order.registerDish(8,81,3);
+//     // if (registerDish3===-1) {
+//     //     throw new Error("The number dish already exist in the list")
+//     // }
+//     // console.log(registerDish3);
 
   
 //     let getDishArray=Order.getDishArray();
@@ -437,15 +438,16 @@ let ordermaintenance=async()=>
   
 // let newdate=new Date(2022,08,27);
 // newdate.setUTCHours(15,00);
-
+//  dtoorder.DateO=newdate;
 //    dtoorder.SpecialRequirement="SpecialRequirement"; 
-//    dtoorder.NumberPeople=4;  
+//    dtoorder.NumberPeople=2;  
 //    dtoorder.Customer=dtocustomer;   
 
 //   let registerOnlineOrder=await DataOrder.registerOnlineOrder(dtoorder,getDishArray);
 //   console.log(registerOnlineOrder)
 
     //#endregion
+
     //#region RESTAURANT ORDER
            
 //         let dtocustomer=new DTOCustomer();
@@ -485,6 +487,7 @@ let ordermaintenance=async()=>
 //   console.log(registerOrderRestaurant)
 
     //#endregion
+
     //#region MAINTENANCE
 
         // let addDetailOrder=await DataOrder.addDetailOrder(58,1,20);
@@ -496,17 +499,79 @@ let ordermaintenance=async()=>
         // let updateDetailOrderQuantity=await DataOrder.updateDetailOrderQuantity(20,6,3);
         // console.log(updateDetailOrderQuantity);
 
-          
-        let cancelOrder=await DataOrder.cancelOrder(10);
-        console.log(cancelOrder);
+        //   let updateSpecialRequirementsNumberPeople=await DataOrder.updateSpecialRequirementsNumberPeople(23,"SpecialRUpdate",3);
+        // console.log(updateSpecialRequirementsNumberPeople);
 
-        
-        
+          
+        // let cancelOrder=await DataOrder.cancelOrder(10);
+        // console.log(cancelOrder);
+
+        // let confirmOrder=await DataOrder.confirmOrder(10);
+        // console.log(confirmOrder);
+
+        //    let newdate=new Date(2022,07,28);
+        //    newdate.setUTCHours(15,00);
+
+        //  let updateDateOOrder=await DataOrder.updateDateOOrder(12,newdate);
+        // console.log(updateDateOOrder);
 
     //#endregion
+
+    //#region GETS
+
+    // let getDetailOrder=await DataOrder.getDetailOrder(23,8);
+    // console.log(getDetailOrder);
+
+    // let getOrder=await DataOrder.getOrder(22);
+    // console.log(getOrder);
+
+
+    //     let dateo1filter1=new Date(2000,09-1,27);
+    //     dateo1filter1.setUTCHours(14,00);
+
+    //     let dateo1filter2=new Date(2100,09-1,27);
+    //     dateo1filter2.setUTCHours(16,00);
+        
+
+    //   let getSearchOrder=await DataOrder.getSearchOrder(0,9999,
+    //     dateo1filter1,dateo1filter2,
+    //     "Pending","",0,9999,0,9999,"","",0,9999,0,99999,7,8
+    //     );
+    //     console.log(getSearchOrder);
+
+    //  let getMultipleIdOrder=await DataOrder.getMultipleIdOrder([24,26]);
+    // console.log(getMultipleIdOrder);
+
+
+
+    //#endregion
+
+
 }
 ordermaintenance().then()
 //#endregion
+//#region TABLE CUSTOMER
+
+let tablecustomer=async()=>
+{
+
+        // let registerTableCustomer=await DataTableCustomer.registerTableCustomer(1,31);
+        // console.log(registerTableCustomer);
+
+           let updateIDTableTableCustomer=await DataTableCustomer.updateIDTableTableCustomer(1,31);
+        console.log(updateIDTableTableCustomer);
+
+
+}
+
+tablecustomer().then()
+
+//#endregion
+
+
+
+
+
 //#region OTHERS
  //const {FactoryLogic}=require("./Restaurant/dist/logic/FactoryLogic");
 // const { default: DTOCategory } = require("./Restaurant/dist/shared/entity/DTOCategory");

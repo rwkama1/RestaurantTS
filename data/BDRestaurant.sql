@@ -92,7 +92,7 @@ CREATE TABLE Bill(
 go
 
 
-
+UPDATE TablesR set statet='Inactive' where idtable=2
 
 --drop table Bill
 --drop table DetailOrder
@@ -109,18 +109,20 @@ go
   select * from Category
   
   select * from Dish
-
+    select * from TablesR
   select * from Ingredient
   select * from Customer
-  select * from TablesR
+   select * from Table_Customer
+      select * from TablesR
   select * from Orderr
   select *  from DetailOrder
 
-   delete from Orderr
-    delete from DetailOrder
-	  delete from Customer where idcustomer in (27,24,22)
+   --delete from Orderr
+    delete from Table_Customer
+   -- delete from DetailOrder
+	  --delete from Customer where idcustomer in (27,24,22)
     
 
- 
+
    --delete  from Dish
 
