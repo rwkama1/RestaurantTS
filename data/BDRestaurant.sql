@@ -92,7 +92,7 @@ CREATE TABLE Bill(
 go
 
 
-UPDATE TablesR set statet='Inactive' where idtable=2
+
 
 --drop table Bill
 --drop table DetailOrder
@@ -116,13 +116,24 @@ UPDATE TablesR set statet='Inactive' where idtable=2
       select * from TablesR
   select * from Orderr
   select *  from DetailOrder
+   select *  from Bill
+   
+   update orderr set stateo='Confirmed' where idorder=23
 
-   --delete from Orderr
-    delete from Table_Customer
-   -- delete from DetailOrder
-	  --delete from Customer where idcustomer in (27,24,22)
-    
-
-
-   --delete  from Dish
-
+  INSERT INTO Bill
+  SELECT 
+  '2022-08-06' AS DateB, 
+  SUM(amountdo) as SubTotal, 
+  (
+    (
+      SUM(amountdo)* 22 / 100
+    )+ SUM(amountdo)
+  ) as TotalB, 
+  22 as VATB, 
+  'Pending' as StateB, 
+  23 as IDOrder
+FROM 
+  Orderr o 
+  INNER JOIN DetailOrder do ON o.IDOrder = do.IDOrder 
+WHERE 
+  o.IDOrder = 23

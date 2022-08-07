@@ -10,8 +10,7 @@ export class LGetBill
         let datac= await this.getLBills();
         let searchc=datac.search(id);
         return searchc
-      }
-      
+      }  
     static getLBillbyOrder=async(id:number)=>
     {
       let datac= await this.getLBills();

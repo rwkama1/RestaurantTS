@@ -1,53 +1,62 @@
 const { VarChar,Int, Money, Date } = require("mssql");
-const { DTOPayment } = require("../DTO/DTOPayment");
+
 const { Conection } = require("./Conection");
-class DataPayment
+
+class DataBill
 {
     //#region CRUD
 
-    static registerPayment=async(idpassenger,numberreservation,
-      numberps,passengeramount,datee,totalrs)=>
+    static registerBill=async(dateb,idorder,idcustomer,vat)=>
     {
-      let resultquery;
+        let resultquery;
        let queryinsert = `   
-       
-            IF NOT EXISTS ( SELECT NumberReservationn FROM Reservation WHERE NumberReservationn=@NumberReservationn AND IDCardPassengerr=@IDCard)
+            
+            IF NOT EXISTS ( SELECT IDOrder FROM Orderr WHERE 
+               IDOrder=@IDOrder and IDCustomer=@IDCustomer and StateO='Confirmed')
             BEGIN
-              select -1 as noexistreservation
+              SELECT -1 as notexistorderornotconfirmed
             END
             ELSE
             BEGIN
-                IF NOT EXISTS ( SELECT NumberPS FROM PassengerServicee WHERE NumberPS=@NumberPS AND idcardp=@IDCard)
-                BEGIN
-                  select -2 as notexistpassengerservice
-                END
-                ELSE
-                BEGIN
-                  insert into Payment values 
-                  (@NumberReservationn,@IDCard,@NumberPS,
-                    @PassengerAmount,@TotalRS,@Datee)
-                    select 1 as insertsuccess
-                END
-             END       
+
+              INSERT INTO Bill 
+              SELECT 
+                @DateB AS DateB, 
+
+                SUM(AmountDO) as SubTotal, 
+
+                (
+                  (
+                    SUM(AmountDO) * @VATB / 100
+                  ) + SUM(AmountDO)
+                ) as TotalB, 
+
+                @VATB as VATB, 
+
+                'Pending' as StateB, 
+
+                @IDOrder as IDOrder 
+              FROM 
+                Orderr o 
+                INNER JOIN DetailOrder do ON o.IDOrder = do.IDOrder 
+              WHERE 
+                o.IDOrder = @IDOrder
+                SELECT  1 AS insertsuccess  
+
+            END       
           `;
           let pool = await Conection.conection();
           const result = await pool.request()
-          .input('IDCard', VarChar, idpassenger)
-          .input('NumberReservationn', Int, numberreservation)
-          .input('PassengerAmount', Money, passengeramount)
-          .input('Datee', Date, datee)
-          .input('TotalRS', Money, totalrs)
-          .input('NumberPS', Int, numberps)
+          .input('IDOrder', Int, idorder)
+          .input('IDCustomer', Int, idcustomer)
+          .input('DateB', Date, dateb)
+          .input('VATB', Money, vat)
           .query(queryinsert)
-          resultquery = result.recordset[0].noexistreservation;
-          if(resultquery===undefined)
-          {
-            resultquery = result.recordset[0].notexistpassengerservice;
+            resultquery = result.recordset[0].notexistorderornotconfirmed;
             if(resultquery===undefined)
             {
                 resultquery = result.recordset[0].insertsuccess;
-            }          
-          }                                                              
+            }                                                                  
           pool.close();
           return resultquery;
   
@@ -330,7 +339,8 @@ class DataPayment
     return stringelement
 
   }
+
 //#endregion
 
 }
-module.exports = { DataPayment };
+module.exports = { DataBill };

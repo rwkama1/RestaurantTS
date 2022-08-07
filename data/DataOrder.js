@@ -159,7 +159,7 @@ class DataOrder
           BEGIN
              UPDATE Orderr SET StateO='Confirmed'
              WHERE IDOrder=@IDOrder
-             select 1 as canceledsuccess
+             select 1 as confirmsuccess
           END
 
           `;
@@ -170,7 +170,7 @@ class DataOrder
           resultquery = result.recordset[0].notexistorder;
           if(resultquery===undefined)
           {
-              resultquery = result.recordset[0].canceledsuccess;
+              resultquery = result.recordset[0].confirmsuccess;
           }
           pool.close();
           return resultquery;

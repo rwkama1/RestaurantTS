@@ -1,3 +1,4 @@
+const { DataBill } = require("./data/DataBill");
 const { DataCategory } = require("./data/DataCategory");
 const { DataCustomer } = require("./data/DataCustomer");
 const { DataDish } = require("./data/DataDish");
@@ -555,19 +556,57 @@ ordermaintenance().then()
 let tablecustomer=async()=>
 {
 
-        // let registerTableCustomer=await DataTableCustomer.registerTableCustomer(1,31);
+        // let registerTableCustomer=await DataTableCustomer.registerTableCustomer(4,33);
         // console.log(registerTableCustomer);
 
-           let updateIDTableTableCustomer=await DataTableCustomer.updateIDTableTableCustomer(1,31);
-        console.log(updateIDTableTableCustomer);
+        // let updateIDTableTableCustomer=await DataTableCustomer.updateIDTableTableCustomer(3,32);
+        // console.log(updateIDTableTableCustomer);
 
+        // let deleteTableCustomer=await DataTableCustomer.deleteTableCustomer(1,31);
+        // console.log(deleteTableCustomer);
+
+        // GETS
+
+        //   let getTableCustomer=await DataTableCustomer.getTableCustomer(1,30);
+        // console.log(getTableCustomer);
+
+        // let getMultipleIDTableTableCustomer=await DataTableCustomer.getMultipleIDTableTableCustomer([1,2]);
+        // console.log(getMultipleIDTableTableCustomer);
+
+        // let getMultipleIDCustomerTableCustomer=await DataTableCustomer.getMultipleIDCustomerTableCustomer([30,35,36]);
+        // console.log(getMultipleIDCustomerTableCustomer);
+
+
+        // let getSearchTableCustomer=await DataTableCustomer.getSearchTableCustomer(
+        //     0,9999,0,9999,0,9999,"","",0,9999
+        // );
+        // console.log(getSearchTableCustomer);
 
 }
 
 tablecustomer().then()
 
 //#endregion
+//#region BILL
 
+let billmaintenance=async()=>
+{
+    let datenow=new Date();
+    let billdate=  new Date(datenow.getFullYear(),datenow.getMonth(),datenow.getDate());
+     let registerBill=await DataBill.registerBill(
+        billdate,23,32,22
+        );
+    console.log(registerBill);
+
+       // let registerTableCustomer=await DataTableCustomer.registerTableCustomer(4,33);
+    // console.log(registerTableCustomer);
+
+
+
+}
+billmaintenance().then()
+
+//#endregion
 
 
 
