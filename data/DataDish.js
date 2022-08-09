@@ -163,6 +163,38 @@ class DataDish
             return resultquery;
     
       }
+     static removeQuantity=async(iddish,quantity)=>
+      {
+            let resultquery;
+            let queryinsert = `
+
+            IF NOT EXISTS ( SELECT IDDishh FROM Dish WHERE IDDishh=@IDDishh)
+            BEGIN
+              select -1 as notexistdish
+            END
+            ELSE
+            BEGIN
+              
+                  Update Dish Set QuantityAD=QuantityAD-@QuantityAD
+                   where IDDishh=@IDDishh
+                  select 1 as updatesucess
+            END
+
+            `;
+            let pool = await Conection.conection();
+            const result = await pool.request()
+            .input('IDDishh', Int, iddish)
+            .input('QuantityAD', Money,quantity )
+            .query(queryinsert)
+            resultquery = result.recordset[0].notexistdish;
+            if(resultquery===undefined)
+            {
+                  resultquery = result.recordset[0].updatesucess;
+            }
+            pool.close();
+            return resultquery;
+    
+      }
 
     //#endregion
 

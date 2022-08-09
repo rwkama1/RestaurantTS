@@ -107,33 +107,25 @@ go
 
 
   select * from Category
-  
   select * from Dish
-    select * from TablesR
+  select * from TablesR
   select * from Ingredient
   select * from Customer
-   select * from Table_Customer
-      select * from TablesR
+  select * from Table_Customer
+  select * from TablesR
   select * from Orderr
   select *  from DetailOrder
-   select *  from Bill
+  select * from Dish
+  select *  from Bill
    
-   update orderr set stateo='Confirmed' where idorder=23
+   update dish set quantityad=30 where iddishh=6
 
-  INSERT INTO Bill
-  SELECT 
-  '2022-08-06' AS DateB, 
-  SUM(amountdo) as SubTotal, 
-  (
-    (
-      SUM(amountdo)* 22 / 100
-    )+ SUM(amountdo)
-  ) as TotalB, 
-  22 as VATB, 
-  'Pending' as StateB, 
-  23 as IDOrder
-FROM 
-  Orderr o 
-  INNER JOIN DetailOrder do ON o.IDOrder = do.IDOrder 
-WHERE 
-  o.IDOrder = 23
+   select sum(quantitydo) as   from detailorder where idorder=
+
+      
+               UPDATE d SET d.QuantityAD=d.QuantityAD-do.QuantityDO
+               FROM 
+               Bill b INNER JOIN Orderr o ON o.IDOrder=b.IDOrder
+               INNER JOIN  DetailOrder do ON do.IDOrder=o.IDOrder 
+               INNER JOIN Dish d ON d.IDDishh=do.IDDishh 
+               WHERE b.IDBilll=3

@@ -1,4 +1,5 @@
 const { VarChar,Int, Money, Date } = require("mssql");
+const { DTOBill } = require("../DTO/DTOBill");
 
 const { Conection } = require("./Conection");
 
@@ -61,76 +62,182 @@ class DataBill
           return resultquery;
   
     }
+    static updateDateBill=async(dateb,idbill)=>
+    {
+        let resultquery;
+       let queryinsert = `   
+            
+            IF NOT EXISTS ( SELECT IDBilll FROM Bill WHERE 
+              IDBilll=@IDBilll )
+            BEGIN
+              SELECT -1 as notexistbill
+            END
+            ELSE
+            BEGIN
+               UPDATE Bill SET DateB=@DateB where IDBilll=@IDBilll
+               SELECT 1 as updatesuccess
+            END   
+                
+          `;
+          let pool = await Conection.conection();
+          const result = await pool.request()
+          .input('IDBilll', Int, idbill)
+          .input('DateB', Date, dateb)
+          .query(queryinsert)
+           resultquery = result.recordset[0].notexistbill;
+          if(resultquery===undefined)
+          {
+              resultquery = result.recordset[0].updatesuccess;
+          }                                                                  
+          pool.close();
+          return resultquery;
+  
+    }
+    static collectBill=async(idbill)=>
+    {
+        let resultquery;
+        let queryinsert = `   
+            
+            IF NOT EXISTS ( SELECT IDBilll FROM Bill WHERE 
+              IDBilll=@IDBilll )
+            BEGIN
+              SELECT -1 as notexistbill
+            END
+            ELSE
+            BEGIN
+              BEGIN TRANSACTION 
+
+               UPDATE Bill SET StateB='Cashed' where IDBilll=@IDBilll
+               
+               UPDATE Dish SET QuantityAD=QuantityAD-QuantityDO
+               FROM 
+               Bill b INNER JOIN Orderr o ON o.IDOrder=b.IDOrder
+               INNER JOIN  DetailOrder do ON do.IDOrder=o.IDOrder 
+               INNER JOIN Dish d ON d.IDDishh=do.IDDishh 
+               WHERE b.IDBilll=@IDBilll
+
+               SELECT 1 as updatesuccess
+
+
+               IF(@@ERROR > 0)  
+               BEGIN  
+                   ROLLBACK TRANSACTION  
+               END  
+               ELSE  
+               BEGIN  
+                COMMIT TRANSACTION  
+               END   
+            END   
+                
+          `;
+          let pool = await Conection.conection();
+          const result = await pool.request()
+          .input('IDBilll', Int, idbill)
+          .query(queryinsert)
+           resultquery = result.recordset[0].notexistbill;
+          if(resultquery===undefined)
+          {
+              resultquery = result.recordset[0].updatesuccess;
+          }                                                                  
+          pool.close();
+          return resultquery;
+  
+    }
+    static cancelBill=async(idbill)=>
+    {
+        let resultquery;
+        let queryinsert = `   
+            
+            IF NOT EXISTS ( SELECT IDBilll FROM Bill WHERE 
+              IDBilll=@IDBilll )
+            BEGIN
+              SELECT -1 as notexistbill
+            END
+            ELSE
+            BEGIN
+               UPDATE Bill SET StateB='Canceled' where IDBilll=@IDBilll
+               SELECT 1 as updatesuccess
+            END   
+                
+          `;
+          let pool = await Conection.conection();
+          const result = await pool.request()
+          .input('IDBilll', Int, idbill)
+          .query(queryinsert)
+           resultquery = result.recordset[0].notexistbill;
+          if(resultquery===undefined)
+          {
+              resultquery = result.recordset[0].updatesuccess;
+          }                                                                  
+          pool.close();
+          return resultquery;
+  
+    }
     //#endregion
 
     //#region GETS
 
-    static getPayment=async(idpayment)=>
+    static getBill=async(idbill)=>
     {
             let array=[];
             let resultquery;
             let querysearch = `
-            IF NOT EXISTS ( SELECT IDPaymentt FROM Payment WHERE IDPaymentt=${idpayment})
-              BEGIN
-                select -1 as noexistpayment
-              END
-            ELSE
+
+            IF NOT EXISTS ( SELECT IDBilll FROM Bill WHERE 
+              IDBilll=@IDBilll )
             BEGIN
+              SELECT -1 as notexistbill
+            END
+            ELSE
+             BEGIN
 
               SELECT
 
-              p.IDPaymentt,
-              p.NumberReservation,
-              p.IDCardPa,
-              p.IDPassangerServicee,
-              p.PassengerAmount,
-              p.TotalRS as TotalPayment,
-              p.Datee,
+              b.*,
             
-              rd.NumberRD,
-              rd.Value,
-              rd.NumberRoom,
+              o.DateO,
+              o.StateO,
+              o.SpecialRequirement,
+              o.NumberPeople,
+              o.IDCustomer,
             
-              r.ReservationDate,
-              r.ArrivalDate, 
-              r.DepartureDate, 
-              r.ProcessStatus, 
-              r.ConfirmationStatus,
-              r.Origin,
-              r.Total as TotalReservation,
+              do.IDDetailO,
+              do.QuantityDO,
+              do.AmountDO,
+              do.IDDishh,
             
-              dps.IDDPassangerService,
-              dps.IDServicee,
-              dps.Amount,
+              d.NameD,
+              d.IDCategory,
+              d.DescriptionD,
+              d.ImgD,
+              d.PriceD,
             
-              ps.StartDate,
-              ps.EndDate,
-              ps.Total as TotalPS ,
-              ps.Observations
-              
-              FROM 
-              Payment as p INNER JOIN ReservationDetail rd
-              ON p.NumberReservation=rd.NumberReservation
-              INNER JOIN Reservation r ON r.NumberReservationn=rd.NumberReservation
-              INNER JOIN DetailPassengerService dps ON dps.NumberPService=p.IDPassangerServicee
-              INNER JOIN PassengerServicee ps ON ps.NumberPS=dps.NumberPService
-              WHERE idpaymentt=${idpayment}
+              c.NamesC,
+              c.LastNameC,
+              c.PhoneNumberC
+                    
+              FROM
+
+              Bill b INNER JOIN Orderr o ON o.IDOrder=b.IDOrder
+              INNER JOIN  DetailOrder do ON do.IDOrder=o.IDOrder 
+              INNER JOIN Dish d ON d.IDDishh=do.IDDishh 
+              INNER JOIN Customer c ON c.IDCustomer=o.IDCustomer
+              WHERE b.IDBilll=@IDBilll
             
             END
             `
             let pool = await Conection.conection();
              const result = await pool.request()
-             .input('IDPaymentt', Int, idpayment)
+             .input('IDBilll', Int, idbill)
              .query(querysearch)
-            resultquery = result.recordset[0].noexistpayment; 
+            resultquery = result.recordset[0].notexistbill; 
             if (resultquery===undefined) {
-              for (var precord of result.recordset) {
-                let dtop  = new DTOPayment();
-                this.getinformation(dtop,precord);
-                array.push(dtop);
-                
-              }
-              resultquery=array;
+              for (var r of result.recordset) {
+                  let dtobill = new DTOBill();
+                  this.getinformation(dtobill, r);
+                  array.push(dtobill);
+                } 
+                resultquery=array
             }
             
            pool.close();
@@ -286,37 +393,37 @@ class DataBill
 
    //#region GET INFORMATION
 
-   static getinformation(p, result) {
+   static getinformation(dtobill, result) {
 
     
-    p.IDPaymentt=result.IDPaymentt;
-    p.NumberReservation=result.NumberReservation;
-    p.IDCardPa=result.IDCardPa;
-    p.IDPassangerServicee=result.IDPassangerServicee;
-    p.PassengerAmount=result.PassengerAmount;
-    p.TotalPayment=result.TotalPayment;
-    p.Datee=result.Datee
+    dtobill.IDBilll=result.IDBilll;
+    dtobill.DateB=result.DateB;
+    dtobill.SubtotalB=result.SubtotalB;
+    dtobill.TotalB=result.TotalB;
+    dtobill.VATB=result.VATB;
+    dtobill.StateB=result.StateB;
+    dtobill.DetailOrder.Order.IDOrder=result.IDOrder;
   
-    p.NumberRD=result.NumberRD
-    p.Value=result.Value
-    p.NumberRoom=result.NumberRoom
-  
-    p.ReservationDate=result.ReservationDate
-    p.ArrivalDate=result.ArrivalDate
-    p.DepartureDate=result.DepartureDate
-    p.ProcessStatus=result.ProcessStatus
-    p.ConfirmationStatus=result.ConfirmationStatus
-    p.Origin=result.Origin
-    p.TotalReservation=result.TotalReservation
-  
-    p.IDDPassangerService=result.IDDPassangerService
-    p.IDServicee=result.IDServicee
-    p.Amount=result.Amount
-  
-    p.StartDate=result.StartDate
-    p.EndDate=result.EndDate
-    p.TotalPS=result.TotalPS
-    p.Observations=result.Observations
+    dtobill.DetailOrder.Order.DateO=result.DateO;
+    dtobill.DetailOrder.Order.StateO=result.StateO;
+    dtobill.DetailOrder.Order.SpecialRequirement=result.SpecialRequirement;
+    dtobill.DetailOrder.Order.NumberPeople=result.NumberPeople;
+    dtobill.DetailOrder.Order.Customer.IDCustomer=result.IDCustomer;
+    
+    dtobill.DetailOrder.IDDetailO=result.IDDetailO;
+    dtobill.DetailOrder.QuantityDO=result.QuantityDO;
+    dtobill.DetailOrder.AmountDO=result.AmountDO;
+    dtobill.DetailOrder.Dish.IDDishh=result.IDDishh;
+
+    dtobill.DetailOrder.Dish.NameD=result.NameD;
+    dtobill.DetailOrder.Dish.IDCategory=result.IDCategory;
+    dtobill.DetailOrder.Dish.DescriptionD=result.DescriptionD;
+    dtobill.DetailOrder.Dish.ImgD=result.ImgD;
+    dtobill.DetailOrder.Dish.PriceD=result.PriceD;
+
+    dtobill.DetailOrder.Order.Customer.NamesC=result.NamesC;
+    dtobill.DetailOrder.Order.Customer.LastNameC=result.LastNameC;
+    dtobill.DetailOrder.Order.Customer.PhoneNumberC=result.PhoneNumberC;
 
     
    }

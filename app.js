@@ -306,6 +306,14 @@ let dishesmaintenace=async()=>
     //     }
    
     // console.log(addQuantity);
+
+        //  let removeQuantity=await DataDish.removeQuantity(6,1);
+        // if (removeQuantity===-1) {
+        //     throw new Error("Dish no exist")
+        // }
+        // console.log(removeQuantity);
+
+        
     //#endregion
 
     //#region INGREDIENTS
@@ -591,16 +599,30 @@ tablecustomer().then()
 
 let billmaintenance=async()=>
 {
-    let datenow=new Date();
-    let billdate=  new Date(datenow.getFullYear(),datenow.getMonth(),datenow.getDate());
-     let registerBill=await DataBill.registerBill(
-        billdate,23,32,22
-        );
-    console.log(registerBill);
+    // let datenow=new Date();
+    // let billdate=  new Date(datenow.getFullYear(),datenow.getMonth(),datenow.getDate());
+    //  let registerBill=await DataBill.registerBill(
+    //     billdate,24,33,22
+    //     );
+    // console.log(registerBill);
 
-       // let registerTableCustomer=await DataTableCustomer.registerTableCustomer(4,33);
-    // console.log(registerTableCustomer);
+    //  let datenow=new Date();
+    // let billdate=  new Date(datenow.getFullYear(),datenow.getMonth(),datenow.getDate());
+    //       let updateDateBill=await DataBill.updateDateBill(
+    //     billdate,2
+    //     );
+    // console.log(updateDateBill);
 
+    //  let collectBill=await DataBill.collectBill(4);
+    // console.log(collectBill);
+
+    // let cancelBill=await DataBill.cancelBill(2);
+    // console.log(cancelBill);
+
+    //GETS 
+    
+    let getBill=await DataBill.getBill(4);
+    console.log(getBill);
 
 
 }
