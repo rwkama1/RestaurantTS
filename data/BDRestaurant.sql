@@ -118,7 +118,7 @@ go
   select * from Dish
   select *  from Bill
    
-   update dish set quantityad=30 where iddishh=6
+   update dish set quantityad=30 
 
    select sum(quantitydo) as   from detailorder where idorder=
 

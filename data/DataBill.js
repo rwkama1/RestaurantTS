@@ -245,147 +245,133 @@ class DataBill
       
     
      }  
-    static getPaymentMultipleId=async(arrayidpayment,orderby="IDPaymentt")=>
+    static getBillMultipleID=async(arrayid,orderby="IDBilll")=>
     {
              let array=[];
             let querysearch = `
-
+            
             SELECT
 
-            p.IDPaymentt,
-            p.NumberReservation,
-            p.IDCardPa,
-            p.IDPassangerServicee,
-            p.PassengerAmount,
-            p.TotalRS as TotalPayment,
-            p.Datee,
+            b.*,
           
-            rd.NumberRD,
-            rd.Value,
-            rd.NumberRoom,
+            o.DateO,
+            o.StateO,
+            o.SpecialRequirement,
+            o.NumberPeople,
+            o.IDCustomer,
           
-            r.ReservationDate,
-            r.ArrivalDate, 
-            r.DepartureDate, 
-            r.ProcessStatus, 
-            r.ConfirmationStatus,
-            r.Origin,
-            r.Total as TotalReservation,
+            do.IDDetailO,
+            do.QuantityDO,
+            do.AmountDO,
+            do.IDDishh,
           
-            dps.IDDPassangerService,
-            dps.IDServicee,
-            dps.Amount,
+            d.NameD,
+            d.IDCategory,
+            d.DescriptionD,
+            d.ImgD,
+            d.PriceD,
           
-            ps.StartDate,
-            ps.EndDate,
-            ps.Total as TotalPS ,
-            ps.Observations
-            
-            FROM 
-            Payment as p INNER JOIN ReservationDetail rd
-            ON p.NumberReservation=rd.NumberReservation
-            INNER JOIN Reservation r ON r.NumberReservationn=rd.NumberReservation
-            INNER JOIN DetailPassengerService dps ON dps.NumberPService=p.IDPassangerServicee
-            INNER JOIN PassengerServicee ps ON ps.NumberPS=dps.NumberPService
-            WHERE idpaymentt in
-                (
-                  ${
-                    this.forinsidestring(arrayidpayment)
-                    }
-                )
+            c.NamesC,
+            c.LastNameC,
+            c.PhoneNumberC
+                  
+            FROM
 
-                ORDER BY ${orderby} desc
+            Bill b INNER JOIN Orderr o ON o.IDOrder=b.IDOrder
+            INNER JOIN  DetailOrder do ON do.IDOrder=o.IDOrder 
+            INNER JOIN Dish d ON d.IDDishh=do.IDDishh 
+            INNER JOIN Customer c ON c.IDCustomer=o.IDCustomer
 
+            WHERE b.IDBilll in 
+            (
+              ${
+                this.forinsidestring(arrayid)
+                }
+            )
+               
+            ORDER BY ${orderby} desc
             `
             let pool = await Conection.conection();
              const result = await pool.request()
              .query(querysearch)        
-             for (var precord of result.recordset) {
-              let dtop  = new DTOPayment();
-              this.getinformation(dtop,precord);
-              array.push(dtop);
-              
-            }
+             for (var r of result.recordset) {
+              let dtobill = new DTOBill();
+              this.getinformation(dtobill, r);
+              array.push(dtobill);
+            } 
            pool.close();
            return array;
       }
-    static getSearchPayment=async(idpayment1=0,idpayment2=99999,
-      numberr1=0,numberr2=99999,idpassengerservice1=0,
-      idpassengerservice2=99999,idcardpassenger=""
-      ,date1='2000-08-08',date2='2100-08-08',orderby="IDPaymentt"
-      )=>
+     static getSearchBill=async(IDBilll1=0,IDBilll2=9999,
+      DateB1='2000-08-08',DateB2='2100-08-08',
+      SubtotalB1=0,SubtotalB2=9999,
+      TotalB1=0,TotalB2=9999, VATB1=0,VATB2=9999,
+      StateB="",IDOrder1=0,IDOrder2=9999,IDCustomer1=0,IDCustomer2=9999,
+      NameC=""
+      ,orderby="IDBilll")=>
       {
-              let array=[];
-              let resultquery;
+               let array=[];
               let querysearch = `
-
-                SELECT
+              
+              SELECT
   
-                p.IDPaymentt,
-                p.NumberReservation,
-                p.IDCardPa,
-                p.IDPassangerServicee,
-                p.PassengerAmount,
-                p.TotalRS as TotalPayment,
-                p.Datee,
-              
-                rd.NumberRD,
-                rd.Value,
-                rd.NumberRoom,
-              
-                r.ReservationDate,
-                r.ArrivalDate, 
-                r.DepartureDate, 
-                r.ProcessStatus, 
-                r.ConfirmationStatus,
-                r.Origin,
-                r.Total as TotalReservation,
-              
-                dps.IDDPassangerService,
-                dps.IDServicee,
-                dps.Amount,
-              
-                ps.StartDate,
-                ps.EndDate,
-                ps.Total as TotalPS ,
-                ps.Observations
-                
-                FROM 
-                Payment as p INNER JOIN ReservationDetail rd
-                ON p.NumberReservation=rd.NumberReservation
-                INNER JOIN Reservation r ON r.NumberReservationn=rd.NumberReservation
-                INNER JOIN DetailPassengerService dps ON dps.NumberPService=p.IDPassangerServicee
-                INNER JOIN PassengerServicee ps ON ps.NumberPS=dps.NumberPService
-                WHERE p.IDPaymentt between ${idpayment1} and ${idpayment2}
-                and p.NumberReservation between ${numberr1} and ${numberr2}
-                and p.IDPassangerServicee between ${idpassengerservice1} and ${idpassengerservice2}
-                and p.IDCardPa like '%${idcardpassenger}%'
-                and p.Datee between @date1 and @date2 
-
-                order by ${orderby} desc
+              b.*,
             
+              o.DateO,
+              o.StateO,
+              o.SpecialRequirement,
+              o.NumberPeople,
+              o.IDCustomer,
+            
+              do.IDDetailO,
+              do.QuantityDO,
+              do.AmountDO,
+              do.IDDishh,
+            
+              d.NameD,
+              d.IDCategory,
+              d.DescriptionD,
+              d.ImgD,
+              d.PriceD,
+            
+              c.NamesC,
+              c.LastNameC,
+              c.PhoneNumberC
+                    
+              FROM
+  
+              Bill b INNER JOIN Orderr o ON o.IDOrder=b.IDOrder
+              INNER JOIN  DetailOrder do ON do.IDOrder=o.IDOrder 
+              INNER JOIN Dish d ON d.IDDishh=do.IDDishh 
+              INNER JOIN Customer c ON c.IDCustomer=o.IDCustomer
+  
+              WHERE 
+
+              b.IDBilll between ${IDBilll1} and ${IDBilll2}
+              AND b.DateB between @DateB1 and @DateB2
+              AND b.SubtotalB between ${SubtotalB1} and ${SubtotalB2}
+              AND b.TotalB between ${TotalB1} and ${TotalB2}
+              AND b.VATB between ${VATB1} and ${VATB2}
+              AND b.IDOrder between ${IDOrder1} and ${IDOrder2}
+              AND o.IDCustomer between ${IDCustomer1} and ${IDCustomer2}
+              AND b.StateB like '%${StateB}%'
+              AND c.NamesC like '%${NameC}%'
+              
+              ORDER BY ${orderby} desc
               `
               let pool = await Conection.conection();
                const result = await pool.request()
-               .input('date1', Date, date1)
-               .input('date2', Date, date2)
-               .query(querysearch)
-              resultquery = result.recordset[0].noexistpayment; 
-              if (resultquery===undefined) {
-                for (var precord of result.recordset) {
-                  let dtop  = new DTOPayment();
-                  this.getinformation(dtop,precord);
-                  array.push(dtop);
-                  
-                }
-                resultquery=array;
-              }
-              
+               .input('DateB1', Date, DateB1)
+               .input('DateB2', Date, DateB2)
+               .query(querysearch)        
+               for (var r of result.recordset) {
+                let dtobill = new DTOBill();
+                this.getinformation(dtobill, r);
+                array.push(dtobill);
+              } 
              pool.close();
-             return resultquery;
-        
-      
-       }  
+             return array;
+        }
     
    
     
