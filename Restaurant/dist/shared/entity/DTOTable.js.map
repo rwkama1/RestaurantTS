@@ -1,1 +1,0 @@
-{"version":3,"file":"DTOTable.js","sourceRoot":"","sources":["../../../shared/entity/DTOTable.ts"],"names":[],"mappings":";;AAAA,MAAsB,QAAQ;IAE1B,GAAG,CAAS;IACZ,MAAM,CAAS;IAEhB,YAAY,QAAe,EAAC,WAAkB;QAE1C,IAAI,CAAC,GAAG,GAAC,QAAQ,CAAC;QAClB,IAAI,CAAC,MAAM,GAAC,WAAW,CAAC;IAC5B,CAAC;CACH;AAVD,2BAUC"}

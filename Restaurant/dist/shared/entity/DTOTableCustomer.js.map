@@ -1,1 +1,0 @@
-{"version":3,"file":"DTOTableCustomer.js","sourceRoot":"","sources":["../../../shared/entity/DTOTableCustomer.ts"],"names":[],"mappings":";;AAEA,MAAsB,gBAAgB;IAElC,IAAI,CAAS;IACb,OAAO,CAAS;IAChB,UAAU,CAAS;IAEpB,YAAY,KAAY,EAAC,QAAe,EAAC,SAAgB;QAErD,IAAI,CAAC,IAAI,GAAC,KAAK,CAAC;QAChB,IAAI,CAAC,OAAO,GAAC,QAAQ,CAAC;QACtB,IAAI,CAAC,UAAU,GAAC,SAAS,CAAC;IAC9B,CAAC;CACH;AAZD,mCAYC"}
